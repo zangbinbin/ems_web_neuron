@@ -28,6 +28,7 @@ export enum NodeCatogery {
 }
 
 export enum TypeOfPluginParam {
+  Float = 'float',
   Int = 'int',
   String = 'string',
   Boolean = 'bool',

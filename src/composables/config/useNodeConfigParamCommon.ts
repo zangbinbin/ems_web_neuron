@@ -46,6 +46,7 @@ export default () => {
 
   const initParamDefaultValueByType = (type: TypeOfPluginParam) => {
     const initValueMap = {
+      [TypeOfPluginParam.Float]: null,
       [TypeOfPluginParam.Int]: null,
       [TypeOfPluginParam.String]: '',
       [TypeOfPluginParam.Boolean]: null,
@@ -70,6 +71,10 @@ export default () => {
   const showLabel = (field: ParamInfo) => {
     const label = i18nContent(field, 'name')
     return upperFirstLetter(label)
+  }
+
+  const isFloatValue = (param: ParamInfo) => {
+    return param.type === TypeOfPluginParam.Float
   }
 
   const isParamHexadecimalBase = (param: ParamInfo) => {
@@ -110,6 +115,7 @@ export default () => {
     showLabel,
 
     checkHexadecimalValue,
+    isFloatValue,
     isParamHexadecimalBase,
     transToDecimal,
     transToHexadecimal,

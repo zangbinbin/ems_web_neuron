@@ -108,6 +108,15 @@ interface ParamBaseInfo {
   }
 }
 
+export interface FloatParamInfo extends ParamBaseInfo {
+  type: TypeOfPluginParam.Float
+  default?: number
+  valid: {
+    min: number
+    max: number
+  }
+}
+
 export interface NumberParamInfo extends ParamBaseInfo {
   type: TypeOfPluginParam.Int
   default?: number
@@ -160,6 +169,7 @@ interface ArrayParamInfo extends ParamBaseInfo {
 }
 
 export type ParamInfo =
+  | FloatParamInfo
   | NumberParamInfo
   | StringParamInfo
   | BoolParamInfo

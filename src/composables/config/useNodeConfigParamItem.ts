@@ -167,6 +167,15 @@ export default (props: Props) => {
     }
   }
 
+  const createFloatParamRules = () => [
+    {
+      // required: !!props.paramInfo.default,
+      required: props.paramInfo.attribute === ParamRequired.True,
+      message: createCommonErrorMessage('input', i18nContent(props.paramInfo, 'name')),
+    },
+    { validator: checkNumberParamLimit, trigger: 'blur' },
+  ]
+
   const createNumberParamRules = () => [
     {
       // required: !!props.paramInfo.default,
@@ -218,6 +227,7 @@ export default (props: Props) => {
 
   const rules = computed(() => {
     const createMap = {
+      [TypeOfPluginParam.Float]: createFloatParamRules,
       [TypeOfPluginParam.Int]: createNumberParamRules,
       [TypeOfPluginParam.String]: createStringParamRules,
       [TypeOfPluginParam.Boolean]: createSelectParamRules,

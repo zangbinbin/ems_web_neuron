@@ -26,6 +26,12 @@
               :prop="`list.${$index}.${fieldName(field.name)}`"
               :rules="getRules(field)"
             >
+              <!-- Float -->
+              <emqx-input
+                v-if="field.type === TypeOfPluginParam.Float"
+                v-model.trim="row[fieldName(field.name)]"
+              />
+
               <!-- Number -->
               <emqx-input
                 v-if="field.type === TypeOfPluginParam.Int"

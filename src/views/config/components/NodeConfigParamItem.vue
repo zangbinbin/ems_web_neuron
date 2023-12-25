@@ -15,6 +15,7 @@
           </template>
         </el-popover>
       </template>
+  
       <!-- Number -->
       <span v-if="paramInfo.type === TypeOfPluginParam.Int">
         <emqx-input
@@ -24,6 +25,14 @@
         />
         <emqx-input v-else v-model="inputValue" :placeholder="String(defaultData[paramKey])" />
       </span>
+
+      <!-- Float -->
+      <emqx-input
+          v-else-if="paramInfo.type === TypeOfPluginParam.Float"
+          @input="limitInput($event)"
+          v-model.number="inputValue"
+          :placeholder="String(defaultData[paramKey] || '')"
+        />
 
       <!-- String -->
       <emqx-input
@@ -169,6 +178,16 @@ const validateArrayParam = async () => {
   } catch (error) {
     return Promise.reject(error)
   }
+}
+
+const limitInput = (value: string) => {
+    let val: any = "" + value;
+    inputValue.value =
+      (val
+        .replace(/[^\d^\.]+/g, "")
+        .replace(/^0+(\d)/, "$1")
+        .replace(/^\./, "0.")
+        .match(/^\d*(\.?\d{0,2})/g)[0] || "").toFixed(2);  
 }
 
 defineExpose({

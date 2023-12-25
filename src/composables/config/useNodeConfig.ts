@@ -12,6 +12,7 @@ import { useI18n } from 'vue-i18n'
 import { cloneDeep } from 'lodash'
 import { randomString } from '@/utils/utils'
 import i18n from '@/i18n/index'
+import { number } from 'echarts'
 
 interface Field {
   key: string
@@ -29,7 +30,7 @@ export default (props: Props) => {
 
   const { initMap, getNodeMsgById } = useNodeMsgMap(props.direction, false)
   const { pluginMsgIdMap, initMsgIdMap } = useGetPluginMsgIdMap()
-  const { initParamDefaultValueByType, isParamHexadecimalBase, transToHexadecimal, transToDecimal } =
+  const { initParamDefaultValueByType, isFloatValue, isParamHexadecimalBase, transToHexadecimal, transToDecimal } =
     useNodeConfigParamCommon()
 
   const configForm: Ref<Record<string, any>> = ref({})
@@ -260,12 +261,16 @@ export default (props: Props) => {
             }
           }
 
+          // if value is float, transefer value to number
+          if (field && field.info && isFloatValue(field.info)) {
+            bodyData[key] = Number(value)
+          }
+
           // if base = 16, transefer value to 10
           if (field && field.info && isParamHexadecimalBase(field.info)) {
             bodyData[key] = transToDecimal(value)
           }
         })
-
         await submitNodeConfig(node.value, bodyData)
         EmqxMessage.success(t('common.submitSuccess'))
         router.back()
