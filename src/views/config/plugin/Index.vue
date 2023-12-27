@@ -1,11 +1,11 @@
 <template>
   <emqx-card class="plugin" v-emqx-loading="isListLoading">
     <ViewHeaderBar>
-      <template v-slot:left>
+      <!-- <template v-slot:left>
         <emqx-button type="primary" size="small" icon="iconfont iconcreate" class="header-item btn" @click="addPlugin">
           {{ $t('config.addPlugin') }}
         </emqx-button>
-      </template>
+      </template> -->
       <template v-slot:right>
         <emqx-select
           v-model="filterNodeType"
