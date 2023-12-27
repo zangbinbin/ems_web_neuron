@@ -13,18 +13,18 @@
           </span>
           <template #dropdown>
             <emqx-dropdown-menu class="header-menu">
-              <emqx-dropdown-item @click="goLicense">
+              <!-- <emqx-dropdown-item @click="goLicense">
                 <i class="iconfont iconLicense"></i>
                 <span>License</span>
-              </emqx-dropdown-item>
+              </emqx-dropdown-item> -->
               <emqx-dropdown-item @click="goAbout">
                 <i class="iconfont iconabout"></i>
                 <span> {{ $t('common.about') }}</span>
               </emqx-dropdown-item>
-              <emqx-dropdown-item @click="downloadLogsFile">
+              <!-- <emqx-dropdown-item @click="downloadLogsFile">
                 <i class="iconfont icondownload"></i>
                 <span> {{ $t('admin.debugFiles') }}</span>
-              </emqx-dropdown-item>
+              </emqx-dropdown-item> -->
             </emqx-dropdown-menu>
           </template>
         </emqx-dropdown>
