@@ -16,28 +16,28 @@ export default {
     en: 'Configuration',
   },
   northAppSetup: {
-    zh: '北向应用',
-    en: 'North Apps',
+    zh: '策略管理',
+    en: 'Strategy Management',
   },
   southDeviceManagement: {
-    zh: '南向设备',
-    en: 'South Devices',
+    zh: '设备管理',
+    en: 'Device Management',
   },
   appName: {
     zh: '应用名称',
     en: 'Name of Application ',
   },
   addApplication: {
-    zh: '添加应用',
-    en: 'Add Application',
+    zh: '添加策略',
+    en: 'Add Strategy',
   },
   addDevice: {
     zh: '添加设备',
     en: 'Add Device',
   },
   addApp: {
-    zh: '添加应用',
-    en: 'Add App',
+    zh: '添加策略',
+    en: 'Add Strategy',
   },
   editApp: {
     zh: '编辑应用',
@@ -164,19 +164,19 @@ export default {
     en: 'More applications',
   },
   northApp: {
-    zh: '北向应用',
-    en: 'North application',
+    zh: '策略管理',
+    en: 'Strategy Management',
   },
   moreDevices: {
     zh: '更多设备',
     en: 'More devices',
   },
   southDevice: {
-    zh: '南向设备',
-    en: 'South device',
+    zh: '设备管理',
+    en: 'Device Management',
   },
   templateManagement: {
-    zh: '模板管理',
+    zh: '设备新增模板',
     en: 'Template',
   },
   plugin: {
