@@ -2,8 +2,9 @@
 [Unit] 
 Description=high performance energy management
 [Service] 
+WorkingDirectory=/root/toolstar/cse_ems/management/build
 Type=forking 
-ExecStart=/root/toolstar/cse_ems/management/build/cse_ems
+ExecStart=cse_ems
 KillMode=process 
 Restart=on-failure 
 RestartSec=1s
