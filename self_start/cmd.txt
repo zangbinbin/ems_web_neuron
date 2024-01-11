@@ -1,0 +1,26 @@
+#/bin/bash
+
+# 进入/etc/systemd/system 或者 /usr/lib/systemd/system
+cd /etc/systemd/system  
+cd /usr/lib/systemd/system 
+# 进入cse_ems.service所在目录
+cd xxxxxx
+# 将cse_ems.service拷贝到上面目录
+cp cse_ems.service /etc/systemd/system
+
+# 设置开机启动
+systemctl enable nginx
+
+
+
+
+# 取消开机自启动
+#systemctl disable nginx
+# 查看服务当前状态
+#systemctl status nginx
+# 启动nginx服务
+#systemctl start nginx
+# 停止nginx服务
+#systemctl stop nginx
+# 重启nginx服务
+#systemctl restart nginx

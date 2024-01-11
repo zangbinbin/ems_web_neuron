@@ -1,0 +1,12 @@
+#cse_ems.service
+[Unit] 
+Description=high performance energy management
+[Service] 
+Type=forking 
+ExecStart=/root/toolstar/cse_ems/management/build/cse_ems
+KillMode=process 
+Restart=on-failure 
+RestartSec=1s
+[Install] 
+WantedBy=multi-user.target
+
