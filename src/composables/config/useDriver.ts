@@ -271,7 +271,7 @@ export const useDriverInfo = (node?: Record<string, any>) => {
       (nodePlugin.value.toLocaleLowerCase() === 'mqtt' ||
         nodePlugin.value.toLocaleLowerCase() === 'grid_connect_off' ||
         nodePlugin.value.toLocaleLowerCase() === 'economy_work' ||
-        nodePlugin.value.toLocaleLowerCase() === 'upload_distribute'),
+        nodePlugin.value.toLocaleLowerCase() === 'strategy_demo'),
   )
 
   const isGewuPugin = computed(() => {
