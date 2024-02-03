@@ -104,6 +104,14 @@ export default (props: Props) => {
         return Promise.resolve()
       }
 
+      // when  `offset` = 0, all other types can be enter as `float`, excepet for `bit` type
+      const offset = props.tag?.offset
+      if (offset !== undefined && offset !== null && offset === 0) {
+        await checkWriteData(type, trueValue)
+        inputErrorMsg.value = ''
+        return Promise.resolve()
+      }
+
       const requests = [checkWriteData(type, trueValue)]
       if (type !== TagType.BYTES) {
         requests.push(checkFloat.bind(null, trueValue)())
