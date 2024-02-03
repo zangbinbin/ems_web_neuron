@@ -153,6 +153,7 @@ export const createTagForm = () => {
     // for the key when use v-for
     id: createRandomString(6),
     decimal: undefined,
+    offset: undefined,
     description: '',
     precision: undefined,
     value: undefined,

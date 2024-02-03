@@ -85,6 +85,7 @@ export default (pluginInfo: PluginInfo) => {
         type: typeLabel,
         description = '',
         decimal,
+        offset,
         precision,
         value,
       } of tagList) {
@@ -136,6 +137,7 @@ export default (pluginInfo: PluginInfo) => {
           type,
           description: description?.toString() || '',
           decimal,
+          offset,
           precision,
         }
         // when `attribute` is includes `Static`

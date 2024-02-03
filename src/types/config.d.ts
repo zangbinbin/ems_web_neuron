@@ -224,6 +224,7 @@ export interface TagForm {
   description: string
   precision?: number | undefined
   decimal?: number | null
+  offset?: number | null
   value?: string | number | undefined
 }
 export interface TagFormItem extends TagForm {

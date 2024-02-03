@@ -134,12 +134,16 @@ export default () => {
 
   // Edit tag
   const editTag = (tag: TagDataInTable) => {
-    const { checked, decimal, ...restData } = tag
+    const { checked, decimal, offset, ...restData } = tag
     const tagData: TagData = { ...restData }
 
     // When the decimal value is 0, does not display its value on the UI
     if (!decimal) {
       tagData.decimal = undefined
+    }
+    // When the offset value is 0, does not display its value on the UI
+    if (!offset) {
+      tagData.offset = undefined
     }
 
     currentTag.value = tagData

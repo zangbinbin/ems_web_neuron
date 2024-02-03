@@ -23,6 +23,7 @@ export interface TagDataInTable extends TagDataInMonitoring {
   error: number
   description: string
   decimal?: number
+  offset?: number
   precision?: number
 }
 export default () => {

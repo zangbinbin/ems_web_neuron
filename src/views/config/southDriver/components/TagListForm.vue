@@ -112,6 +112,21 @@
         </template>
       </el-table-column>
 
+      <el-table-column :label="$t('config.offset')" width="110">
+        <template #default="{ row, $index }">
+          <el-form-item :prop="`tagList.${$index}.offset`">
+            <!-- @blur="changeDecimal($index)" -->
+            <emqx-input-number
+              v-if="!isAttrsIncludeStatic(row.attribute)"
+              v-model="row.offset"
+              :step="0.1"
+              controls-position="right"
+            />
+            <span v-else>-</span>
+          </el-form-item>
+        </template>
+      </el-table-column>
+
       <el-table-column :label="$t('config.precision')" width="110">
         <template #default="{ row, $index }">
           <el-form-item :prop="`tagList.${$index}.precision`">
@@ -192,6 +207,7 @@ const changeAttribute = (row: TagFormItem, $index: number) => {
   } else {
     formData.value.tagList[$index].precision = undefined
     formData.value.tagList[$index].decimal = null
+    formData.value.tagList[$index].offset = null
     if (isBYTESType.value($index)) {
       formData.value.tagList[$index].type = null
     }

@@ -250,7 +250,9 @@ export const useAddSubscription = (props: AddSubscriptionProps) => {
 
   const setDefaultTopic = () => {
     const nodeName = props.currentNode
-    subscriptionForm.value.topic = `/neuron/${nodeName}`
+    //subscriptionForm.value.topic = `/neuron/${nodeName}`
+    // nikon update default topic
+    subscriptionForm.value.topic = 'v1/devices/me/telemetry'
   }
 
   const initForm = async () => {
