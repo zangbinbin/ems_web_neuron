@@ -273,7 +273,8 @@ export const useDriverInfo = (node?: Record<string, any>) => {
         nodePlugin.value.toLocaleLowerCase() === 'grid_connect_off' ||
         nodePlugin.value.toLocaleLowerCase() === 'economy_work' ||
         nodePlugin.value.toLocaleLowerCase() === 'strategy_demo'||
-        nodePlugin.value.toLocaleLowerCase() === 'primary'),
+        nodePlugin.value.toLocaleLowerCase() === 'primary')||
+        nodePlugin.value.toLocaleLowerCase() === 'upload_distribute',
   )
 
   const isGewuPugin = computed(() => {
