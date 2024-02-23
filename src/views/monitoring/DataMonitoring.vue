@@ -62,6 +62,9 @@
         <emqx-table-column :label="$t('config.decimal')">
           <template #default="{ row }">{{ tagDecimalValue(row.decimal) }}</template>
         </emqx-table-column>
+        <emqx-table-column :label="$t('config.offset')">
+          <template #default="{ row }">{{ tagDecimalValue(row.offset) }}</template>
+        </emqx-table-column>
         <emqx-table-column prop="valueToShow" min-width="100">
           <template #header>
             <div class="value-column-hd">
@@ -86,7 +89,7 @@
         </emqx-table-column>
         <emqx-table-column :label="$t('config.desc')" prop="description" min-width="100" />
 
-        <emqx-table-column width="100" :label="$t('common.oper')" align="right">
+        <emqx-table-column width="100" :label="$t('common.oper')" fixed="right">
           <template #default="{ row }">
             <emqx-button type="text" @click="writeData(row)" v-if="canWrite(row)">Write</emqx-button>
           </template>

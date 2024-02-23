@@ -91,6 +91,10 @@ export default {
     zh: '乘系数',
     en: 'Decimal',
   },
+  offset: {
+    zh: '偏移量',
+    en: 'Offset',
+  },
   precision: {
     zh: '精度',
     en: 'Precision',
@@ -391,6 +395,10 @@ export default {
   decimalFormatError: {
     zh: '请输入格式正确的 10 进制数',
     en: 'Please enter a decimal number in the correct format',
+  },
+  offsetFormatError: {
+    zh: '请输入格式正确的 10 进制数',
+    en: 'Please enter a offset number in the correct format',
   },
 
   lengthRangeErrorMsg: {

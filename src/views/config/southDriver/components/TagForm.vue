@@ -72,6 +72,13 @@
         </emqx-form-item>
       </emqx-col>
 
+      <emqx-col v-if="!isAttrsIncludeStatic(form.attribute)" :span="12">
+        <emqx-form-item :label="$t('config.offset')" prop="offset">
+          <!--  @blur="changeDecimal" -->
+          <emqx-input-number v-model="form.offset" :step="1" controls-position="right" />
+        </emqx-form-item>
+      </emqx-col>
+
       <emqx-col :span="12">
         <emqx-form-item :label="$t('config.desc')">
           <emqx-input v-model="form.description" />
@@ -128,6 +135,7 @@ const changeAttribute = () => {
   } else {
     form.value.precision = undefined
     form.value.decimal = null
+    form.value.offset = null
     if (isBYTESType.value) {
       form.value.type = null
     }
