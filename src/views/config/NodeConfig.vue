@@ -97,6 +97,9 @@ const {
   .emqx-row {
     padding-top: 16px;
   }
+  .emqx-row:empty {
+    padding-top: 0; /* 当没有子标签时，将向上间距设置为 0 */
+  }
   .el-radio-group {
     width: 100%;
   }

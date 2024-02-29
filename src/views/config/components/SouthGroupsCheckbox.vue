@@ -21,7 +21,8 @@
               class="node-name"
               @change="handelCheckedAll($event, node.name)"
             >
-              {{ node.name }}
+              <!-- {{ node.name }} -->
+              {{ convertNodeName(node.name) }}
             </el-checkbox>
           </template>
 
@@ -48,6 +49,7 @@
 <script lang="ts" setup>
 import { defineProps, defineEmits, ref, watch, nextTick, computed } from 'vue'
 import type { Ref, PropType } from 'vue'
+import { convertNodeName } from '@/utils/driverNames'
 import { ElCollapse, ElCollapseItem, ElCheckbox, ElCheckboxGroup, ElRadioGroup, ElRadioButton } from 'element-plus'
 import { queryGroupList, querySouthDriverList } from '@/api/config'
 import type { RawDriverData } from '@/types/config'

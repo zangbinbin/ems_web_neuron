@@ -53,7 +53,8 @@
         <emqx-table-column :label="$t('common.name')" prop="name" sortable="custom" show-overflow-tooltip>
           <template #default="{ row }">
             <el-link type="primary" :underline="false" href="javascript:;" @click="goGroupPage(row)">
-              {{ row.name }}
+              <!-- {{ node.name }} -->
+              {{ convertNodeName(row.name) }}
             </el-link>
           </template>
         </emqx-table-column>
@@ -219,6 +220,7 @@ import { isTheSameParentRoute } from '@/utils/utils'
 import useCheckLicense from '@/composables/useCheckLicense'
 import LicenseTipDialog from '@/components/LicenseTipDialog.vue'
 import Cookies from 'js-cookie'
+import { convertNodeName } from '@/utils/driverNames'
 
 export default defineComponent({
   beforeRouteEnter(to, from, next) {
