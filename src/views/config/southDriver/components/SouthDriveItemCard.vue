@@ -1,7 +1,8 @@
 <template>
   <div class="node-card south-drive-item-card" @click.stop.prevent="goGroupPage(data)">
     <div class="node-item-hd common-flex">
-      <p class="south-drive-item-name ellipsis">{{ data.name }}</p>
+      <!-- <p class="south-drive-item-name ellipsis">{{ data.name }}</p> -->
+      <p class="south-drive-item-name ellipsis">{{ convertNodeName(data.name) }}</p>
       <div class="setup-item-handlers">
         <AComWithDesc :content="$t('config.deviceConfig')">
           <i class="iconfont iconsetting" @click.stop="goNodeConfig(props.data)"></i>
@@ -95,6 +96,7 @@ import type { DriverItemInList } from '@/types/config'
 import { NodeCatogery } from '@/types/enums'
 import AComWithDesc from '@/components/AComWithDesc.vue'
 import DataStatisticsDrawer from '../../components/dataStatisticsDrawer.vue'
+import { convertNodeName } from '@/utils/driverNames'
 
 const props = defineProps({
   data: {

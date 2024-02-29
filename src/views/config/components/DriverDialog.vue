@@ -2,7 +2,10 @@
   <el-dialog v-model="showDialog" :width="500" custom-class="common-dialog" :title="dialogTitle" :z-index="2000">
     <emqx-form ref="formCom" :model="driverForm" :rules="groupFormRules">
       <emqx-form-item prop="name" :label="$t('common.name')" required>
-        <emqx-input v-model.trim="driverForm.name" :disabled="driver" />
+        <!-- <emqx-input v-model.trim="driverForm.name" :disabled="driver" /> -->
+        <emqx-select v-model="driverForm.name" filterable clearable allow-create :disabled="driver">
+          <emqx-option v-for="{ label, value } in driverNameList" :key="value" :value="value" :label="label" />
+        </emqx-select>
       </emqx-form-item>
 
       <!-- 1. Supports dual modes: plug-in and template  -->
@@ -51,6 +54,7 @@ import { computed, defineEmits, defineProps, watch, nextTick } from 'vue'
 import { ElDialog } from 'element-plus'
 import useDriverDialog from '@/composables/config/useDriverDialog'
 import type { DriverDirection } from '@/types/enums'
+import { driverNameList } from '@/utils/driverNames'
 import PluginListSelector from '@/views/config/components/PluginListSelector.vue'
 import TemplateListSelector from '@/views/config/components/TemplateListSelector.vue'
 
