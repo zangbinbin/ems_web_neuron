@@ -35,10 +35,11 @@
       <emqx-table-column label="No" :width="60">
         <template #default="{ index }">{{ index + 1 }}</template>
       </emqx-table-column>
-      <emqx-table-column :label="$t('config.groupName')" prop="group"></emqx-table-column>
       <emqx-table-column :label="$t('config.deviceName')" prop="name">
-        <template #default="{ row }">{{ row.driver }}</template>
+        <!-- <template #default="{ row }">{{ row.driver }}</template> -->
+        <template #default="{ row }">{{ convertNodeName(row.driver) }}</template>
       </emqx-table-column>
+      <emqx-table-column :label="$t('config.groupName')" prop="group"></emqx-table-column>
       <emqx-table-column v-if="isMQTTPugin" :label="$t('config.topic')" show-overflow-tooltip>
         <template #default="{ row }">{{ row?.params?.topic }}</template>
       </emqx-table-column>
@@ -76,6 +77,7 @@ import AddSubscriptionDialog from './components/AddSubscriptionDialog.vue'
 import AComWithDesc from '@/components/AComWithDesc.vue'
 import EditSubcriptionGroup from './components/EditSubcriptionGroup.vue'
 import { DriverDirection } from '@/types/enums'
+import { convertNodeName } from '@/utils/driverNames'
 
 const { isMQTTPugin, isGewuPugin } = useDriverInfo()
 
