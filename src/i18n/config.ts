@@ -676,15 +676,15 @@ export default {
   },
   tabPolicy: {
     zh: '策略配置',
-    en: 'Policy Configuration',
+    en: 'Policy',
   },
   tabPoint: {
     zh: '点位名称配置',
-    en: 'Point Name Configuration',
+    en: 'Point Name',
   },
   tabConnection: {
     zh: '连接配置',
-    en: 'Connection Configuration',
+    en: 'Connection',
   },
   tabOther: {
     zh: '其他',

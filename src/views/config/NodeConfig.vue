@@ -13,12 +13,12 @@
         <!-- Tab Nav -->
         <div class="tab-nav">
           <div @click="changeTab(0)" :class="{ active: currentIndex === 0 }" style="border-radius: 5px 0px 0px 5px">
-            $t('config.tabPolicy')
+            {{ $t('config.tabPolicy') }}
           </div>
-          <div @click="changeTab(1)" :class="{ active: currentIndex === 1 }">$t('config.tabPoint')</div>
-          <div @click="changeTab(2)" :class="{ active: currentIndex === 2 }">$t('config.tabConnection')</div>
+          <div @click="changeTab(1)" :class="{ active: currentIndex === 1 }">{{ $t('config.tabPoint') }}</div>
+          <div @click="changeTab(2)" :class="{ active: currentIndex === 2 }">{{ $t('config.tabConnection') }}</div>
           <div @click="changeTab(3)" :class="{ active: currentIndex === 3 }" style="border-radius: 0px 5px 5px 0px">
-            $t('config.tabOther')
+            {{ $t('config.tabOther') }}
           </div>
         </div>
         <!-- Tab Content -->
@@ -211,7 +211,8 @@ const changeTab = (index: number) => {
     margin-top: 10px;
   }
   .tab-nav > div {
-    min-width: 100px;
+    min-width: 130px;
+    max-width: 150px;
     text-align: center;
     padding: 12px;
     cursor: pointer;
