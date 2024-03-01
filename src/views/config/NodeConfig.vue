@@ -12,34 +12,17 @@
       <div v-if="isNeedConfigType">
         <!-- Tab Nav -->
         <div class="tab-nav">
-          <div @click="changeTab(0)" :class="{ active: currentIndex === 0 }" style="border-radius: 5px 0px 0px 5px">
+          <div @click="changeTab(1)" :class="{ active: currentIndex === 1 }" style="border-radius: 5px 0px 0px 5px">
             {{ $t('config.tabPolicy') }}
           </div>
-          <div @click="changeTab(1)" :class="{ active: currentIndex === 1 }">{{ $t('config.tabPoint') }}</div>
-          <div @click="changeTab(2)" :class="{ active: currentIndex === 2 }">{{ $t('config.tabConnection') }}</div>
-          <div @click="changeTab(3)" :class="{ active: currentIndex === 3 }" style="border-radius: 0px 5px 5px 0px">
+          <div @click="changeTab(2)" :class="{ active: currentIndex === 2 }">{{ $t('config.tabPoint') }}</div>
+          <div @click="changeTab(3)" :class="{ active: currentIndex === 3 }">{{ $t('config.tabConnection') }}</div>
+          <div @click="changeTab(4)" :class="{ active: currentIndex === 4 }" style="border-radius: 0px 5px 5px 0px">
             {{ $t('config.tabOther') }}
           </div>
         </div>
         <!-- Tab Content -->
         <div>
-          <div v-show="currentIndex === 0">
-            <emqx-form ref="formCom" :model="configForm">
-              <template v-for="field in fieldList" :key="field.key">
-                <emqx-row v-if="field.info.tab === 0">
-                  <NodeConfigParamItem
-                    :ref="setParamRef"
-                    v-if="shouldFieldShow(field, configForm)"
-                    v-model="configForm[field.key]"
-                    :param-key="field.key"
-                    :param-info="field.info"
-                    :default-data="defaultConfigData"
-                    @validateFileds="validateFileds"
-                  />
-                </emqx-row>
-              </template>
-            </emqx-form>
-          </div>
           <div v-show="currentIndex === 1">
             <emqx-form ref="formCom" :model="configForm">
               <template v-for="field in fieldList" :key="field.key">
@@ -77,7 +60,24 @@
           <div v-show="currentIndex === 3">
             <emqx-form ref="formCom" :model="configForm">
               <template v-for="field in fieldList" :key="field.key">
-                <emqx-row v-if="!field.info.tab">
+                <emqx-row v-if="field.info.tab === 3">
+                  <NodeConfigParamItem
+                    :ref="setParamRef"
+                    v-if="shouldFieldShow(field, configForm)"
+                    v-model="configForm[field.key]"
+                    :param-key="field.key"
+                    :param-info="field.info"
+                    :default-data="defaultConfigData"
+                    @validateFileds="validateFileds"
+                  />
+                </emqx-row>
+              </template>
+            </emqx-form>
+          </div>
+          <div v-show="currentIndex === 4">
+            <emqx-form ref="formCom" :model="configForm">
+              <template v-for="field in fieldList" :key="field.key">
+                <emqx-row v-if="field.info.tab === null || field.info.tab === undefined || field.info.tab === 4">
                   <NodeConfigParamItem
                     :ref="setParamRef"
                     v-if="shouldFieldShow(field, configForm)"
@@ -173,7 +173,7 @@ const isNeedConfigType = computed(
       node.value.toLocaleLowerCase() === 'strategy_demo' ||
       node.value.toLocaleLowerCase() === 'primary'),
 )
-const currentIndex = ref(0)
+const currentIndex = ref(1)
 const changeTab = (index: number) => {
   // 切换当前选中的Tab
   currentIndex.value = index
