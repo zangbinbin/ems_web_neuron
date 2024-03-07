@@ -82,6 +82,10 @@ export default () => {
     return param.type === TypeOfPluginParam.Int && param?.base === SchameBase.hexadecimal
   }
 
+  const isArrayValue = (param: ParamInfo) => {
+    return param.type === TypeOfPluginParam.Array
+  }
+
   const checkHexadecimalValue = (value: string | number) => {
     if (value === undefined || value === null) return false
 
@@ -118,6 +122,7 @@ export default () => {
     checkHexadecimalValue,
     isFloatValue,
     isParamHexadecimalBase,
+    isArrayValue,
     transToDecimal,
     transToHexadecimal,
   }

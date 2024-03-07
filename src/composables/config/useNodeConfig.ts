@@ -30,8 +30,14 @@ export default (props: Props) => {
 
   const { initMap, getNodeMsgById } = useNodeMsgMap(props.direction, false)
   const { pluginMsgIdMap, initMsgIdMap } = useGetPluginMsgIdMap()
-  const { initParamDefaultValueByType, isFloatValue, isParamHexadecimalBase, transToHexadecimal, transToDecimal } =
-    useNodeConfigParamCommon()
+  const {
+    initParamDefaultValueByType,
+    isFloatValue,
+    isParamHexadecimalBase,
+    isArrayValue,
+    transToHexadecimal,
+    transToDecimal,
+  } = useNodeConfigParamCommon()
 
   const configForm: Ref<Record<string, any>> = ref({})
   const defaultConfigData: Ref<Record<string, any>> = ref({})
@@ -66,6 +72,9 @@ export default (props: Props) => {
       const field = fieldList.value.find(({ key: fieldKey }) => fieldKey === key)
       if (field?.info && isParamHexadecimalBase(field.info)) {
         objData[key] = transToHexadecimal(String(value))
+      }
+      if (field?.info && isArrayValue(field.info)) {
+        objData[key] = JSON.parse(String(value))
       }
     })
     return objData
@@ -269,6 +278,11 @@ export default (props: Props) => {
           // if base = 16, transefer value to 10
           if (field && field.info && isParamHexadecimalBase(field.info)) {
             bodyData[key] = transToDecimal(value)
+          }
+
+          // if value is array, transefer value to json str
+          if (field && field.info && isArrayValue(field.info)) {
+            bodyData[key] = JSON.stringify(value)
           }
         })
         await submitNodeConfig(node.value, bodyData)

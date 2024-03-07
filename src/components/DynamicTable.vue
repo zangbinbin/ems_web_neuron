@@ -2,7 +2,7 @@
   <el-form ref="dynamicTableRef" :model="formData">
     <el-table :data="formData.list" style="width: 100%" stripe>
       <template v-for="field in allFields" :key="fieldName(field.name).length > field.name">
-        <el-table-column :min-width="fieldName(field.name).length > 10 ? 170 : 110">
+        <el-table-column :min-width="getTableItemWidth(field)">
           <!-- header -->
           <template #header>
             <span>{{ showLabel(field) }}</span>
@@ -248,6 +248,12 @@ const validate = async () => {
   } catch (error) {
     return Promise.reject(error)
   }
+}
+
+const getTableItemWidth = (field: ParamInfo) => {
+  let width = field.name.toLocaleLowerCase().replaceAll(' ', '_').length > 10 ? 170 : 110
+  width = field.type === TypeOfPluginParam.TimeRange ? 350 : width
+  return width
 }
 
 defineExpose({
