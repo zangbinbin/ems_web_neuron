@@ -690,4 +690,12 @@ export default {
     zh: '其他',
     en: 'Other',
   },
+  charge: {
+    zh: '充电',
+    en: 'Charge',
+  },
+  discharge: {
+    zh: '放电',
+    en: 'Discharge',
+  },
 }
