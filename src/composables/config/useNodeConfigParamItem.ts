@@ -192,6 +192,13 @@ export default (props: Props) => {
     { validator: checkNumberParamLimit, trigger: 'blur' },
   ]
 
+  const createTimerangeParamRules = () => [
+    {
+      required: props.paramInfo.attribute === ParamRequired.True,
+      message: createCommonErrorMessage('input', i18nContent(props.paramInfo, 'name')),
+    },
+  ]
+
   const createStringParamRules = () => [
     {
       type: 'string',
@@ -229,6 +236,7 @@ export default (props: Props) => {
     const createMap = {
       [TypeOfPluginParam.Float]: createFloatParamRules,
       [TypeOfPluginParam.Int]: createNumberParamRules,
+      [TypeOfPluginParam.TimeRange]: createTimerangeParamRules,
       [TypeOfPluginParam.String]: createStringParamRules,
       [TypeOfPluginParam.Boolean]: createSelectParamRules,
       [TypeOfPluginParam.Enum]: createSelectParamRules,
