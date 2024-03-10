@@ -271,9 +271,10 @@ export default (props: Props) => {
           }
 
           // if value is float, transefer value to number
-          if (field && field.info && isFloatValue(field.info)) {
-            bodyData[key] = Number(value)
-          }
+          // if (field && field.info && isFloatValue(field.info)) {
+          //   bodyData[key] = Number(value)
+          // }
+          // if value is float, we have to keep it type is string
 
           // if base = 16, transefer value to 10
           if (field && field.info && isParamHexadecimalBase(field.info)) {
