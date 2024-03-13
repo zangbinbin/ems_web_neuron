@@ -131,11 +131,11 @@ export default (pluginInfo: PluginInfo) => {
 
         let tagItem: TagData = {
           group,
-          name: name?.toString() || '',
-          address: address?.toString() || '',
+          name: name?.toString().trim() || '',
+          address: address?.toString().trim() || '',
           attribute: attr,
           type,
-          description: description?.toString() || '',
+          description: description?.toString().trim() || '',
           decimal,
           offset,
           precision,

@@ -2,7 +2,7 @@
   <el-form ref="dynamicTableRef" :model="formData">
     <el-table :data="formData.list" style="width: 100%" stripe>
       <template v-for="field in allFields" :key="fieldName(field.name).length > field.name">
-        <el-table-column :min-width="fieldName(field.name).length > 10 ? 170 : 110">
+        <el-table-column :min-width="getTableItemWidth(field)">
           <!-- header -->
           <template #header>
             <span>{{ showLabel(field) }}</span>
@@ -27,10 +27,7 @@
               :rules="getRules(field)"
             >
               <!-- Float -->
-              <emqx-input
-                v-if="field.type === TypeOfPluginParam.Float"
-                v-model.trim="row[fieldName(field.name)]"
-              />
+              <emqx-input v-if="field.type === TypeOfPluginParam.Float" v-model.trim="row[fieldName(field.name)]" />
 
               <!-- Number -->
               <emqx-input
@@ -43,6 +40,20 @@
               <emqx-input
                 v-else-if="field.type === TypeOfPluginParam.String"
                 v-model.trim="row[fieldName(field.name)]"
+              />
+
+              <!-- TimeRange -->
+              <el-time-picker
+                v-else-if="field.type === TypeOfPluginParam.TimeRange"
+                v-model="row[fieldName(field.name)]"
+                is-range
+                size="small"
+                format="HH时:mm分"
+                value-format="HH:mm"
+                arrow-control
+                range-separator="-"
+                :start-placeholder="$t('common.startTime')"
+                :end-placeholder="$t('common.endTime')"
               />
 
               <!-- Boolean -->
@@ -106,7 +117,7 @@
 import { cloneDeep } from 'lodash'
 import { ref, defineProps, defineEmits, computed, defineExpose } from 'vue'
 import type { PropType } from 'vue'
-import { ElForm, ElTable, ElFormItem, ElTableColumn, ElPopover } from 'element-plus'
+import { ElForm, ElTable, ElFormItem, ElTableColumn, ElPopover, ElTimePicker } from 'element-plus'
 import type { ParamInfo } from '@/types/config'
 import { TypeOfPluginParam } from '@/types/enums'
 import useLang from '@/composables/useLang'
@@ -217,6 +228,7 @@ const addItem = () => {
 }
 const deleteItem = (index: number) => {
   formData.value.list.splice(index, 1)
+  formData.value = cloneDeep(formData.value)
   emits('validateFileds')
 }
 
@@ -236,6 +248,12 @@ const validate = async () => {
   } catch (error) {
     return Promise.reject(error)
   }
+}
+
+const getTableItemWidth = (field: ParamInfo) => {
+  let width = field.name.toLocaleLowerCase().replaceAll(' ', '_').length > 10 ? 170 : 110
+  width = field.type === TypeOfPluginParam.TimeRange ? 350 : width
+  return width
 }
 
 defineExpose({
