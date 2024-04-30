@@ -36,6 +36,7 @@ export enum TypeOfPluginParam {
   Map = 'map',
   File = 'file',
   Array = 'array',
+  TimeRange = 'timerange',
 }
 
 export enum TagType {

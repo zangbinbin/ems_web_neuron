@@ -106,6 +106,7 @@ interface ParamBaseInfo {
     values?: Array<any>
     regex: string
   }
+  tab: number
 }
 
 export interface FloatParamInfo extends ParamBaseInfo {

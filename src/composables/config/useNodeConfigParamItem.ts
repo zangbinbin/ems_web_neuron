@@ -4,7 +4,7 @@ import type { NumberParamInfo, ParamInfo, StringParamInfo, ArrayParamInfo } from
 import { ParamRequired, TypeOfPluginParam, SchameBase } from '@/types/enums'
 import { createCommonErrorMessage, dataType } from '@/utils/utils'
 import useNodeConfigParamCommon from '@/composables/config/useNodeConfigParamCommon'
-import { DECIMAL_POSITIVE_REGEX } from '@/utils/regexps'
+import { DECIMAL_REGEX } from '@/utils/regexps'
 import useLang from '@/composables/useLang'
 
 type Props = Readonly<{
@@ -103,7 +103,7 @@ export default (props: Props) => {
         callback()
       }
     } else {
-      const isDecimalValue = DECIMAL_POSITIVE_REGEX.test(trueVlue)
+      const isDecimalValue = DECIMAL_REGEX.test(trueVlue)
       if (!isDecimalValue) {
         callback(new Error(t('config.decimalFormatError')))
       } else {
@@ -192,6 +192,13 @@ export default (props: Props) => {
     { validator: checkNumberParamLimit, trigger: 'blur' },
   ]
 
+  const createTimerangeParamRules = () => [
+    {
+      required: props.paramInfo.attribute === ParamRequired.True,
+      message: createCommonErrorMessage('input', i18nContent(props.paramInfo, 'name')),
+    },
+  ]
+
   const createStringParamRules = () => [
     {
       type: 'string',
@@ -229,6 +236,7 @@ export default (props: Props) => {
     const createMap = {
       [TypeOfPluginParam.Float]: createFloatParamRules,
       [TypeOfPluginParam.Int]: createNumberParamRules,
+      [TypeOfPluginParam.TimeRange]: createTimerangeParamRules,
       [TypeOfPluginParam.String]: createStringParamRules,
       [TypeOfPluginParam.Boolean]: createSelectParamRules,
       [TypeOfPluginParam.Enum]: createSelectParamRules,

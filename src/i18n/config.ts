@@ -674,4 +674,28 @@ export default {
     zh: '广电',
     en: 'China Broadnet',
   },
+  tabPolicy: {
+    zh: '策略配置',
+    en: 'Policy',
+  },
+  tabPoint: {
+    zh: '点位名称配置',
+    en: 'Point Name',
+  },
+  tabConnection: {
+    zh: '连接配置',
+    en: 'Connection',
+  },
+  tabOther: {
+    zh: '其他',
+    en: 'Other',
+  },
+  charge: {
+    zh: '充电',
+    en: 'Charge',
+  },
+  discharge: {
+    zh: '放电',
+    en: 'Discharge',
+  },
 }

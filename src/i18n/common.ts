@@ -403,4 +403,12 @@ export default {
     zh: '全部展开',
     en: 'Expand all',
   },
+  startTime: {
+    zh: '开始时间',
+    en: 'Start time',
+  },
+  endTime: {
+    zh: '结束时间',
+    en: 'End Time',
+  },
 }
