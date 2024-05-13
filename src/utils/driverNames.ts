@@ -12,6 +12,8 @@ export const driverNameList = [
   { label: '消防预警信号(KA)', value: 'KA' },
   { label: '浪涌遥信信号(SPD)', value: 'SPD' },
   { label: '总开关分合闸信号(QF)', value: 'QF' },
+  { label: '计量表(PJ)', value: 'PJ' },
+  { label: '策略表(PM)', value: 'PM' },
 ]
 
 export const convertNodeName = (node: string) => {
