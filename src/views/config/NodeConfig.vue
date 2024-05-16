@@ -15,9 +15,9 @@
           <div @click="changeTab(1)" :class="{ active: currentIndex === 1 }" style="border-radius: 5px 0px 0px 5px">
             {{ $t('config.tabCore') }}
           </div>
-          <div @click="changeTab(2)" :class="{ active: currentIndex === 2 }">{{ $t('config.tabPoint') }}</div>
-          <div @click="changeTab(3)" :class="{ active: currentIndex === 3 }">{{ $t('config.tabConnection') }}</div>
-          <div @click="changeTab(4)" :class="{ active: currentIndex === 4 }" style="border-radius: 0px 5px 5px 0px">
+          <div @click="changeTab(20)" :class="{ active: currentIndex === 20 }">{{ $t('config.tabPoint') }}</div>
+          <div @click="changeTab(30)" :class="{ active: currentIndex === 30 }">{{ $t('config.tabConnection') }}</div>
+          <div @click="changeTab(99)" :class="{ active: currentIndex === 99 }" style="border-radius: 0px 5px 5px 0px">
             {{ $t('config.tabOther') }}
           </div>
         </div>
@@ -40,10 +40,10 @@
               </template>
             </emqx-form>
           </div>
-          <div v-show="currentIndex === 2">
+          <div v-show="currentIndex === 20">
             <emqx-form ref="formCom" :model="configForm">
               <template v-for="field in fieldList" :key="field.key">
-                <emqx-row v-if="field.info.tab === 2">
+                <emqx-row v-if="field.info.tab === 20">
                   <NodeConfigParamItem
                     :ref="setParamRef"
                     v-if="shouldFieldShow(field, configForm)"
@@ -57,10 +57,10 @@
               </template>
             </emqx-form>
           </div>
-          <div v-show="currentIndex === 3">
+          <div v-show="currentIndex === 30">
             <emqx-form ref="formCom" :model="configForm">
               <template v-for="field in fieldList" :key="field.key">
-                <emqx-row v-if="field.info.tab === 3">
+                <emqx-row v-if="field.info.tab === 30">
                   <NodeConfigParamItem
                     :ref="setParamRef"
                     v-if="shouldFieldShow(field, configForm)"
@@ -74,10 +74,10 @@
               </template>
             </emqx-form>
           </div>
-          <div v-show="currentIndex === 4">
+          <div v-show="currentIndex === 99">
             <emqx-form ref="formCom" :model="configForm">
               <template v-for="field in fieldList" :key="field.key">
-                <emqx-row v-if="field.info.tab === null || field.info.tab === undefined || field.info.tab === 4">
+                <emqx-row v-if="field.info.tab === null || field.info.tab === undefined || field.info.tab === 99">
                   <NodeConfigParamItem
                     :ref="setParamRef"
                     v-if="shouldFieldShow(field, configForm)"
