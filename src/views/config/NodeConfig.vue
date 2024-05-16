@@ -13,7 +13,7 @@
         <!-- Tab Nav -->
         <div class="tab-nav">
           <div @click="changeTab(1)" :class="{ active: currentIndex === 1 }" style="border-radius: 5px 0px 0px 5px">
-            {{ $t('config.tabPolicy') }}
+            {{ $t('config.tabCore') }}
           </div>
           <div @click="changeTab(2)" :class="{ active: currentIndex === 2 }">{{ $t('config.tabPoint') }}</div>
           <div @click="changeTab(3)" :class="{ active: currentIndex === 3 }">{{ $t('config.tabConnection') }}</div>

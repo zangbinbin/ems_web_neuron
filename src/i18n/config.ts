@@ -674,9 +674,9 @@ export default {
     zh: '广电',
     en: 'China Broadnet',
   },
-  tabPolicy: {
-    zh: '策略配置',
-    en: 'Policy',
+  tabCore: {
+    zh: '主控制',
+    en: 'Core Control',
   },
   tabPoint: {
     zh: '点位名称配置',
