@@ -188,6 +188,9 @@ const initDefaultValue = (rowData: Record<string, any>) => {
   return newRowData
 }
 const initData = (data: Array<Record<string, any>>) => {
+  if (!Array.isArray(data)) {
+    return []
+  }
   const list = data
   const newList = list.map((item: Record<string, any>) => {
     const newItem = initDefaultValue(item)
