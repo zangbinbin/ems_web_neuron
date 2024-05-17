@@ -678,6 +678,30 @@ export default {
     zh: '主控制',
     en: 'Core Control',
   },
+  tabAbnormalList: {
+    zh: '异常列表配置',
+    en: 'Abnormal List Config',
+  },
+  tabPeakShaveValleyFill: {
+    zh: '削峰填谷',
+    en: 'Peak Shave Valley Fill Config',
+  },
+  tabDemandManage: {
+    zh: '需量管理',
+    en: 'Demand Manage Config',
+  },
+  tabBackFlowPrevente: {
+    zh: '防逆流',
+    en: 'Back Flow Prevente Config',
+  },
+  tabEconomyWork: {
+    zh: '经济运行',
+    en: 'Economy Work Config',
+  },
+  tabGridConnectOff: {
+    zh: '并离网',
+    en: 'Grid Connect Off Config',
+  },
   tabPoint: {
     zh: '点位名称配置',
     en: 'Point Name',
