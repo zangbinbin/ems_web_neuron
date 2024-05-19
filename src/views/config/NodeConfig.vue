@@ -27,6 +27,7 @@
             {{ $t('config.tabGridConnectOff') }}
           </div>
           <div @click="changeTab(50)" :class="{ active: currentIndex === 50 }">{{ $t('config.tabAbnormalList') }}</div>
+          <div @click="changeTab(55)" :class="{ active: currentIndex === 55 }">{{ $t('config.tabCoreDataList') }}</div>
           <div @click="changeTab(70)" :class="{ active: currentIndex === 70 }">{{ $t('config.tabPoint') }}</div>
           <div @click="changeTab(80)" :class="{ active: currentIndex === 80 }">{{ $t('config.tabConnection') }}</div>
           <div @click="changeTab(99)" :class="{ active: currentIndex === 99 }" style="border-radius: 0px 5px 5px 0px">
@@ -141,6 +142,23 @@
             <emqx-form ref="formCom" :model="configForm">
               <template v-for="field in fieldList" :key="field.key">
                 <emqx-row v-if="field.info.tab === 50">
+                  <NodeConfigParamItem
+                    :ref="setParamRef"
+                    v-if="shouldFieldShow(field, configForm)"
+                    v-model="configForm[field.key]"
+                    :param-key="field.key"
+                    :param-info="field.info"
+                    :default-data="defaultConfigData"
+                    @validateFileds="validateFileds"
+                  />
+                </emqx-row>
+              </template>
+            </emqx-form>
+          </div>
+          <div v-show="currentIndex === 55">
+            <emqx-form ref="formCom" :model="configForm">
+              <template v-for="field in fieldList" :key="field.key">
+                <emqx-row v-if="field.info.tab === 55">
                   <NodeConfigParamItem
                     :ref="setParamRef"
                     v-if="shouldFieldShow(field, configForm)"
