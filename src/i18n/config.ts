@@ -682,9 +682,9 @@ export default {
     zh: '异常列表配置',
     en: 'Abnormal List Config',
   },
-  tabCoreDataList: {
-    zh: '核心数据配置',
-    en: 'Core Data Config',
+  tabDataStorageList: {
+    zh: '数据存储配置',
+    en: 'Data Storage Config',
   },
   tabPeakShaveValleyFill: {
     zh: '削峰填谷',
