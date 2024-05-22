@@ -168,7 +168,7 @@ const fieldName = computed(() => (name: string) => {
 })
 
 // time range filed name
-const timeRangeField = ref('fields')
+const timeRangeField = ref('time_frame')
 const timeRangeFieldName = computed(() => (name: string) => {
   timeRangeField.value = name.toLocaleLowerCase().replaceAll(' ', '_')
 })
