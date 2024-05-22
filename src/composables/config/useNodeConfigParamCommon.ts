@@ -55,6 +55,7 @@ export default () => {
       [TypeOfPluginParam.Array]: [],
       [TypeOfPluginParam.File]: '',
       [TypeOfPluginParam.TimeRange]: '',
+      [TypeOfPluginParam.MonthDay]: '',
     }
     return initValueMap[type] === undefined ? '' : initValueMap[type]
   }

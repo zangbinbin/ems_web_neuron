@@ -45,7 +45,7 @@
               <!-- TimeRange -->
               <el-time-picker
                 v-else-if="field.type === TypeOfPluginParam.TimeRange"
-                v-model="row[fieldName(field.name)]"
+                v-model="row[`${timeRangeField}`]"
                 is-range
                 size="small"
                 format="HH时:mm分"
@@ -54,6 +54,16 @@
                 range-separator="-"
                 :start-placeholder="$t('common.startTime')"
                 :end-placeholder="$t('common.endTime')"
+              />
+
+              <!-- MonthDay -->
+              <el-date-picker
+                v-else-if="field.type === TypeOfPluginParam.MonthDay"
+                v-model="row[fieldName(field.name)]"
+                size="small"
+                format="MM-DD"
+                value-format="MM-DD"
+                type="date"
               />
 
               <!-- Boolean -->
@@ -117,7 +127,7 @@
 import { cloneDeep } from 'lodash'
 import { ref, defineProps, defineEmits, computed, defineExpose } from 'vue'
 import type { PropType } from 'vue'
-import { ElForm, ElTable, ElFormItem, ElTableColumn, ElPopover, ElTimePicker } from 'element-plus'
+import { ElForm, ElTable, ElFormItem, ElTableColumn, ElPopover, ElTimePicker, ElDatePicker } from 'element-plus'
 import type { ParamInfo } from '@/types/config'
 import { TypeOfPluginParam } from '@/types/enums'
 import useLang from '@/composables/useLang'
@@ -155,6 +165,12 @@ const allFields = computed(() => {
 // filed name
 const fieldName = computed(() => (name: string) => {
   return name.toLocaleLowerCase().replaceAll(' ', '_')
+})
+
+// time range filed name
+const timeRangeField = ref('fields')
+const timeRangeFieldName = computed(() => (name: string) => {
+  timeRangeField.value = name.toLocaleLowerCase().replaceAll(' ', '_')
 })
 
 interface FormInfo {
@@ -256,6 +272,7 @@ const validate = async () => {
 const getTableItemWidth = (field: ParamInfo) => {
   let width = field.name.toLocaleLowerCase().replaceAll(' ', '_').length > 10 ? 170 : 110
   width = field.type === TypeOfPluginParam.TimeRange ? 350 : width
+  width = field.type === TypeOfPluginParam.MonthDay ? 240 : width
   return width
 }
 
