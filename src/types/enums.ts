@@ -37,7 +37,7 @@ export enum TypeOfPluginParam {
   File = 'file',
   Array = 'array',
   TimeRange = 'timerange',
-  MonthDay = 'monthday',
+  MonthDayRange = 'monthdayrange',
 }
 
 export enum TagType {

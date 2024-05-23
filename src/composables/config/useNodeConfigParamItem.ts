@@ -199,7 +199,7 @@ export default (props: Props) => {
     },
   ]
 
-  const createMonthDayParamRules = () => [
+  const createMonthDayRangeParamRules = () => [
     {
       required: props.paramInfo.attribute === ParamRequired.True,
       message: createCommonErrorMessage('input', i18nContent(props.paramInfo, 'name')),
@@ -244,7 +244,7 @@ export default (props: Props) => {
       [TypeOfPluginParam.Float]: createFloatParamRules,
       [TypeOfPluginParam.Int]: createNumberParamRules,
       [TypeOfPluginParam.TimeRange]: createTimerangeParamRules,
-      [TypeOfPluginParam.MonthDay]: createMonthDayParamRules,
+      [TypeOfPluginParam.MonthDayRange]: createMonthDayRangeParamRules,
       [TypeOfPluginParam.String]: createStringParamRules,
       [TypeOfPluginParam.Boolean]: createSelectParamRules,
       [TypeOfPluginParam.Enum]: createSelectParamRules,

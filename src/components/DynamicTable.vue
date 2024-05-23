@@ -56,14 +56,17 @@
                 :end-placeholder="$t('common.endTime')"
               />
 
-              <!-- MonthDay -->
+              <!-- MonthDayRange -->
               <el-date-picker
-                v-else-if="field.type === TypeOfPluginParam.MonthDay"
+                v-else-if="field.type === TypeOfPluginParam.MonthDayRange"
                 v-model="row[fieldName(field.name)]"
                 size="small"
-                format="MM-DD"
-                value-format="MM-DD"
-                type="date"
+                value-format="MM/DD"
+                range-separator="-"
+                format="MM/DD"
+                :start-placeholder="$t('common.startDate')"
+                :end-placeholder="$t('common.endDate')"
+                type="daterange"
               />
 
               <!-- Boolean -->
@@ -271,8 +274,7 @@ const validate = async () => {
 
 const getTableItemWidth = (field: ParamInfo) => {
   let width = field.name.toLocaleLowerCase().replaceAll(' ', '_').length > 10 ? 170 : 110
-  width = field.type === TypeOfPluginParam.TimeRange ? 350 : width
-  width = field.type === TypeOfPluginParam.MonthDay ? 240 : width
+  width = field.type === TypeOfPluginParam.TimeRange || field.type === TypeOfPluginParam.MonthDayRange ? 350 : width
   return width
 }
 

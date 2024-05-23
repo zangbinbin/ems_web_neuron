@@ -411,4 +411,12 @@ export default {
     zh: '结束时间',
     en: 'End Time',
   },
+  startDate: {
+    zh: '开始日期',
+    en: 'Start date',
+  },
+  endDate: {
+    zh: '结束日期',
+    en: 'End date',
+  },
 }
