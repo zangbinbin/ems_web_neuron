@@ -45,7 +45,7 @@
               <!-- TimeRange -->
               <el-time-picker
                 v-else-if="field.type === TypeOfPluginParam.TimeRange"
-                v-model="row[`${timeRangeField}`]"
+                v-model="row[fieldTimeRangeName(field.name)]"
                 is-range
                 size="small"
                 format="HH时:mm分"
@@ -170,10 +170,9 @@ const fieldName = computed(() => (name: string) => {
   return name.toLocaleLowerCase().replaceAll(' ', '_')
 })
 
-// time range filed name
-const timeRangeField = ref('time_frame')
-const timeRangeFieldName = computed(() => (name: string) => {
-  timeRangeField.value = name.toLocaleLowerCase().replaceAll(' ', '_')
+// filed time range name
+const fieldTimeRangeName = computed(() => (name: string) => {
+  return name.toLocaleLowerCase().replaceAll(' ', '')
 })
 
 interface FormInfo {
