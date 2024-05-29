@@ -312,6 +312,7 @@ export default (props: Props) => {
 
   return {
     node,
+    pluginName,
     configForm,
     defaultConfigData,
     fieldList,

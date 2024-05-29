@@ -9,7 +9,7 @@
         </p>
       </div>
       <!-- Policy configuration that requires tab classification -->
-      <div v-if="isNeedConfigType">
+      <div v-if="pluginName === 'primary'">
         <!-- Tab Nav -->
         <div class="tab-nav">
           <div @click="changeTab(1)" :class="{ active: currentIndex === 1 }" style="border-radius: 5px 0px 0px 5px">
@@ -228,7 +228,7 @@
         </div>
       </div>
       <!-- Policy configuration that does not require tab classification -->
-      <div v-if="!isNeedConfigType">
+      <div v-else>
         <emqx-form ref="formCom" :model="configForm">
           <template v-for="field in fieldList" :key="field.key">
             <emqx-row>
@@ -286,6 +286,7 @@ const labelForNodeName = computed(() =>
 const { shouldFieldShow } = useNodeConfigParamCommon()
 const {
   node,
+  pluginName,
   configForm,
   defaultConfigData,
   fieldList,
@@ -298,15 +299,6 @@ const {
   reset,
   validateFileds,
 } = useNodeConfig(props)
-// add plugin-config style
-const isNeedConfigType = computed(
-  () =>
-    node.value &&
-    (node.value.toLocaleLowerCase() === 'grid_connect_off' ||
-      node.value.toLocaleLowerCase() === 'economy_work' ||
-      node.value.toLocaleLowerCase() === 'strategy_demo' ||
-      node.value.toLocaleLowerCase() === 'primary'),
-)
 const currentIndex = ref(1)
 const changeTab = (index: number) => {
   // 切换当前选中的Tab
