@@ -16,21 +16,21 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Home',
     redirect: '/configuration/south-driver',
   },
-  /** Overview */
-  // {
-  //   path: '/overview',
-  //   name: 'Overview',
-  //   meta: { title: 'common.overview' },
-  //   component: Home,
-  //   children: [
-  //     {
-  //       path: '/overview',
-  //       name: 'Overview',
-  //       meta: { requireAuth: true },
-  //       component: () => import('@/views/overview/Index.vue'),
-  //     },
-  //   ],
-  // },
+  /* Overview */
+  {
+    path: '/overview',
+    name: 'Overview',
+    meta: { title: 'common.overview' },
+    component: Home,
+    children: [
+      {
+        path: '/overview',
+        name: 'Overview',
+        meta: { requireAuth: true },
+        component: () => import('@/views/overview/Index.vue'),
+      },
+    ],
+  },
   /* MONITORING */
   {
     path: '/monitoring',
