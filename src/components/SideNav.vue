@@ -57,6 +57,14 @@ const navList = computed(() => {
           to: '/monitoring/data',
           label: 'data.dataMonitoring',
         },
+        {
+          to: '/monitoring/faults',
+          label: 'data.faults',
+        },
+        {
+          to: '/monitoring/history_data',
+          label: 'data.dataHistory',
+        },
       ],
     },
     {

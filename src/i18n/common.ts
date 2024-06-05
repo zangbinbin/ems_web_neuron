@@ -411,6 +411,14 @@ export default {
     zh: '结束时间',
     en: 'End Time',
   },
+  createdTime: {
+    zh: '创建时间',
+    en: 'Created Time',
+  },
+  finishTime: {
+    zh: '完成时间',
+    en: 'Finish Time',
+  },
   startDate: {
     zh: '开始日期',
     en: 'Start date',
@@ -418,5 +426,17 @@ export default {
   endDate: {
     zh: '结束日期',
     en: 'End date',
+  },
+  abnormalValue: {
+    zh: '异常值',
+    en: 'Abnormal Value',
+  },
+  valueText: {
+    zh: '值',
+    en: 'Value Text',
+  },
+  state: {
+    zh: '状态',
+    en: 'State',
   },
 }

@@ -726,4 +726,8 @@ export default {
     zh: '放电',
     en: 'Discharge',
   },
+  query: {
+    zh: '查询',
+    en: 'Query',
+  },
 }

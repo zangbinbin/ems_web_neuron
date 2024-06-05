@@ -136,7 +136,13 @@ export enum PluginType {
   zhNoA11 = '非 A11',
   enNoA11 = 'Non A11',
 }
+
 export enum SchameBase {
   decimal = 10,
   hexadecimal = 16,
+}
+
+export enum State {
+  故障 = -1,
+  已修复
 }

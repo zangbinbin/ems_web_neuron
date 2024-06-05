@@ -44,6 +44,18 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/monitoring/DataMonitoring.vue'),
         meta: { hiddenBreadcrumb: true },
       },
+      {
+        path: 'faults',
+        name: 'Faults',
+        component: () => import('@/views/monitoring/Faults.vue'),
+        meta: { hiddenBreadcrumb: true },
+      },
+      {
+        path: 'history_data',
+        name: 'HistoryData',
+        component: () => import('@/views/monitoring/HistoryData.vue'),
+        meta: { hiddenBreadcrumb: true },
+      }      
     ],
   },
   /* CONFIG- NorthAPP */

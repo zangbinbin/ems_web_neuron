@@ -11,7 +11,11 @@ export default {
     zh: '数据监控',
     en: 'Data Monitoring',
   },
-  history: {
+  faults: {
+    zh: '故障',
+    en: 'Faults',
+  },
+  dataHistory: {
     zh: '历史数据',
     en: 'History',
   },
