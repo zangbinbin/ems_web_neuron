@@ -20,8 +20,8 @@
         <emqx-table-column :label="$t('config.desc')" min-width="150" prop="description" />
         <emqx-table-column :label="$t('config.driver')" width="90" sortable="custom" prop="driver_name" />
         <emqx-table-column :label="$t('config.groupName')" width="90" sortable="custom" prop="group_name" />
-        <emqx-table-column :label="$t('config.tag')" width="90" sortable="custom" prop="tag_name" />
-        <emqx-table-column :label="$t('common.abnormalValue')" width="90" sortable="custom" prop="abnormal_value" />
+        <emqx-table-column :label="$t('config.tag')" min-width="150" sortable="custom" prop="tag_name" />
+        <emqx-table-column :label="$t('common.abnormalValue')" min-width="100" sortable="custom" prop="abnormal_value" />
         <emqx-table-column :label="$t('common.state')" width="90" sortable="custom" prop="stateToShow" />
         <emqx-table-column :label="$t('common.createdTime')" min-width="150" sortable="custom" prop="created_time" />
         <emqx-table-column :label="$t('common.finishTime')" min-width="150" sortable="custom" prop="updated_time" />
