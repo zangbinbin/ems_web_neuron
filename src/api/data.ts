@@ -1,4 +1,4 @@
-import type { TagDataInMonitoring, TagDataInFaults, WriteData} from '@/types/data'
+import type { TagDataInMonitoring, TagDataInFaults, TagDataInHistoryData, WriteData} from '@/types/data'
 import http from '@/utils/http'
 import type { AxiosResponse } from 'axios'
 
@@ -39,7 +39,7 @@ export const getFaultsData = (
 export const getHistoryData = (
   start_time: string,
   end_time: string,
-): Promise<AxiosResponse<{ faults: Array<TagDataInFaults> }>> => {
+): Promise<AxiosResponse<{ history_data: Array<TagDataInHistoryData> }>> => {
   return http.get('/read/history_data', {
     params: {
       start_time: start_time,

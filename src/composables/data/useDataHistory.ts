@@ -80,17 +80,16 @@ export default () => {
       const startDate = new Date(now.getFullYear(), now.getMonth() - 3, now.getDate(), 23, 59, 59).toISOString().slice(0, 19); // 当前日期加一个月，设置为23:59:59
       query.value.time = [startDate, endDate];
     }
-    try {
-      debugger
-      const { data } = await getHistoryData(query.value.time[0], query.value.time[1])
-      debugger
+    try { 
 
-      totalData.value = (data.faults || []).map((item: any) => {
+      const { data } = await getHistoryData(query.value.time[0], query.value.time[1])      
+
+      totalData.value = (data.history_data || []).map((item: any) => {
         const ret =  { ...item}
         return ret
       })
 
-      pageController.value.total = data.faults.length
+      pageController.value.total = data.history_data.length
 
       totalDataBackup.value = cloneDeep(totalData.value)
       sortDataByKey(sortBy.value)
