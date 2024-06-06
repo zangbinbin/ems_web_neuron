@@ -12,7 +12,7 @@ export default {
     en: 'Data Monitoring',
   },
   faults: {
-    zh: '故障',
+    zh: '故障监测',
     en: 'Faults',
   },
   dataHistory: {
