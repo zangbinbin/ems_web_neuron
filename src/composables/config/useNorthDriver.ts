@@ -1,7 +1,7 @@
 import { useRouter } from 'vue-router'
 import { queryNorthDriverList } from '@/api/config'
 import type { DriverItemInList } from '@/types/config'
-import { NodeCatogery } from '@/types/enums'
+import { NodeCatogery, NodeState } from '@/types/enums'
 import type { PluginKind } from '@/types/enums'
 import type { Ref } from 'vue'
 import { ref, onUnmounted } from 'vue'
@@ -12,9 +12,12 @@ import useDeleteDriver from '@/composables/config/useDeleteDriver'
 import { useNodeDebugLogLevel, useDriverName } from '@/composables/config/useDriver'
 import { listOrderByKey } from '@/utils/utils'
 import { statusTextMap, connectionStatusTextMap } from '@/utils/driver'
+import { EmqxMessage } from '@emqx/emqx-ui'
+import { useI18n } from 'vue-i18n'
 
 export default (autoLoad = true, needRefreshStatus = false) => {
   const router = useRouter()
+  const { t } = useI18n()
 
   const { pluginMsgIdMap, initMsgIdMap } = useGetPluginMsgIdMap()
   const { fillNodeListStatusData } = useFillNodeListStatusData()
@@ -140,8 +143,13 @@ export default (autoLoad = true, needRefreshStatus = false) => {
   }
 
   // Compatible with jumping from created a node
-  const goNodeConfig = (node: DriverItemInList | { name: string }) =>
+  const goNodeConfig = (node: DriverItemInList | { name: string }) => {
+    if ('running' in node && node.running === NodeState.Running) {
+      EmqxMessage.error(t('common.stopConfigFirst'))
+      return
+    }
     router.push({ name: 'NorthDriverConfig', params: { node: node.name } })
+  }
 
   const deleteDriver = async (node: DriverItemInList) => {
     await deleteDriverByNode(NodeCatogery.North, node)

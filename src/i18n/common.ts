@@ -439,4 +439,8 @@ export default {
     zh: '状态',
     en: 'State',
   },
+  stopConfigFirst: {
+    zh: '请先停止策略配置，再进行配置',
+    en: 'Please stop the policy config first before configuring it',
+  },
 }
