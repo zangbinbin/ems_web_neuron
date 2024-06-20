@@ -1,12 +1,12 @@
 import { getFaultsData } from '@/api/data'
 import type { TagDataInFaults } from '@/types/data'
 import { State } from '@/types/enums'
-import { paginate, listOrderByKey, spliceKeywords } from '@/utils/utils'
+import { paginate, listOrderByKey } from '@/utils/utils'
 import type { Ref } from 'vue'
 import { computed, onUnmounted, ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'vuex'
-import { debounce, cloneDeep } from 'lodash'
+import { cloneDeep } from 'lodash'
 import { EmqxMessage } from '@emqx/emqx-ui'
 
 export interface TagDataInTable extends TagDataInFaults {
@@ -25,16 +25,12 @@ export interface TagDataInTable extends TagDataInFaults {
 
 export default () => {
   const { t } = useI18n()
-  const store = useStore()
 
   const query = ref({
     time: [] as any,
   })
 
-  const defaultTime = [
-    new Date(2000, 1, 1, 0, 0, 0),
-    new Date(2000, 2, 1, 23, 59, 59),
-  ] // '00:00:00', '23:59:59'
+  const defaultTime = [new Date(2000, 1, 1, 0, 0, 0), new Date(2000, 2, 1, 23, 59, 59)] // '00:00:00', '23:59:59'
 
   const keywordSearch = ref('')
 
@@ -51,7 +47,6 @@ export default () => {
   const totalData: Ref<Array<TagDataInTable>> = ref([])
   const totalDataBackup: Ref<Array<TagDataInTable>> = ref([])
 
-
   const tableEmptyText = computed(() =>
     pageController.value.total && pageController.value.total > 0 ? t('data.selectGroupTip') : t('common.emptyData'),
   )
@@ -60,13 +55,11 @@ export default () => {
     return paginate(totalData.value, pageController.value.size, pageController.value.num)
   })
 
-
-  const stateToShow = (state: Number) => {
+  const stateToShow = (state: number) => {
     if (state === State.故障) {
-      return "故障"
-    }else{
-      return "已修复"
-    }   
+      return '故障'
+    }
+    return '已修复'
   }
 
   const sortDataByKey = (data: { prop: string | null; order: string | null }) => {
@@ -88,18 +81,19 @@ export default () => {
 
   const getTableData = async () => {
     if (!query.value.time || !query.value.time[0] || !query.value.time[1]) {
-      const now = new Date();
-      const endDate = now.toISOString().slice(0, 19); // 包括时分秒的当前日期
-      const startDate = new Date(now.getFullYear(), now.getMonth() - 3, now.getDate(), 23, 59, 59).toISOString().slice(0, 19); // 当前日期加一个月，设置为23:59:59
-      query.value.time = [startDate, endDate];
+      const now = new Date(new Date().getTime() + 8 * 60 * 60 * 1000 + 10 * 60 * 1000)
+      const endDate = now.toISOString().slice(0, 19) // 包括时分秒的当前日期
+      const startDate = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate(), 23, 59, 59)
+        .toISOString()
+        .slice(0, 19) // 当前日期加一个月，设置为23:59:59
+      query.value.time = [startDate, endDate]
     }
     try {
-
       const { data } = await getFaultsData(query.value.time[0], query.value.time[1])
 
       totalData.value = (data.faults || []).map((item: any) => {
         item.stateToShow = stateToShow(item.state)
-        const ret =  { ...item}
+        const ret = { ...item }
         return ret
       })
 
@@ -107,9 +101,8 @@ export default () => {
 
       totalDataBackup.value = cloneDeep(totalData.value)
       sortDataByKey(sortBy.value)
-
     } catch (error: any) {
-      EmqxMessage.error(t('common.jsonFormatError'))   
+      EmqxMessage.error(t('common.jsonFormatError'))
     }
   }
 
@@ -117,7 +110,6 @@ export default () => {
     pageController.value.num = 1
     pageController.value.total = 0
   }
-
 
   // const resetKeywordSearch = () => {
   //   keywordSearch.value = ''
@@ -129,12 +121,8 @@ export default () => {
   }
 
   onMounted(async () => {
-    initPageController();
-    getTableData();
-  })
-
-  onUnmounted(() => {
-
+    initPageController()
+    getTableData()
   })
 
   return {
