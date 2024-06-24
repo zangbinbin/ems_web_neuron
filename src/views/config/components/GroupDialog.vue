@@ -98,7 +98,7 @@ const groupRules = computed(() => {
       },
       {
         type: 'number',
-        min: 100,
+        min: 20,
         message: t('config.readIntervalMinimumError'),
         trigger: 'blur',
       },
