@@ -14,6 +14,7 @@ export const driverNameList = [
   { label: '总开关分合闸信号(QF)', value: 'QF' },
   { label: '计量表(PJ)', value: 'PJ' },
   { label: '策略表(PM)', value: 'PM' },
+  { label: 'IO设备(DIDO)', value: 'DIDO' },
 ]
 
 export const convertNodeName = (node: string) => {
