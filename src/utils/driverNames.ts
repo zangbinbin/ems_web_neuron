@@ -12,9 +12,10 @@ export const driverNameList = [
   { label: '消防预警信号(KA)', value: 'KA' },
   { label: '浪涌遥信信号(SPD)', value: 'SPD' },
   { label: '总开关分合闸信号(QF)', value: 'QF' },
-  { label: '计量表(PJ)', value: 'PJ' },
-  { label: '策略表(PM)', value: 'PM' },
+  { label: '计量表(EM)', value: 'EM' },
+  { label: '策略表(DM)', value: 'DM' },
   { label: 'DIDO设备(DIDO)', value: 'DIDO' },
+  { label: '温湿水浸设备(WSSJ)', value: 'WSSJ' },
 ]
 
 export const convertNodeName = (node: string) => {
