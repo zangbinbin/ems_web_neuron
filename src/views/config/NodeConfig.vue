@@ -18,6 +18,9 @@
           <div @click="changeTab(5)" :class="{ active: currentIndex === 5 }">
             {{ $t('config.tabPeakShaveValleyFill') }}
           </div>
+          <div @click="changeTab(6)" :class="{ active: currentIndex === 6 }">
+            {{ $t('config.tabPeakShaveValleyFillMS') }}
+          </div>
           <div @click="changeTab(9)" :class="{ active: currentIndex === 9 }">{{ $t('config.tabDemandManage') }}</div>
           <div @click="changeTab(10)" :class="{ active: currentIndex === 10 }">
             {{ $t('config.tabBackFlowPrevente') }}
@@ -59,6 +62,23 @@
             <emqx-form ref="formCom" :model="configForm">
               <template v-for="field in fieldList" :key="field.key">
                 <emqx-row v-if="field.info.tab === 5">
+                  <NodeConfigParamItem
+                    :ref="setParamRef"
+                    v-if="shouldFieldShow(field, configForm)"
+                    v-model="configForm[field.key]"
+                    :param-key="field.key"
+                    :param-info="field.info"
+                    :default-data="defaultConfigData"
+                    @validateFileds="validateFileds"
+                  />
+                </emqx-row>
+              </template>
+            </emqx-form>
+          </div>
+          <div v-show="currentIndex === 6">
+            <emqx-form ref="formCom" :model="configForm">
+              <template v-for="field in fieldList" :key="field.key">
+                <emqx-row v-if="field.info.tab === 6">
                   <NodeConfigParamItem
                     :ref="setParamRef"
                     v-if="shouldFieldShow(field, configForm)"

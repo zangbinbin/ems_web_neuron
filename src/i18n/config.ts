@@ -690,6 +690,10 @@ export default {
     zh: '削峰填谷',
     en: 'Peak Shave Valley Fill Config',
   },
+  tabPeakShaveValleyFillMS: {
+    zh: '削峰填谷(主从)',
+    en: 'Peak Shave Valley Fill Config(Master&Slave)',
+  },
   tabDemandManage: {
     zh: '需量管理',
     en: 'Demand Manage Config',

@@ -206,10 +206,20 @@ const initDefaultValue = (rowData: Record<string, any>) => {
   return newRowData
 }
 const initData = (data: Array<Record<string, any>>) => {
+  let list
   if (!Array.isArray(data)) {
-    return []
+    let parsedData = data.toString()
+    while (typeof parsedData === 'string') {
+      parsedData = JSON.parse(parsedData)
+    }
+    if (!Array.isArray(parsedData)) {
+      return []
+    }
+    list = parsedData
+  } else {
+    list = data
   }
-  const list = data
+
   const newList = list.map((item: Record<string, any>) => {
     const newItem = initDefaultValue(item)
     return newItem
