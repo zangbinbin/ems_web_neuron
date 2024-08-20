@@ -106,6 +106,15 @@ interface ParamBaseInfo {
     values?: Array<any>
     regex: string
   }
+  condition_arr?: [
+    {
+      field: string
+      value: boolean | number | string
+      values?: Array<any>
+      regex: string
+      operator: string
+    },
+  ]
   tab: number
 }
 
