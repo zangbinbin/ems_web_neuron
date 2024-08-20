@@ -21,7 +21,43 @@ export default () => {
     if (whiteList.includes(key)) return false
 
     if (!fieldData?.info?.condition) {
-      return true
+      if (!fieldData?.info?.condition_arr) {
+        return true
+      }
+      let res = true
+      const condition_list = fieldData.info.condition_arr
+      condition_list.forEach((item: any) => {
+        const { field, regex, value, values = [], operator } = item
+        const fieldValue = formData[field]
+
+        let res_once = true
+
+        if (regex) {
+          const regexExpression = new RegExp(regex)
+          res_once = regexExpression.test(fieldValue)
+        } else {
+          const emptyEnums = ['undefined', 'null']
+
+          // 判断 value 和 values 是否为空值
+          const isValueEmpty = emptyEnums.includes(String(value))
+          const isValuesEmpty = emptyEnums.includes(String(values))
+
+          if (!isValueEmpty) {
+            res_once = fieldValue === value
+          } else if (!isValuesEmpty && Array.isArray(values)) {
+            res_once = values.includes(fieldValue)
+          }
+
+          if (operator === '||') {
+            res = res || res_once
+          } else if (operator === '&&') {
+            res = res && res_once
+          } else {
+            res = res && res_once
+          }
+        }
+      })
+      return res
     }
 
     const { field, regex, value, values = [] } = fieldData.info.condition
@@ -41,6 +77,7 @@ export default () => {
     } else if (!emptyValues) {
       res = values.includes(fieldValue)
     }
+
     return res
   }
 
@@ -50,6 +87,7 @@ export default () => {
       [TypeOfPluginParam.Int]: null,
       [TypeOfPluginParam.String]: '',
       [TypeOfPluginParam.Boolean]: null,
+      [TypeOfPluginParam.Boolint]: null,
       [TypeOfPluginParam.Enum]: '',
       [TypeOfPluginParam.Map]: '',
       [TypeOfPluginParam.Array]: [],

@@ -61,9 +61,9 @@
                 v-else-if="field.type === TypeOfPluginParam.MonthDayRange"
                 v-model="row[fieldName(field.name)]"
                 size="small"
-                value-format="MM/DD"
+                value-format="MM:DD"
                 range-separator="-"
-                format="MM/DD"
+                format="MM:DD"
                 :start-placeholder="$t('common.startDate')"
                 :end-placeholder="$t('common.endDate')"
                 type="daterange"
@@ -76,6 +76,15 @@
               >
                 <emqx-radio :label="true">True</emqx-radio>
                 <emqx-radio :label="false">False</emqx-radio>
+              </emqx-radio-group>
+
+              <!-- Boolint -->
+              <emqx-radio-group
+                v-else-if="field.type === TypeOfPluginParam.Boolint"
+                v-model="row[fieldName(field.name)]"
+              >
+                <emqx-radio :label="1">True</emqx-radio>
+                <emqx-radio :label="0">False</emqx-radio>
               </emqx-radio-group>
 
               <!-- Map -->

@@ -106,6 +106,15 @@ interface ParamBaseInfo {
     values?: Array<any>
     regex: string
   }
+  condition_arr?: [
+    {
+      field: string
+      value: boolean | number | string
+      values?: Array<any>
+      regex: string
+      operator: string
+    },
+  ]
   tab: number
 }
 
@@ -142,6 +151,12 @@ interface BoolParamInfo extends ParamBaseInfo {
   valid: Record<string, never>
 }
 
+interface BoolintParamInfo extends ParamBaseInfo {
+  type: TypeOfPluginParam.Boolint
+  default?: number
+  valid: Record<number, never>
+}
+
 interface FileParamInfo extends ParamBaseInfo {
   type: TypeOfPluginParam.File
   default?: string
@@ -174,6 +189,7 @@ export type ParamInfo =
   | NumberParamInfo
   | StringParamInfo
   | BoolParamInfo
+  | BoolintParamInfo
   | MapParamInfo
   | FileParamInfo
   | ArrayParamInfo

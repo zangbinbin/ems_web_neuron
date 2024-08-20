@@ -32,6 +32,7 @@ export enum TypeOfPluginParam {
   Int = 'int',
   String = 'string',
   Boolean = 'bool',
+  Boolint = 'boolint',
   Enum = 'enum',
   Map = 'map',
   File = 'file',
@@ -144,5 +145,5 @@ export enum SchameBase {
 
 export enum State {
   故障 = -1,
-  已修复
+  已修复,
 }
