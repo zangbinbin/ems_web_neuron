@@ -46,6 +46,11 @@
         <emqx-radio :label="true">True</emqx-radio>
         <emqx-radio :label="false">False</emqx-radio>
       </emqx-radio-group>
+      <!-- Boolint -->
+      <emqx-radio-group v-else-if="paramInfo.type === TypeOfPluginParam.Boolint" v-model="inputValue">
+        <emqx-radio :label="1">True</emqx-radio>
+        <emqx-radio :label="0">False</emqx-radio>
+      </emqx-radio-group>
       <!-- File -->
       <div class="file-param" v-else-if="paramInfo.type === TypeOfPluginParam.File">
         <emqx-upload action="" class="file-upload" :show-file-list="false" :before-upload="handleUpload">

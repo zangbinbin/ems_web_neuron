@@ -78,6 +78,15 @@
                 <emqx-radio :label="false">False</emqx-radio>
               </emqx-radio-group>
 
+              <!-- Boolint -->
+              <emqx-radio-group
+                v-else-if="field.type === TypeOfPluginParam.Boolint"
+                v-model="row[fieldName(field.name)]"
+              >
+                <emqx-radio :label="1">True</emqx-radio>
+                <emqx-radio :label="0">False</emqx-radio>
+              </emqx-radio-group>
+
               <!-- Map -->
               <template v-else-if="field.type === TypeOfPluginParam.Map">
                 <emqx-radio-group v-if="field.valid.map.length < 3" v-model="row[fieldName(field.name)]">

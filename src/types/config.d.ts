@@ -142,6 +142,12 @@ interface BoolParamInfo extends ParamBaseInfo {
   valid: Record<string, never>
 }
 
+interface BoolintParamInfo extends ParamBaseInfo {
+  type: TypeOfPluginParam.Boolint
+  default?: number
+  valid: Record<number, never>
+}
+
 interface FileParamInfo extends ParamBaseInfo {
   type: TypeOfPluginParam.File
   default?: string
@@ -174,6 +180,7 @@ export type ParamInfo =
   | NumberParamInfo
   | StringParamInfo
   | BoolParamInfo
+  | BoolintParamInfo
   | MapParamInfo
   | FileParamInfo
   | ArrayParamInfo

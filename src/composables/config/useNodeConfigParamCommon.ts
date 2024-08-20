@@ -50,6 +50,7 @@ export default () => {
       [TypeOfPluginParam.Int]: null,
       [TypeOfPluginParam.String]: '',
       [TypeOfPluginParam.Boolean]: null,
+      [TypeOfPluginParam.Boolint]: null,
       [TypeOfPluginParam.Enum]: '',
       [TypeOfPluginParam.Map]: '',
       [TypeOfPluginParam.Array]: [],

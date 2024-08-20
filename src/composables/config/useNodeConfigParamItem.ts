@@ -247,6 +247,7 @@ export default (props: Props) => {
       [TypeOfPluginParam.MonthDayRange]: createMonthDayRangeParamRules,
       [TypeOfPluginParam.String]: createStringParamRules,
       [TypeOfPluginParam.Boolean]: createSelectParamRules,
+      [TypeOfPluginParam.Boolint]: createSelectParamRules,
       [TypeOfPluginParam.Enum]: createSelectParamRules,
       [TypeOfPluginParam.Map]: createSelectParamRules,
       [TypeOfPluginParam.File]: createFileParamRules,
