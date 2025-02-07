@@ -268,13 +268,13 @@ export const useDriverInfo = (node?: Record<string, any>) => {
   // nikon update isMQTTPugin
   const isMQTTPugin = computed(
     () =>
-      nodePlugin.value &&
-      (nodePlugin.value.toLocaleLowerCase() === 'mqtt' ||
-        nodePlugin.value.toLocaleLowerCase() === 'grid_connect_off' ||
-        nodePlugin.value.toLocaleLowerCase() === 'economy_work' ||
-        nodePlugin.value.toLocaleLowerCase() === 'strategy_demo'||
-        nodePlugin.value.toLocaleLowerCase() === 'primary')||
-        nodePlugin.value.toLocaleLowerCase() === 'upload_distribute',
+      (nodePlugin.value &&
+        (nodePlugin.value.toLocaleLowerCase() === 'mqtt' ||
+          nodePlugin.value.toLocaleLowerCase() === 'grid_connect_off' ||
+          nodePlugin.value.toLocaleLowerCase() === 'economy_work' ||
+          nodePlugin.value.toLocaleLowerCase() === 'strategy_demo' ||
+          nodePlugin.value.toLocaleLowerCase() === 'primary')) ||
+      nodePlugin.value.toLocaleLowerCase() === 'upload_distribute',
   )
 
   const isGewuPugin = computed(() => {
@@ -287,7 +287,7 @@ export const useDriverInfo = (node?: Record<string, any>) => {
     return (
       isMQTTPugin.value ||
       isGewuPugin.value ||
-      ['ekuiper', 'websocket', 'sparkplugb'].includes(nodePlugin.value.toLocaleLowerCase())
+      ['ekuiper', 'websocket', 'sparkplugb', 'iec104'].includes(nodePlugin.value.toLocaleLowerCase())
     )
   })
 

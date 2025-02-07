@@ -87,6 +87,10 @@ export default {
     zh: '地址',
     en: 'Address',
   },
+  point: {
+    zh: '点位',
+    en: 'Point',
+  },
   decimal: {
     zh: '乘系数',
     en: 'Decimal',

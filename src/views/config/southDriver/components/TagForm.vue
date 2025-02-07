@@ -42,7 +42,11 @@
           <emqx-input v-model.trim="form.address" />
         </emqx-form-item>
       </emqx-col>
-
+      <emqx-col :span="12">
+        <emqx-form-item :label="$t('config.point')" prop="point">
+          <emqx-input v-model.trim="form.point" />
+        </emqx-form-item>
+      </emqx-col>
       <emqx-col v-if="isAttrsIncludeStatic(form.attribute)" :span="12">
         <emqx-form-item
           :label="$t('config.tagValue')"

@@ -80,6 +80,7 @@ export default (pluginInfo: PluginInfo) => {
       for await (const {
         group,
         name,
+        point,
         address,
         attribute,
         type: typeLabel,
@@ -132,6 +133,7 @@ export default (pluginInfo: PluginInfo) => {
         let tagItem: TagData = {
           group,
           name: name?.toString().trim() || '',
+          point: point?.toString().trim() || '',
           address: address?.toString().trim() || '',
           attribute: attr,
           type,

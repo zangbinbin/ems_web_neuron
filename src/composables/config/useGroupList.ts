@@ -130,7 +130,6 @@ export default (nodePluginInfo: PluginInfo) => {
   const importTagsByGroups = async (file: File) => {
     try {
       const tagList = await readTagListFile(file)
-
       const tagsByGroupName = groupBy(tagList, (item) => item.group)
       const groupNames = Object.keys(tagsByGroupName)
       const requestList = groupNames.map((groupName: string) => {
