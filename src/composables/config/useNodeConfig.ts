@@ -280,11 +280,14 @@ export default (props: Props) => {
           if (field && field.info && isParamHexadecimalBase(field.info)) {
             bodyData[key] = transToDecimal(value)
           }
-
-          // if value is array, transefer value to json str
-          if (field && field.info && isArrayValue(field.info)) {
+          if (Array.isArray(value)) {
+            debugger
             bodyData[key] = JSON.stringify(value)
           }
+          // if value is array, transefer value to json str
+          // if (field && field.info && isArrayValue(field.info)) {
+
+          // }
         })
         await submitNodeConfig(node.value, bodyData)
         EmqxMessage.success(t('common.submitSuccess'))
