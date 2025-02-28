@@ -171,6 +171,14 @@ export default {
     zh: '名称',
     en: 'Name',
   },
+  deviceType: {
+    zh: '设备类型',
+    en: 'Device Type',
+  },
+  sn: {
+    zh: 'SN（唯一标识）',
+    en: 'SN',
+  },
   generalStatistics: {
     zh: '通用数据统计',
     en: 'General Statistics',

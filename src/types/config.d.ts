@@ -30,6 +30,7 @@ export interface CreatedPlugin extends PluginForm {
 
 export interface NodeForm {
   name: string
+  sn: string
   plugin: string
   template: string
 }
