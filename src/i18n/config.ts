@@ -679,11 +679,11 @@ export default {
     en: 'China Broadnet',
   },
   tabCore: {
-    zh: '主控制',
+    zh: '充放电深度',
     en: 'Core Control',
   },
   tabAbnormalList: {
-    zh: '异常列表配置',
+    zh: '报警规则配置',
     en: 'Abnormal List Config',
   },
   tabDataStorageList: {
@@ -695,7 +695,7 @@ export default {
     en: 'Peak Shave Valley Fill Config',
   },
   tabPeakShaveValleyFillMS: {
-    zh: '削峰填谷(主从)',
+    zh: '主从配置',
     en: 'Peak Shave Valley Fill Config(Master&Slave)',
   },
   tabDemandManage: {
@@ -719,11 +719,11 @@ export default {
     en: 'Point Name',
   },
   tabConnection: {
-    zh: '连接配置',
+    zh: '云连接配置',
     en: 'Connection',
   },
   tabOther: {
-    zh: '其他',
+    zh: '基本信息',
     en: 'Other',
   },
   charge: {

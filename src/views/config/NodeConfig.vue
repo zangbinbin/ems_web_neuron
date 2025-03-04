@@ -12,6 +12,9 @@
       <div v-if="pluginName === 'primary'">
         <!-- Tab Nav -->
         <div class="tab-nav">
+          <div @click="changeTab(99)" :class="{ active: currentIndex === 99 }" style="border-radius: 0px 5px 5px 0px">
+            {{ $t('config.tabOther') }}
+          </div>
           <div @click="changeTab(1)" :class="{ active: currentIndex === 1 }" style="border-radius: 5px 0px 0px 5px">
             {{ $t('config.tabCore') }}
           </div>
@@ -25,19 +28,16 @@
           <div @click="changeTab(10)" :class="{ active: currentIndex === 10 }">
             {{ $t('config.tabBackFlowPrevente') }}
           </div>
-          <div @click="changeTab(44)" :class="{ active: currentIndex === 44 }">{{ $t('config.tabEconomyWork') }}</div>
+          <!-- <div @click="changeTab(44)" :class="{ active: currentIndex === 44 }">{{ $t('config.tabEconomyWork') }}</div>
           <div @click="changeTab(45)" :class="{ active: currentIndex === 45 }">
             {{ $t('config.tabGridConnectOff') }}
-          </div>
+          </div> -->
           <div @click="changeTab(50)" :class="{ active: currentIndex === 50 }">{{ $t('config.tabAbnormalList') }}</div>
           <div @click="changeTab(55)" :class="{ active: currentIndex === 55 }">
             {{ $t('config.tabDataStorageList') }}
           </div>
           <div @click="changeTab(70)" :class="{ active: currentIndex === 70 }">{{ $t('config.tabPoint') }}</div>
           <div @click="changeTab(80)" :class="{ active: currentIndex === 80 }">{{ $t('config.tabConnection') }}</div>
-          <div @click="changeTab(99)" :class="{ active: currentIndex === 99 }" style="border-radius: 0px 5px 5px 0px">
-            {{ $t('config.tabOther') }}
-          </div>
         </div>
         <!-- Tab Content -->
         <div>
