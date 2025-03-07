@@ -16,7 +16,7 @@ export default {
     en: 'Configuration',
   },
   northAppSetup: {
-    zh: '策略管理',
+    zh: '应用管理',
     en: 'Strategy Management',
   },
   southDeviceManagement: {
@@ -28,7 +28,7 @@ export default {
     en: 'Name of Application ',
   },
   addApplication: {
-    zh: '添加策略',
+    zh: '添加应用',
     en: 'Add Strategy',
   },
   addDevice: {
@@ -36,7 +36,7 @@ export default {
     en: 'Add Device',
   },
   addApp: {
-    zh: '添加策略',
+    zh: '添加应用',
     en: 'Add Strategy',
   },
   editApp: {
