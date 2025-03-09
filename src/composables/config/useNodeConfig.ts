@@ -247,6 +247,7 @@ export default (props: Props) => {
       const valid = await validateAll()
 
       if (valid) {
+        console.log(configForm.value)
         const bodyData = cloneDeep(configForm.value)
         // delete `tag_regex`
         const { tag_regex } = bodyData
@@ -258,7 +259,7 @@ export default (props: Props) => {
         dataKeys.forEach((key) => {
           const value = bodyData[key]
           const field = fieldList.value.find((item: { key: string; info: any }) => item.key === key)
-
+          // console.log(value);
           // if configForm value is '' or 'undefined' or null, change its value to `default` value or delete it.
           if (value === '' || value === undefined || value == null) {
             const isOptional = field?.info?.attribute
@@ -281,7 +282,7 @@ export default (props: Props) => {
             bodyData[key] = transToDecimal(value)
           }
           if (Array.isArray(value)) {
-            debugger
+            // debugger
             bodyData[key] = JSON.stringify(value)
           }
           // if value is array, transefer value to json str

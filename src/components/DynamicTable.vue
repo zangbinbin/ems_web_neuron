@@ -27,19 +27,25 @@
               :rules="getRules(field)"
             >
               <!-- Float -->
-              <emqx-input v-if="field.type === TypeOfPluginParam.Float" v-model.trim="row[fieldName(field.name)]" />
+              <emqx-input
+                v-if="field.type === TypeOfPluginParam.Float"
+                v-model.trim="row[fieldName(field.name)]"
+                @change="handleChange"
+              />
 
               <!-- Number -->
               <emqx-input
                 v-if="field.type === TypeOfPluginParam.Int"
                 v-model.number="row[fieldName(field.name)]"
                 type="number"
+                @change="handleChange"
               />
 
               <!-- String -->
               <emqx-input
                 v-else-if="field.type === TypeOfPluginParam.String"
                 v-model.trim="row[fieldName(field.name)]"
+                @change="handleChange"
               />
 
               <!-- TimeRange -->
@@ -54,6 +60,7 @@
                 range-separator="-"
                 :start-placeholder="$t('common.startTime')"
                 :end-placeholder="$t('common.endTime')"
+                @change="handleChange"
               />
 
               <!-- MonthDayRange -->
@@ -67,12 +74,14 @@
                 :start-placeholder="$t('common.startDate')"
                 :end-placeholder="$t('common.endDate')"
                 type="daterange"
+                @change="handleChange"
               />
 
               <!-- Boolean -->
               <emqx-radio-group
                 v-else-if="field.type === TypeOfPluginParam.Boolean"
                 v-model="row[fieldName(field.name)]"
+                @change="handleChange"
               >
                 <emqx-radio :label="true">True</emqx-radio>
                 <emqx-radio :label="false">False</emqx-radio>
@@ -82,6 +91,7 @@
               <emqx-radio-group
                 v-else-if="field.type === TypeOfPluginParam.Boolint"
                 v-model="row[fieldName(field.name)]"
+                @change="handleChange"
               >
                 <emqx-radio :label="1">True</emqx-radio>
                 <emqx-radio :label="0">False</emqx-radio>
@@ -89,12 +99,21 @@
 
               <!-- Map -->
               <template v-else-if="field.type === TypeOfPluginParam.Map">
-                <emqx-radio-group v-if="field.valid.map.length < 3" v-model="row[fieldName(field.name)]">
+                <emqx-radio-group
+                  v-if="field.valid.map.length < 3"
+                  v-model="row[fieldName(field.name)]"
+                  @change="handleChange"
+                >
                   <emqx-radio v-for="{ key, value } in field.valid.map" :key="value" :label="value">
                     {{ upperFirstLetter(key) }}
                   </emqx-radio>
                 </emqx-radio-group>
-                <emqx-select v-else v-model="row[fieldName(field.name)]" :placeholder="$t('common.pleaseSelect')">
+                <emqx-select
+                  v-else
+                  v-model="row[fieldName(field.name)]"
+                  @change="handleChange"
+                  :placeholder="$t('common.pleaseSelect')"
+                >
                   <emqx-option
                     v-for="{ key, value } in field.valid.map"
                     :key="value"
@@ -137,7 +156,7 @@
 
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash'
-import { ref, defineProps, defineEmits, computed, defineExpose } from 'vue'
+import { watchEffect, ref, defineProps, defineEmits, computed, defineExpose } from 'vue'
 import type { PropType } from 'vue'
 import { ElForm, ElTable, ElFormItem, ElTableColumn, ElPopover, ElTimePicker, ElDatePicker } from 'element-plus'
 import type { ParamInfo } from '@/types/config'
@@ -239,7 +258,7 @@ const initData = (data: Array<Record<string, any>>) => {
 const isShowField = (field: ParamInfo, rowData: Record<string, any>, $index: number) => {
   const key = fieldName.value(field.name)
   const res = shouldFieldShow({ key, info: field }, rowData)
-  // reset the field value, if doesn’t show the field, void data legacy
+  // reset the field value, if doesn't show the field, void data legacy
   if (!res) {
     formData.value.list[$index][key] = null
   }
@@ -296,6 +315,23 @@ const getTableItemWidth = (field: ParamInfo) => {
   return width
 }
 
+// 添加深度监听
+// watch(
+//   () => formData.value,
+//   (newVal: FormInfo) => {
+//     emits('update:modelValue', newVal.list)
+//   },
+//   {
+//     deep: true,
+//     immediate: true
+//   }
+// )
+// watchEffect(() => {
+//   emits('update:modelValue', formData.value.list);
+// });
+const handleChange = () => {
+  emits('update:modelValue', formData.value.list)
+}
 defineExpose({
   validate,
 })

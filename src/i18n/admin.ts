@@ -88,56 +88,56 @@ export default {
     en: `Please upload '.lic' type file`,
   },
   licenseEvaluationTip: {
-    zh: `您现在正在使用 30 个标签评估许可证。 请<a target="_blank" rel="noopener norefferrer" href="https://www.emqx.com/zh/apply-licenses/neuron">升级</a>许可证。`,
-    en: `You are now using the 30 tags evaluation license. Please <a target="_blank" rel="noopener norefferrer" href="https://www.emqx.com/zh/apply-licenses/neuron">upgrade</a> license.`,
+    zh: `您现在正在使用 30 个标签评估许可证。 请许可证。`,
+    en: `You are now using the 30 tags evaluation license. Please license.`,
   },
   licenseInvalidTip: {
     zh: `您的 License 无效，
-    请<a target="_blank" rel="noopener norefferrer" href="https://www.emqx.com/zh/apply-licenses/neuron">更新 License</a>
+    请
     或联系销售人员更新 License。`,
     en: `
     Your license has invalid,
-    please <a target="_blank" rel="noopener norefferrer" href="https://www.emqx.com/zh/apply-licenses/neuron">update the license</a>
+    please
     or contact the sales staff to update the License.`,
   },
   licenseExpiryTip: {
     zh: `您的 License 已过期，
-    请<a target="_blank" rel="noopener norefferrer" href="https://www.emqx.com/zh/apply-licenses/neuron">更新 License</a>
+    请
     或联系销售人员更新 License。`,
     en: `Your License has expired,
-    please <a target="_blank" rel="noopener norefferrer" href="https://www.emqx.com/zh/apply-licenses/neuron">update the License</a>
+    please
     or contact the sales staff to update the License.`,
   },
   licenseOverMaximumNodesTip: {
-    zh: `节点数超过 License 限制，Neuron 无法正常使用，
-    请<a target="_blank" rel="noopener norefferrer" href="https://www.emqx.com/zh/apply-licenses/neuron">更新 License</a>
+    zh: `节点数超过 License 限制，EMS 无法正常使用，
+    请
     或删除部分驱动节点。`,
-    en: `The count of nodes exceeds the license limit, and Neuron cannot be used normally.
-    Please <a target="_blank" rel="noopener norefferrer" href="https://www.emqx.com/zh/apply-licenses/neuron">update the license</a>
+    en: `The count of nodes exceeds the license limit, and EMS cannot be used normally.
+    Please
     or delete some driver nodes.`,
   },
   licenseOverMaximumTagsTip: {
-    zh: `点位数超过 License 限制，Neuron 无法正常使用，
-    请<a target="_blank" rel="noopener norefferrer" href="https://www.emqx.com/zh/apply-licenses/neuron">更新 License</a>
+    zh: `点位数超过 License 限制，EMS 无法正常使用，
+    请
     或删除部分点位。`,
-    en: `The count of data tags exceeds the license limit, and Neuron cannot be used normally.
-    Please <a target="_blank" rel="noopener norefferrer" href="https://www.emqx.com/zh/apply-licenses/neuron">update the license</a>
+    en: `The count of data tags exceeds the license limit, and EMS cannot be used normally.
+    Please
     or delete some data tags.`,
   },
   licenseHardwareMismatchTip: {
-    zh: `License 与该硬件不匹配，Neuron 无法正常使用，
-    请<a target="_blank" rel="noopener norefferrer" href="https://www.emqx.com/zh/apply-licenses/neuron">更新 License</a>
+    zh: `License 与该硬件不匹配，EMS 无法正常使用，
+    请
     或联系销售人员更新 License。`,
-    en: `The license does not match the hardware, and Neuron cannot be used normally.
-    Please <a target="_blank" rel="noopener norefferrer" href="https://www.emqx.com/zh/apply-licenses/neuron">update the license</a>
+    en: `The license does not match the hardware, and EMS cannot be used normally.
+    Please
     or contact the sales staff to update the License.`,
   },
   licenseReadyExpiryTip: {
     zh: `您的 License 即将过期，
-    请<a target="_blank" rel="noopener norefferrer" href="https://www.emqx.com/zh/apply-licenses/neuron">更新 License</a>
+    请
     或联系销售人员更新 License。`,
     en: `Your license is about to expire,
-    please <a target="_blank" rel="noopener norefferrer" href="https://www.emqx.com/zh/apply-licenses/neuron">update the License</a>
+    please
     or contact the sales staff to update the License.`,
   },
   konw: {

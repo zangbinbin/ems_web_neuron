@@ -13,11 +13,11 @@ export const queryLog = (data: {
   return http.get('/log', { params: data })
 }
 
-export const queryLicense = (): Promise<AxiosResponse<License & { error: number }>> => {
-  return http.get('/license', {
-    _handleErrorSelf: true,
-  } as AxiosRequestConfig)
-}
+// export const queryLicense = (): Promise<AxiosResponse<License & { error: number }>> => {
+//   return http.get('/license', {
+//     _handleErrorSelf: true,
+//   } as AxiosRequestConfig)
+// }
 
 /**
  * To use `_compatibleErrorCode`, please update @/utils/constants.ts file  `SELF_HANDLE_ERROR_CODES`,

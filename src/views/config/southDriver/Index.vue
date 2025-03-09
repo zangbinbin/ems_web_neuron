@@ -180,7 +180,7 @@
   />
 
   <!-- check license -->
-  <LicenseTipDialog
+  <!-- <LicenseTipDialog
     v-model="licenseTipVisible"
     :isHasLicense="isHasLicense"
     :isLicenseInvalid="isLicenseInvalid"
@@ -189,7 +189,7 @@
     :isHardwareMismatch="isHardwareMismatch"
     :isOverMaximumTags="isOverMaximumTags"
     :isDefaultLicense="isDefaultLicense"
-  />
+  /> -->
 </template>
 
 <script lang="ts">
@@ -217,8 +217,8 @@ import ListCardSwitch from '@/components/ListCardSwitch.vue'
 import AComWithDesc from '@/components/AComWithDesc.vue'
 import DataStatisticsDrawer from '../components/dataStatisticsDrawer.vue'
 import { isTheSameParentRoute } from '@/utils/utils'
-import useCheckLicense from '@/composables/useCheckLicense'
-import LicenseTipDialog from '@/components/LicenseTipDialog.vue'
+// import useCheckLicense from '@/composables/useCheckLicense'
+// import LicenseTipDialog from '@/components/LicenseTipDialog.vue'
 import Cookies from 'js-cookie'
 import { convertNodeName } from '@/utils/driverNames'
 
@@ -304,21 +304,21 @@ const handleClickOperator = async (command: string, row: DriverItemInList) => {
   }
 }
 
-const {
-  checkLicense,
-  licenseTipVisible,
-  isHasLicense,
-  isLicenseExpiry,
-  isLicenseReadyExpiry,
-  isLicenseInvalid,
-  isHardwareMismatch,
-  isOverMaximumTags,
-  isDefaultLicense,
-} = useCheckLicense()
+// const {
+//   checkLicense,
+//   licenseTipVisible,
+//   isHasLicense,
+//   isLicenseExpiry,
+//   isLicenseReadyExpiry,
+//   isLicenseInvalid,
+//   isHardwareMismatch,
+//   isOverMaximumTags,
+//   isDefaultLicense,
+// } = useCheckLicense()
 
 const isShowLicenseTip = Cookies.get('licenseTipVisible')
 if (isShowLicenseTip !== 'false') {
-  checkLicense()
+  // checkLicense()
 }
 </script>
 
