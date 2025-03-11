@@ -147,6 +147,7 @@ export default (props: any) => {
   const rules = computed(() => {
     return {
       name: [{ required: true, message: t('config.tagNameRequired') }],
+      point: [{ required: false }],
       address: [
         //  Whether or not is `required` is defined in vue code, because required is dynamic, is determined by the tag's `attribute`
         { validator: validAddress, trigger: ['blur', 'change'] },

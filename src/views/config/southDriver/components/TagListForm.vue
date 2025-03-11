@@ -53,9 +53,8 @@
           <el-form-item
             v-if="isAttrsIncludeStatic(row.attribute)"
             :prop="`tagList.${$index}.address`"
-            :rules="[{ required: false }, rules.address]"
-          >
-            <emqx-input v-model="row.address" />
+            :rules="[{ required: false }, rules.address]">
+            
           </el-form-item>
           <el-form-item
             v-else
@@ -72,16 +71,7 @@
           <span class="thead-title">{{ $t('config.point') }}</span>
         </template>
         <template #default="{ row, $index }">
-          <el-form-item
-            v-if="isAttrsIncludeStatic(row.attribute)"
-            :prop="`tagList.${$index}.point`"
-            :rules="[{ required: false }, rules.point]"
-          >
             <emqx-input v-model="row.point" />
-          </el-form-item>
-          <el-form-item v-else :prop="`tagList.${$index}.point`">
-            <emqx-input v-model="row.point" />
-          </el-form-item>
         </template>
       </el-table-column>
 
