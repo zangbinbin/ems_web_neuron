@@ -144,10 +144,10 @@ export default (autoLoad = true, needRefreshStatus = false) => {
 
   // Compatible with jumping from created a node
   const goNodeConfig = (node: DriverItemInList | { name: string }) => {
-    if ('running' in node && node.running === NodeState.Running) {
-      EmqxMessage.error(t('common.stopConfigFirst'))
-      return
-    }
+    // if ('running' in node && node.running === NodeState.Running) {
+    //   EmqxMessage.error(t('common.stopConfigFirst'))
+    //   return
+    // }
     router.push({ name: 'NorthDriverConfig', params: { node: node.name } })
   }
 
