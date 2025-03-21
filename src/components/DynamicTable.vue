@@ -121,6 +121,25 @@
                     :label="upperFirstLetter(key)"
                   />
                 </emqx-select>
+
+                <!-- TimeSelect -->
+                <el-time-picker
+                  v-if="field.type === TypeOfPluginParam.TimeSelect"
+                  v-model="row[fieldTimeRangeName(field.name)][0]"
+                  is-range
+                  format="HH:mm"
+                  value-format="HH:mm"
+                  placeholder="$t('common.time')"
+                />
+                <span v-if="field.type === TypeOfPluginParam.TimeSelect">-</span>
+                <el-time-picker
+                  v-if="field.type === TypeOfPluginParam.TimeSelect"
+                  v-model="row[fieldTimeRangeName(field.name)][1]"
+                  is-range
+                  format="HH:mm"
+                  value-format="HH:mm"
+                  placeholder="$t('common.time')"
+                />
               </template>
             </el-form-item>
             <el-form-item v-else>

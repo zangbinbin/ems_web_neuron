@@ -39,6 +39,7 @@ export enum TypeOfPluginParam {
   Array = 'array',
   TimeRange = 'timerange',
   MonthDayRange = 'monthdayrange',
+  TimeSelect = 'timeselect',
 }
 
 export enum TagType {
