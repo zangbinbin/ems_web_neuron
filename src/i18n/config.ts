@@ -88,7 +88,7 @@ export default {
     en: 'Address',
   },
   point: {
-    zh: '点位',
+    zh: '虚地址',
     en: 'Point',
   },
   decimal: {
@@ -172,7 +172,7 @@ export default {
     en: 'More applications',
   },
   northApp: {
-    zh: '策略管理',
+    zh: '应用管理',
     en: 'Strategy Management',
   },
   moreDevices: {

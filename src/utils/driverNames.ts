@@ -3,7 +3,7 @@ export const driverNameList = [
   { label: 'BMS', value: 'BMS' },
   { label: '液冷系统(FC)', value: 'FC' },
   { label: '消防系统(FCS)', value: 'FCS' },
-  { label: '温湿度变送器(WS)', value: 'WS' },
+  { label: '主从机通讯器', value: 'WS' },
   { label: '水浸传感器(SJ)', value: 'SJ' },
   { label: '运行指示灯(HG2)', value: 'HG2' },
   { label: '故障指示灯(HR1)', value: 'HR1' },
