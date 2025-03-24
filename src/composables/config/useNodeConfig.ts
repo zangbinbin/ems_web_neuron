@@ -11,6 +11,7 @@ import { EmqxMessage } from '@emqx/emqx-ui'
 import { useI18n } from 'vue-i18n'
 import { cloneDeep } from 'lodash'
 import { randomString } from '@/utils/utils'
+import { TypeOfPluginParam } from '@/types/enums'
 import i18n from '@/i18n/index'
 import { number } from 'echarts'
 
@@ -48,6 +49,7 @@ export default (props: Props) => {
   const formComParmasRef: any = ref([])
   const isSubmitting = ref(false)
   const pluginName = ref('')
+  const keyName = ref('peak-shave-valley-fill-day-config-list')
 
   const setParamRef = (el: any) => {
     formComParmasRef.value.push(el)
@@ -151,8 +153,23 @@ export default (props: Props) => {
   const createFieldListFormPluginInfo = (info: PluginInfo) => {
     // TODO: delete params after api changed
     const { params, tag_type, ...fields } = info
-
     return Object.keys(fields).map((key) => {
+      // ---------------------------单独处理削峰填谷时间范围----------------------------
+      if (key == keyName.value) {
+        const fieldsInfo = (fields[key] as { fields: any }).fields
+        fieldsInfo.forEach((item: any) => {
+          if (item.type == TypeOfPluginParam.TimeRange) {
+            // 修改原值
+            item.name_zh = '开始时间'
+            item.type = TypeOfPluginParam.TimeSelect
+            item.name = `${TypeOfPluginParam.TimeSelect}_one`
+            // 插入一条新值
+            const newitem = { ...item, name_zh: '结束时间', name: `${TypeOfPluginParam.TimeSelect}_two` }
+            fieldsInfo.splice(2, 0, newitem)
+          }
+        })
+      }
+      // ---------------------------------------------------------------------------
       return {
         key,
         info: fields[key],
@@ -213,6 +230,17 @@ export default (props: Props) => {
           configForm.value[key] = value
         }
       }
+      // ----------------------------单独处理削峰填谷时间范围------------------------------
+      // 将值中的 timerange（数组） 拆分成两个 timeselect 值
+      setTimeout(() => {
+        if (configForm.value[keyName.value].length > 0) {
+          configForm.value[keyName.value].forEach((valInfo: any) => {
+            valInfo.timeselect_one = valInfo.timeframe[0]
+            valInfo.timeselect_two = valInfo.timeframe[1]
+          })
+        }
+      }, 1000) // 1000 毫秒（1 秒）后执行
+      // --------------------------------------------------------------------------------
     }
   }
 
@@ -247,7 +275,6 @@ export default (props: Props) => {
       const valid = await validateAll()
 
       if (valid) {
-        console.log(configForm.value)
         const bodyData = cloneDeep(configForm.value)
         // delete `tag_regex`
         const { tag_regex } = bodyData
@@ -276,6 +303,16 @@ export default (props: Props) => {
           //   bodyData[key] = Number(value)
           // }
           // if value is float, we have to keep it type is string
+
+          // --------------------------单独处理削峰填谷时间范围---------------------------------------
+          if (key == keyName.value && value.length > 0) {
+            value.forEach((valueInfo: any) => {
+              valueInfo.timeframe = [valueInfo.timeselect_one, valueInfo.timeselect_two]
+              delete valueInfo.timeselect_one
+              delete valueInfo.timeselect_two
+            })
+          }
+          // ----------------------------------------------------------------------------------------
 
           // if base = 16, transefer value to 10
           if (field && field.info && isParamHexadecimalBase(field.info)) {

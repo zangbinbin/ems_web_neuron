@@ -1,7 +1,7 @@
 <template>
   <el-form ref="dynamicTableRef" :model="formData">
     <el-table :data="formData.list" style="width: 100%" stripe>
-      <template v-for="field in allFields" :key="fieldName(field.name).length > field.name">
+      <template v-for="(field, index) in allFields" :key="index">
         <el-table-column :min-width="getTableItemWidth(field)">
           <!-- header -->
           <template #header>
@@ -47,6 +47,17 @@
                 v-model.trim="row[fieldName(field.name)]"
                 @change="handleChange"
               />
+
+              <!-- TimeSelect -->
+              <el-time-picker
+                style="width: 130px"
+                v-else-if="field.type === TypeOfPluginParam.TimeSelect"
+                v-model="row[fieldTimeRangeName(field.name)]"
+                format="HH时:mm分"
+                value-format="HH:mm"
+                placeholder="$t('common.time')"
+              >
+              </el-time-picker>
 
               <!-- TimeRange -->
               <el-time-picker
