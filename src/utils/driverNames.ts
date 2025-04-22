@@ -17,6 +17,7 @@ export const driverNameList = [
   { label: 'DIDO设备(DIDO)', value: 'DIDO' },
   { label: '温湿水浸设备(WSSJ)', value: 'WSSJ' },
   { label: '除湿装置(CSH)', value: 'CSH' },
+  { label: '能量管理器(EMS)', value: 'EMS' },
 ]
 
 export const convertNodeName = (node: string) => {
