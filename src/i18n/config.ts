@@ -690,6 +690,10 @@ export default {
     zh: '数据存储配置',
     en: 'Data Storage Config',
   },
+  lightStoragePriority: {
+    zh: '光储优先',
+    en: 'Light storage priority',
+  },
   tabPeakShaveValleyFill: {
     zh: '削峰填谷',
     en: 'Peak Shave Valley Fill Config',
