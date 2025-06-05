@@ -289,12 +289,6 @@ const newItem = computed(() => {
 const addItem = () => {
   const item = cloneDeep(newItem.value)
   const { list } = formData.value
-  // ---------------------单独处理削峰填谷时间范围--------------------
-  if (item.timeselect_one) {
-    item.timeselect_one = ''
-    item.timeselect_two = ''
-  }
-  // ---------------------------------------------------------------
   list.push(item)
   formData.value = {
     list,
