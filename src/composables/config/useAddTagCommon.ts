@@ -14,7 +14,6 @@ export const useTagTypeSelect = () => {
       value: Number(key),
       label: TagType[key as keyof typeof TagType],
     }))
-
   const findLabelByValue = (val: number) => tagTypeOptList.find(({ value }) => val === value)?.label || ''
 
   const findValueByLabel = (lab: TagType) => tagTypeOptList.find(({ label }) => label === lab)?.value || undefined

@@ -219,8 +219,16 @@ export default {
     zh: '您确定要删除吗？',
     en: 'Are you sure delete?',
   },
+  confirmDeleteGroup: {
+    zh: '您确定要删除分组吗？北向设备需要重新订阅',
+    en: 'Are you sure delete?',
+  },
   confirmClear: {
     zh: '操作不可撤回，是否确定要清空数据？',
+    en: 'The operation is irreversible. Are you sure you want to clear the data?',
+  },
+  confirmClearGroup: {
+    zh: '操作不可撤回，是否确定要清空分组信息吗？北向设备需要重新订阅',
     en: 'The operation is irreversible. Are you sure you want to clear the data?',
   },
   confirmLogout: {
