@@ -82,7 +82,11 @@
           <emqx-input-number v-model="form.offset" :step="1" controls-position="right" />
         </emqx-form-item>
       </emqx-col>
-
+      <emqx-col :span="12">
+        <emqx-form-item :label="$t('config.valueRange')">
+          <emqx-input v-model="form.valueRange" />
+        </emqx-form-item>
+      </emqx-col>
       <emqx-col :span="12">
         <emqx-form-item :label="$t('config.desc')">
           <emqx-input v-model="form.description" />

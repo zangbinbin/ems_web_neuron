@@ -40,7 +40,6 @@ export default (autoLoad = true, needRefreshStatus = false) => {
     showEditDialog.value = true
     editDriverData.value = { name: node.name }
   }
-
   const pageController = computed({
     get: () => store.state.paginationData,
     set: (val) => {

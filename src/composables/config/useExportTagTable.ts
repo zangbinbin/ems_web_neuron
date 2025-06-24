@@ -25,6 +25,7 @@ export default () => {
       'attribute',
       'type',
       'description',
+      'valueRange',
       'decimal',
       'offset',
       'precision',
@@ -32,11 +33,37 @@ export default () => {
     ]
     const sheets: Array<any> = [cols]
     tagList.forEach((obj) => {
-      const { group, name, address, point, attribute, type, description, decimal, offset, precision, value } = obj
+      const {
+        group,
+        name,
+        address,
+        point,
+        attribute,
+        type,
+        description,
+        valueRange,
+        decimal,
+        offset,
+        precision,
+        value,
+      } = obj
       const content = []
       const attrStr = attribute ? getAttrStrByValue(attribute, FILLER_IN_TAG_ATTR) : ''
       const typeStr = type ? findLabelByValue(type) : ''
-      content.push([group, name, address, point, attrStr, typeStr, description, decimal, offset, precision, value])
+      content.push([
+        group,
+        name,
+        address,
+        point,
+        attrStr,
+        typeStr,
+        description,
+        valueRange,
+        decimal,
+        offset,
+        precision,
+        value,
+      ])
       sheets.push(...content)
     })
     return sheets

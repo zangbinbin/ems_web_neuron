@@ -241,6 +241,7 @@ export interface TagForm {
   attribute: number | undefined
   type: number | null
   description: string
+  valueRange: string
   precision?: number | undefined
   decimal?: number | null
   offset?: number | null

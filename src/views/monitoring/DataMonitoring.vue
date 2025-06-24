@@ -65,6 +65,9 @@
         <emqx-table-column :label="$t('config.offset')">
           <template #default="{ row }">{{ tagDecimalValue(row.offset) }}</template>
         </emqx-table-column>
+        <emqx-table-column :label="$t('config.valueRange')">
+          <template #default="{ row }">{{ row.valueRange }}</template>
+        </emqx-table-column>
         <emqx-table-column prop="valueToShow" min-width="100">
           <template #header>
             <div class="value-column-hd">
@@ -82,6 +85,7 @@
               </el-popover>
             </div>
           </template>
+
           <template #default="{ row }">
             <span v-if="!row.error">{{ row.valueToShow }}</span>
             <span v-else class="has-error"> Error({{ row.error }}): {{ getErrorMsg(row.error) }} </span>
