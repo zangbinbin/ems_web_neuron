@@ -96,6 +96,7 @@ export default () => {
       [TypeOfPluginParam.MonthDayRange]: '',
       [TypeOfPluginParam.TimeSelect]: '',
       [TypeOfPluginParam.NameMap]: '',
+      [TypeOfPluginParam.RichString]: '',
     }
     return initValueMap[type] === undefined ? '' : initValueMap[type]
   }

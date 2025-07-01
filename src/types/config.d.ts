@@ -145,6 +145,14 @@ export interface StringParamInfo extends ParamBaseInfo {
     length: number
   }
 }
+export interface RichStringParamInfo extends ParamBaseInfo {
+  type: TypeOfPluginParam.RichString
+  default?: string
+  valid: {
+    regex: string
+    length: number
+  }
+}
 
 interface BoolParamInfo extends ParamBaseInfo {
   type: TypeOfPluginParam.Boolean
@@ -194,6 +202,7 @@ export type ParamInfo =
   | MapParamInfo
   | FileParamInfo
   | ArrayParamInfo
+  | RichStringParamInfo
 
 interface TagRegex {
   type: number

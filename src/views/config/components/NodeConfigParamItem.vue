@@ -41,6 +41,10 @@
         v-model.trim="inputValue"
         :placeholder="String(defaultData[paramKey])"
       />
+      <template v-else-if="paramInfo.type === TypeOfPluginParam.RichString">
+        <!-- String -->
+        <emqx-input type="textarea" autosize v-model.trim="inputValue" :placeholder="String(defaultData[paramKey])" />
+      </template>
       <!-- Boolean -->
       <emqx-radio-group v-else-if="paramInfo.type === TypeOfPluginParam.Boolean" v-model="inputValue">
         <emqx-radio :label="true">True</emqx-radio>
@@ -103,7 +107,7 @@ import type { PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { fromByteArray } from 'base64-js'
 import md5 from 'blueimp-md5'
-import { ElPopover } from 'element-plus'
+import { ElPopover, ElInput } from 'element-plus'
 import useNodeConfigParamItem from '@/composables/config/useNodeConfigParamItem'
 import useNodeConfigParamCommon from '@/composables/config/useNodeConfigParamCommon'
 import useUploadFileAndRead from '@/composables/config/useUploadFileAndRead'

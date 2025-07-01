@@ -41,6 +41,7 @@ export enum TypeOfPluginParam {
   MonthDayRange = 'monthdayrange',
   TimeSelect = 'timeselect',
   NameMap = 'namemap',
+  RichString = 'richstring',
 }
 
 export enum TagType {

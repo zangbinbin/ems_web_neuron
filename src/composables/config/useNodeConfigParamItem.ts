@@ -252,6 +252,7 @@ export default (props: Props) => {
       [TypeOfPluginParam.Map]: createSelectParamRules,
       [TypeOfPluginParam.File]: createFileParamRules,
       [TypeOfPluginParam.Array]: createArrayParamRules,
+      [TypeOfPluginParam.RichString]: createStringParamRules,
     }
     return (createMap[props.paramInfo.type] && createMap[props.paramInfo.type]()) || []
   })
