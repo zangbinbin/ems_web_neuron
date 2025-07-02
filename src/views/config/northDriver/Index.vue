@@ -32,12 +32,31 @@
       @sort-change="sortDataByKey"
       @row-click="goGroupPage"
     >
-      <emqx-table-column :label="$t('common.name')" prop="name" sortable="custom" show-overflow-tooltip>
+      <emqx-table-column :label="$t('common.name')" prop="name" width="300" sortable="custom" show-overflow-tooltip>
         <template #default="{ row }">
           <span v-if="isMonitorNode(row.name)">{{ row.name }}</span>
-          <el-link v-else type="primary" :underline="false" href="javascript:;" @click.stop="goGroupPage(row, $event)">
-            {{ row.name }}
-          </el-link>
+          <div v-else>
+            <el-link
+              v-if="!row.node_description"
+              type="primary"
+              :underline="false"
+              href="javascript:;"
+              @click.stop="goGroupPage(row, $event)"
+            >
+              {{ row.name }}
+            </el-link>
+            <el-link
+              v-else
+              type="primary"
+              :underline="false"
+              href="javascript:;"
+              @click.stop="goGroupPage(row)"
+              style="text-align: center; display: block"
+            >
+              {{ row.node_description }}<br />
+              ({{ row.name }})
+            </el-link>
+          </div>
         </template>
       </emqx-table-column>
       <!--  workStatus-->
@@ -145,6 +164,7 @@
     v-model="showEditDialog"
     :type="DriverDirection.North"
     :node-name="editDriverData.name"
+    :node-description="editDriverData.node_description"
     :node="editDriverData"
     @updated="reloadDriverList"
   />

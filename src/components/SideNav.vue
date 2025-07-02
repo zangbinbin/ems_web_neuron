@@ -44,6 +44,11 @@ export default defineComponent({
 const navList = computed(() => {
   const navs = [
     {
+      to: '/wiringDiagram',
+      label: 'common.wiringDiagram',
+      icon: 'iconhome',
+    },
+    {
       to: '/overview',
       label: 'common.home',
       icon: 'iconattributed',

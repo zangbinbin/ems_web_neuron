@@ -356,6 +356,10 @@ export default {
     zh: '请填写名称',
     en: 'Please enter the name',
   },
+  node_descriptionRequired: {
+    zh: '请填写节点描述',
+    en: 'Please enter the node description',
+  },
   pluginRequired: {
     zh: '请选择插件',
     en: 'Please select the plugin',

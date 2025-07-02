@@ -50,11 +50,28 @@
         @sort-change="sortDataByKey"
         @row-click="goGroupPage"
       >
-        <emqx-table-column :label="$t('common.name')" prop="name" sortable="custom" show-overflow-tooltip>
+        <emqx-table-column :label="$t('common.name')" prop="name" width="300" sortable="custom" show-overflow-tooltip>
           <template #default="{ row }">
-            <el-link type="primary" :underline="false" href="javascript:;" @click="goGroupPage(row)">
-              <!-- {{ node.name }} -->
+            <el-link
+              v-if="!row.node_description"
+              type="primary"
+              :underline="false"
+              href="javascript:;"
+              @click="goGroupPage(row)"
+            >
               {{ convertNodeName(row.name) }}
+            </el-link>
+            <el-link
+              v-else
+              type="primary"
+              :underline="false"
+              href="javascript:;"
+              @click="goGroupPage(row)"
+              style="text-align: center; display: block"
+            >
+              <!-- {{ node.name }} -->
+              {{ row.node_description }}<br />
+              ({{ convertNodeName(row.name) }})
             </el-link>
           </template>
         </emqx-table-column>
@@ -175,6 +192,7 @@
     v-model="showEditDialog"
     :type="DriverDirection.South"
     :node-name="editDriverData.name"
+    :node-description="editDriverData.node_description"
     :node="editDriverData"
     @updated="reloadDriverList"
   />

@@ -38,13 +38,13 @@ export default (autoLoad = true, needRefreshStatus = false) => {
 
   const showDialog = ref(false)
   const showEditDialog = ref(false)
-  const editDriverData: Ref<{ name: string }> = ref({ name: '' })
+  const editDriverData: Ref<{ name: string; node_description: string }> = ref({ name: '', node_description: '' })
   const addConfig = () => {
     showDialog.value = true
   }
   const editDialog = (node: DriverItemInList) => {
     showEditDialog.value = true
-    editDriverData.value = { name: node.name }
+    editDriverData.value = { name: node.name, node_description: node.node_description }
   }
 
   const getNorthDriverList = async () => {
@@ -77,7 +77,7 @@ export default (autoLoad = true, needRefreshStatus = false) => {
 
   const reloadDriverList = () => {
     getNorthDriverList()
-    editDriverData.value = { name: '' }
+    editDriverData.value = { name: '', node_description: '' }
   }
 
   const startTimer = () => {

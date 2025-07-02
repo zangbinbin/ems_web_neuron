@@ -4,6 +4,9 @@
       <emqx-form-item prop="name" :label="$t('common.name')" required>
         <emqx-input v-model.trim="form.name" />
       </emqx-form-item>
+      <emqx-form-item prop="node_description" :label="$t('common.node_description')" required>
+        <emqx-input type="textarea" v-model.trim="form.node_description" />
+      </emqx-form-item>
     </emqx-form>
     <template #footer>
       <span class="dialog-footer">
@@ -40,8 +43,12 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  nodeDescription: {
+    type: String,
+    required: true,
+  },
   node: {
-    type: Object as PropType<{ name: string }>,
+    type: Object as PropType<{ name: string; node_description: string }>,
     required: true,
   },
 })
@@ -49,12 +56,14 @@ const emit = defineEmits(['update:modelValue', 'updated'])
 
 const form = ref({
   name: '',
+  node_description: '',
 })
 const formCom = ref()
 
 const rules = computed(() => {
   return {
     name: [{ required: true, message: t('config.nameRequired') }],
+    node_description: [{ required: true, message: t('config.node_descriptionRequired') }],
   }
 })
 
@@ -84,7 +93,12 @@ const submit = async () => {
     await formCom.value.validate()
     isSubmitting.value = true
 
-    await updateDriver({ name: props.nodeName, new_name: form.value.name })
+    await updateDriver({
+      name: props.nodeName,
+      new_name: form.value.name,
+      node_description: props.nodeDescription,
+      new_node_description: form.value.node_description,
+    })
     EmqxMessage.success(t('common.updateSuccess'))
     showDialog.value = false
     emit('updated')

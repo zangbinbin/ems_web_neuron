@@ -31,11 +31,12 @@ export interface CreatedPlugin extends PluginForm {
 export interface NodeForm {
   name: string
   sn: string
+  node_description: string
   plugin: string
   template: string
 }
 export type NodeFormWithTemplate = Pick<NodeForm, 'name' | 'template'>
-export type NodeFormWithPlugin = Pick<NodeForm, 'name' | 'plugin'>
+export type NodeFormWithPlugin = Pick<NodeForm, 'name' | 'plugin' | 'node_description'>
 
 export interface SubscriptionDataForm {
   app: string | null
@@ -63,6 +64,7 @@ export interface SubscriptionsData {
 
 export interface RawDriverData {
   name: string
+  node_description: string
   plugin: string
 }
 

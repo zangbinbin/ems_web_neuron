@@ -10,6 +10,9 @@
       <emqx-form-item v-if="isDualMode" prop="sn" :label="$t('common.sn')" required>
         <emqx-input v-model.trim="driverForm.sn" />
       </emqx-form-item>
+      <emqx-form-item prop="node_description" :label="$t('common.node_description')" required>
+        <emqx-input type="textarea" v-model.trim="driverForm.node_description" />
+      </emqx-form-item>
       <!-- 1. Supports dual modes: plug-in and template  -->
       <emqx-form-item v-if="isDualMode" :label="$t('config.addDriverMode')">
         <emqx-radio-group v-model="activeDriverMode" class="mode-radio-group" @change="changeMode">

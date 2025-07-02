@@ -31,6 +31,21 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+  /* WiringDiagram */
+  {
+    path: '/wiringDiagram',
+    name: 'WiringDiagram',
+    meta: { hiddenBreadcrumb: true },
+    component: Home,
+    children: [
+      {
+        path: '/wiringDiagram',
+        name: 'WiringDiagram',
+        meta: { requireAuth: true },
+        component: () => import('@/views/home/Index.vue'),
+      },
+    ],
+  },
   /* MONITORING */
   {
     path: '/monitoring',
@@ -55,7 +70,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'HistoryData',
         component: () => import('@/views/monitoring/HistoryData.vue'),
         meta: { hiddenBreadcrumb: true },
-      }      
+      },
     ],
   },
   /* CONFIG- NorthAPP */

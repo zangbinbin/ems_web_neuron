@@ -11,6 +11,7 @@ import useSouthDriver from '@/composables/config/useSouthDriver'
 const createRawDriverForm = (): NodeForm => ({
   name: '',
   sn: '',
+  node_description: '',
   plugin: '',
   template: '',
 })
@@ -84,9 +85,9 @@ export default (type: DriverDirection) => {
         if (driverForm.value.sn !== '') {
           driverForm.value.name += `_${driverForm.value.sn}`
         }
-        const { name, plugin } = driverForm.value
+        const { name, plugin, node_description } = driverForm.value
 
-        await addDriverByPlugin({ name, plugin })
+        await addDriverByPlugin({ name, plugin, node_description })
       } else {
         await addDriverByTemplateMode()
       }

@@ -179,6 +179,10 @@ export default {
     zh: 'SN（唯一标识）',
     en: 'SN',
   },
+  node_description: {
+    zh: '节点描述',
+    en: 'Device Type',
+  },
   generalStatistics: {
     zh: '通用数据统计',
     en: 'General Statistics',
@@ -458,5 +462,9 @@ export default {
   stopConfigFirst: {
     zh: '请先停止策略配置，再进行配置',
     en: 'Please stop the policy config first before configuring it',
+  },
+  wiringDiagram: {
+    zh: '一次接线图',
+    en: 'Primary wiring diagram',
   },
 }

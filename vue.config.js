@@ -9,6 +9,7 @@ module.exports = {
   publicPath: './',
   lintOnSave: false,
   productionSourceMap: false,
+  transpileDependencies: ['@meta2d/core'],
   devServer: {
     port: 3003,
     proxy: {
