@@ -41,8 +41,8 @@
           </template>
         </emqx-table-column>
         <emqx-table-column :label="$t('common.name')" prop="name"></emqx-table-column>
+        <emqx-table-column :label="$t('config.point')" prop="point"></emqx-table-column>
         <emqx-table-column :label="$t('config.address')" prop="address"></emqx-table-column>
-
         <emqx-table-column :label="$t('common.type')">
           <template #default="{ row }">{{ findTagTypeLabelByValue(row.type) }}</template>
         </emqx-table-column>
