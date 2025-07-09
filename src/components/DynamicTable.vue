@@ -176,7 +176,7 @@
 
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash'
-import { watchEffect, ref, defineProps, defineEmits, computed, defineExpose } from 'vue'
+import { watchEffect, ref, defineProps, defineEmits, computed, defineExpose, onMounted } from 'vue'
 import type { PropType, Ref } from 'vue'
 import { ElForm, ElTable, ElFormItem, ElTableColumn, ElPopover, ElTimePicker, ElDatePicker } from 'element-plus'
 import type { ParamInfo, RawDriverData } from '@/types/config'
@@ -213,17 +213,10 @@ const allFields = computed(() => {
   }
   return list
 })
-
-const getSouthNodeList = async () => {
-  try {
-    nodeList.value = await querySouthDriverList()
-    return Promise.resolve(nodeList.value)
-  } catch (error) {
-    nodeList.value = []
-    return Promise.reject(error)
-  }
-}
-await getSouthNodeList()
+onMounted(async () => {
+  const res = await querySouthDriverList()
+  nodeList.value = res || []
+})
 // filed name
 const fieldName = computed(() => (name: string) => {
   return name.toLocaleLowerCase().replaceAll(' ', '_')
