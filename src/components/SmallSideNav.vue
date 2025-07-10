@@ -40,22 +40,23 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-</script>
-
-<script lang="ts" setup>
+import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
-  name: 'SmallSideNav',
+  name: 'SideNav',
 })
+</script>
 
+<script lang="ts" setup>
 const { t } = useI18n()
-const router = useRouter()
-const route = useRoute()
-
 const navList = computed(() => {
   const navs = [
+    {
+      to: '/wiringDiagram',
+      label: 'common.wiringDiagram',
+      icon: 'iconhome',
+    },
     {
       to: '/overview',
       label: 'common.home',
@@ -112,6 +113,14 @@ const navList = computed(() => {
           to: '/admin/change-password',
           label: 'common.changePassword',
         },
+        // {
+        //   to: '/admin/account-settings',
+        //   label: 'common.accountSettings',
+        // },
+        // {
+        //   to: '/admin/log',
+        //   label: ('admin.log'),
+        // },
       ],
     },
   ]
@@ -122,7 +131,7 @@ const firstLevelRoutePathArr: Array<string> = []
 const secondLevelRoutePathArr: Array<string> = []
 
 const actvieMenu = computed(() => {
-  const currentPath = route.path
+  const currentPath = useRoute().path
   let ret = secondLevelRoutePathArr.find((item) => currentPath.match(item))
 
   if (ret) {
@@ -147,10 +156,6 @@ const countRoutePath = () => {
       firstLevelRoutePathArr.push(menu.to)
     }
   })
-}
-
-const handleSubMenuClick = (path: string) => {
-  router.push(path)
 }
 
 countRoutePath()
