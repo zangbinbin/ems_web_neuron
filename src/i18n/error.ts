@@ -403,6 +403,10 @@ export default {
     zh: '插件不支持写点位',
     en: 'Plugin not support write tags',
   },
+  3018: {
+    zh: '不在取值范围内',
+    en: 'value not in range',
+  },
   4100: {
     zh: '字符串太长',
     en: 'String too long',

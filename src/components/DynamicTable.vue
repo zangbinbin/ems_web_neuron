@@ -133,6 +133,15 @@
                   />
                 </emqx-select>
               </template>
+              <template v-else-if="field.type === TypeOfPluginParam.NameMap">
+                <emqx-select
+                  v-model="row[fieldName(field.name)]"
+                  @change="handleChange"
+                  :placeholder="$t('common.pleaseSelect')"
+                >
+                  <emqx-option v-for="{ name } in nodeList" :key="name" :value="name" />
+                </emqx-select>
+              </template>
             </el-form-item>
             <el-form-item v-else>
               <span>-</span>
@@ -167,14 +176,15 @@
 
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash'
-import { watchEffect, ref, defineProps, defineEmits, computed, defineExpose } from 'vue'
-import type { PropType } from 'vue'
+import { watchEffect, ref, defineProps, defineEmits, computed, defineExpose, onMounted } from 'vue'
+import type { PropType, Ref } from 'vue'
 import { ElForm, ElTable, ElFormItem, ElTableColumn, ElPopover, ElTimePicker, ElDatePicker } from 'element-plus'
-import type { ParamInfo } from '@/types/config'
+import type { ParamInfo, RawDriverData } from '@/types/config'
 import { TypeOfPluginParam } from '@/types/enums'
 import useLang from '@/composables/useLang'
 import useNodeConfigParamCommon from '@/composables/config/useNodeConfigParamCommon'
 import useNodeConfigParamItem from '@/composables/config/useNodeConfigParamItem'
+import { querySouthDriverList } from '@/api/config'
 import { dataType } from '@/utils/utils'
 
 const props = defineProps({
@@ -194,7 +204,7 @@ const { i18nContent } = useLang()
 const { shouldFieldShow, initParamDefaultValueByType, upperFirstLetter, showLabel } = useNodeConfigParamCommon()
 
 const dynamicTableRef = ref()
-
+const nodeList: Ref<Array<RawDriverData>> = ref([])
 const allFields = computed(() => {
   const fieldType = dataType(props.fields)
   let list = props.fields || []
@@ -203,7 +213,10 @@ const allFields = computed(() => {
   }
   return list
 })
-
+onMounted(async () => {
+  const res = await querySouthDriverList()
+  nodeList.value = res || []
+})
 // filed name
 const fieldName = computed(() => (name: string) => {
   return name.toLocaleLowerCase().replaceAll(' ', '_')

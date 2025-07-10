@@ -103,6 +103,10 @@ export default {
     zh: '精度',
     en: 'Precision',
   },
+  valueRange: {
+    zh: '取值范围',
+    en: 'Precision',
+  },
   tagValue: {
     zh: '值',
     en: 'Value',

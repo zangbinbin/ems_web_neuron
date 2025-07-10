@@ -60,7 +60,7 @@
           <template #default="{ row }">{{ tagPrecisionValue(row.type, row.precision) }}</template>
         </emqx-table-column>
         <emqx-table-column :label="$t('config.desc')" prop="description" />
-
+        <emqx-table-column :label="$t('config.valueRange')" prop="valueRange" />
         <emqx-table-column align="left" :label="$t('common.oper')" width="140px" fixed="right">
           <template #default="{ row }">
             <AComWithDesc :content="$t('common.edit')">
