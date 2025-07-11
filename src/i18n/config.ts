@@ -361,8 +361,12 @@ export default {
     en: 'Please enter the name',
   },
   node_descriptionRequired: {
-    zh: '请填写节点描述',
-    en: 'Please enter the node description',
+    zh: '请填写名称',
+    en: 'Please enter the device name',
+  },
+  signRequired: {
+    zh: '请填写标识',
+    en: 'Please enter the sign',
   },
   pluginRequired: {
     zh: '请选择插件',

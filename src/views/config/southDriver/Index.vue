@@ -50,7 +50,7 @@
         @sort-change="sortDataByKey"
         @row-click="goGroupPage"
       >
-        <emqx-table-column :label="$t('common.name')" prop="name" sortable="custom" show-overflow-tooltip>
+        <emqx-table-column :label="$t('common.sign')" prop="name" sortable="custom" show-overflow-tooltip>
           <template #default="{ row }">
             <el-link type="primary" :underline="false" href="javascript:;" @click="goGroupPage(row)">
               <!-- {{ node.name }} -->

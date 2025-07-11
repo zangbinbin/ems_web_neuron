@@ -180,8 +180,12 @@ export default {
     en: 'SN',
   },
   node_description: {
-    zh: '节点描述',
-    en: 'Device Type',
+    zh: '名称',
+    en: 'Device Name',
+  },
+  sign: {
+    zh: '标识',
+    en: 'sign',
   },
   generalStatistics: {
     zh: '通用数据统计',

@@ -43,11 +43,11 @@ export default defineComponent({
 <script lang="ts" setup>
 const navList = computed(() => {
   const navs = [
-    {
-      to: '/wiringDiagram',
-      label: 'common.wiringDiagram',
-      icon: 'iconhome',
-    },
+    // {
+    //   to: '/wiringDiagram',
+    //   label: 'common.wiringDiagram',
+    //   icon: 'iconhome',
+    // },
     {
       to: '/overview',
       label: 'common.home',
