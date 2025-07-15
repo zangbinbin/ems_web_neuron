@@ -11,6 +11,15 @@
       </div>
       <div class="btns common-flex">
         <div class="btn-group">
+          <emqx-button
+            size="small"
+            type="primary"
+            :disabled="!subCheckedList.length"
+            :loading="isExporting"
+            @click="exportExcel"
+          >
+            {{ $t('config.exportExcel') }}
+          </emqx-button>
           <emqx-button size="small" type="primary" @click="addSubscription">
             {{ $t('config.addSubscription') }}
           </emqx-button>
@@ -78,6 +87,10 @@ import AComWithDesc from '@/components/AComWithDesc.vue'
 import EditSubcriptionGroup from './components/EditSubcriptionGroup.vue'
 import { DriverDirection } from '@/types/enums'
 import { convertNodeName } from '@/utils/driverNames'
+import type { GroupData } from '@/types/config'
+import { queryTagList } from '@/api/config'
+import useGroupCommon from '@/composables/config/useGroupCommon'
+import useExportTagTable from '@/composables/config/useExportTagTable'
 
 const { isMQTTPugin, isGewuPugin } = useDriverInfo()
 
@@ -102,6 +115,25 @@ const {
 } = useSubscriptionList()
 
 const showAddSubscriptionDialog = ref(false)
+
+const { getTagsByGroups } = useGroupCommon()
+const { isExporting, exportTable } = useExportTagTable()
+
+// 导出点位excel
+const exportExcel = async () => {
+  console.log('导出Excel！')
+  // 查询点位数据
+  const requesList = subCheckedList.value.map((group: any) => queryTagList({ node: group.driver, group: group.group }))
+  // 数据格式转换
+  const groupCheckedList = ref(JSON.parse(JSON.stringify(subCheckedList.value))) // 深拷贝
+  groupCheckedList.value.forEach((item: GroupData) => {
+    item.name = item.group
+  })
+  // 处理导出数据
+  const tags = await getTagsByGroups(requesList, groupCheckedList.value)
+  // 导出excel
+  exportTable(tags, node.value)
+}
 
 const addSubscription = () => {
   showAddSubscriptionDialog.value = true

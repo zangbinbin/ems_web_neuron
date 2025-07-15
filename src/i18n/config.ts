@@ -219,6 +219,10 @@ export default {
     zh: '全部',
     en: 'All',
   },
+  exportExcel: {
+    zh: '导出Excel',
+    en: 'Export excel',
+  },
   addSubscription: {
     zh: '添加订阅',
     en: 'Add subscription',
