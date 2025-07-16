@@ -573,6 +573,10 @@ export default {
     zh: '请选择南向设备',
     en: 'Select south device',
   },
+  nodeDescriptionPlaceholder: {
+    zh: '请选择设备名称',
+    en: 'Select device name',
+  },
   groupPlaceholder: {
     zh: '请选择组',
     en: 'Select group',

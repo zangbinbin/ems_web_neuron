@@ -15,6 +15,23 @@
           filterable
           clearable
           class="header-item search-group filter-selector"
+          :placeholder="$t('config.nodeDescriptionPlaceholder')"
+          @change="selectedNodeChanged"
+        >
+          <emqx-option
+            v-for="item in nodeList"
+            :key="item.node_description"
+            :value="item.name"
+            :label="item.node_description"
+          />
+        </emqx-select>
+
+        <emqx-select
+          v-model="currentGroup.node"
+          size="medium"
+          filterable
+          clearable
+          class="header-item search-group filter-selector"
           :placeholder="$t('config.southDevicePlaceholder')"
           @change="selectedNodeChanged"
         >
