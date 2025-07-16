@@ -1,7 +1,10 @@
 <template>
   <el-dialog v-model="showDialog" :width="500" custom-class="common-dialog" :title="dialogTitle" :z-index="2000">
     <emqx-form ref="formCom" :model="driverForm" :rules="groupFormRules">
-      <emqx-form-item prop="name" :label="$t('common.deviceType')" required>
+      <emqx-form-item prop="node_description" :label="$t('common.node_description')" required>
+        <emqx-input type="input" v-model.trim="driverForm.node_description" />
+      </emqx-form-item>
+      <emqx-form-item prop="name" :label="isDualMode ? $t('common.deviceType') : $t('common.sign')" required>
         <emqx-select v-if="isDualMode" v-model="driverForm.name" filterable clearable allow-create :disabled="driver">
           <emqx-option v-for="{ label, value } in driverNameList" :key="value" :value="value" :label="label" />
         </emqx-select>
@@ -9,9 +12,6 @@
       </emqx-form-item>
       <emqx-form-item v-if="isDualMode" prop="sn" :label="$t('common.sn')" required>
         <emqx-input v-model.trim="driverForm.sn" />
-      </emqx-form-item>
-      <emqx-form-item prop="node_description" :label="$t('common.node_description')" required>
-        <emqx-input type="textarea" v-model.trim="driverForm.node_description" />
       </emqx-form-item>
       <!-- 1. Supports dual modes: plug-in and template  -->
       <emqx-form-item v-if="isDualMode" :label="$t('config.addDriverMode')">

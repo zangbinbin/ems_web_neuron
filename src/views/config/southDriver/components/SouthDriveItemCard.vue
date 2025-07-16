@@ -2,7 +2,7 @@
   <div class="node-card south-drive-item-card" @click.stop.prevent="goGroupPage(data)">
     <div class="node-item-hd common-flex">
       <!-- <p class="south-drive-item-name ellipsis">{{ data.name }}</p> -->
-      <p class="south-drive-item-name ellipsis">{{ convertNodeName(data.name) }}</p>
+      <p class="south-drive-item-name ellipsis">{{ convertNodeName(data.node_description) }}</p>
       <div class="setup-item-handlers">
         <AComWithDesc :content="$t('config.deviceConfig')">
           <i class="iconfont iconsetting" @click.stop="goNodeConfig(props.data)"></i>

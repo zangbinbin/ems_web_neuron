@@ -5,7 +5,7 @@
     @click="goGroupPage(data)"
   >
     <div class="node-item-hd common-flex">
-      <p class="setup-item-name ellipsis">{{ data.name }}</p>
+      <p class="setup-item-name ellipsis">{{ data.node_description }}</p>
       <div class="setup-item-handlers">
         <AComWithDesc :content="$t('config.appConfig')">
           <i class="iconfont iconsetting" @click.stop="goNodeConfig(data)"></i>

@@ -29,7 +29,13 @@ export default (type: DriverDirection) => {
 
   const groupFormRules = computed(() => {
     return {
-      name: [{ required: true, message: t('config.nameRequired') }],
+      node_description: [{ required: true, message: t('config.node_descriptionRequired') }],
+      name: [
+        {
+          required: true,
+          message: type === DriverDirection.North ? t('config.signRequired') : t('config.deviceTypeRequired'),
+        },
+      ],
       plugin: [{ required: true, message: t('config.pluginRequired') }],
       template: [{ required: true, message: t('config.templateRequired') }],
     }

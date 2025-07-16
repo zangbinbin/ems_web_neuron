@@ -1,11 +1,11 @@
 <template>
   <el-dialog v-model="showDialog" :width="500" custom-class="common-dialog" :title="dialogTitle" :z-index="2000">
     <emqx-form ref="formCom" :model="form" :rules="rules" @submit.prevent>
+      <emqx-form-item prop="node_description" :label="$t('common.node_description')" required>
+        <emqx-input type="input" v-model.trim="form.node_description" />
+      </emqx-form-item>
       <emqx-form-item prop="name" :label="$t('common.sign')" required>
         <emqx-input v-model.trim="form.name" />
-      </emqx-form-item>
-      <emqx-form-item prop="node_description" :label="$t('common.node_description')" required>
-        <emqx-input type="textarea" v-model.trim="form.node_description" />
       </emqx-form-item>
     </emqx-form>
     <template #footer>

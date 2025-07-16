@@ -50,6 +50,7 @@
         @sort-change="sortDataByKey"
         @row-click="goGroupPage"
       >
+        <emqx-table-column :label="$t('common.node_description')" prop="node_description" sortable="custom" />
         <emqx-table-column :label="$t('common.sign')" prop="name" sortable="custom" show-overflow-tooltip>
           <template #default="{ row }">
             <el-link type="primary" :underline="false" href="javascript:;" @click="goGroupPage(row)">
@@ -58,7 +59,6 @@
             </el-link>
           </template>
         </emqx-table-column>
-        <emqx-table-column :label="$t('common.node_description')" prop="node_description" sortable="custom" />
         <!--  workStatus-->
         <emqx-table-column :label="$t('config.workStatus')" prop="statusText" sortable="custom">
           <template #default="{ row }">

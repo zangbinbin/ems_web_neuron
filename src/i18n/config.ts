@@ -372,6 +372,10 @@ export default {
     zh: '请填写标识',
     en: 'Please enter the sign',
   },
+  deviceTypeRequired: {
+    zh: '请填写设备类型',
+    en: 'Please enter the device type',
+  },
   pluginRequired: {
     zh: '请选择插件',
     en: 'Please select the plugin',
