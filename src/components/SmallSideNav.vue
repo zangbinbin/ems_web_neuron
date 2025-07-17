@@ -52,11 +52,11 @@ export default defineComponent({
 const { t } = useI18n()
 const navList = computed(() => {
   const navs = [
-    {
-      to: '/wiringDiagram',
-      label: 'common.wiringDiagram',
-      icon: 'iconhome',
-    },
+    // {
+    //   to: '/wiringDiagram',
+    //   label: 'common.wiringDiagram',
+    //   icon: 'iconhome',
+    // },
     {
       to: '/overview',
       label: 'common.home',
