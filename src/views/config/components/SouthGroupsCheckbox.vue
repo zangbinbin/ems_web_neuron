@@ -22,7 +22,7 @@
               @change="handelCheckedAll($event, node.name)"
             >
               <!-- {{ node.name }} -->
-              {{ convertNodeName(node.name) }}
+              {{ node.node_description ? node.node_description : convertNodeName(node.name) }}
             </el-checkbox>
           </template>
 

@@ -32,7 +32,7 @@
           filterable
           clearable
           class="header-item search-group filter-selector"
-          :placeholder="$t('config.southDevicePlaceholder')"
+          :placeholder="$t('config.signPlaceholder')"
           @change="selectedNodeChanged"
         >
           <emqx-option v-for="{ name } in nodeList" :key="name" :value="name" :label="name" />

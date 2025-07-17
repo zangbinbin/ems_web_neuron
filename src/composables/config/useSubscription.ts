@@ -44,6 +44,7 @@ export const useSubscriptionList = () => {
   })
 
   const node = computed(() => route.params.node.toString())
+  const node_description = computed(() => route.params.node_description.toString())
 
   const allChecked = computed({
     get() {
@@ -129,6 +130,7 @@ export const useSubscriptionList = () => {
 
   return {
     node,
+    node_description,
     subscriptionList,
     subCheckedList,
     isListLoading,
@@ -250,7 +252,7 @@ export const useAddSubscription = (props: AddSubscriptionProps) => {
 
   const setDefaultTopic = () => {
     const nodeName = props.currentNode
-    //subscriptionForm.value.topic = `/neuron/${nodeName}`
+    // subscriptionForm.value.topic = `/neuron/${nodeName}`
     // nikon update default topic
     subscriptionForm.value.topic = 'v1/devices/me/telemetry'
   }

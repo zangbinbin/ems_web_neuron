@@ -38,6 +38,7 @@ export default (nodePluginInfo: PluginInfo) => {
   const { isExporting, exportTable } = useExportTagTable()
 
   const node = computed(() => route.params.node.toString())
+  const node_description = computed(() => route.params.node_description.toString())
   const allChecked = computed({
     get() {
       if (groupList.value.length === 0) {
@@ -179,6 +180,7 @@ export default (nodePluginInfo: PluginInfo) => {
 
   return {
     node,
+    node_description,
     groupList,
     groupCheckedList,
     isListLoading,

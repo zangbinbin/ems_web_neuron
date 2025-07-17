@@ -5,7 +5,7 @@
       <div class="bar-left common-flex">
         <p class="driver-name">
           <label>{{ $t('config.deviceName') }}</label>
-          <span>{{ node }}</span>
+          <span>{{ node_description ? node_description : node }}</span>
           <!-- <i class="el-icon-edit icon-edit" :title="$t('common.edit')" @click="editNodeName" /> -->
         </p>
       </div>
@@ -128,6 +128,7 @@ await getNodePluginInfo()
 
 const {
   node,
+  node_description,
   groupList,
   groupCheckedList,
   isListLoading,

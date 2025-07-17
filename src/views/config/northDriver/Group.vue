@@ -5,7 +5,7 @@
       <div class="bar-left common-flex">
         <p class="driver-name">
           <label>{{ $t('config.appName') }}</label>
-          <span>{{ node }}</span>
+          <span>{{ node_description ? node_description : node }}</span>
           <!-- <i class="el-icon-edit icon-edit" :title="$t('common.edit')" @click="editNodeName" /> -->
         </p>
       </div>
@@ -44,7 +44,8 @@
       <emqx-table-column label="No" :width="60">
         <template #default="{ index }">{{ index + 1 }}</template>
       </emqx-table-column>
-      <emqx-table-column :label="$t('config.deviceName')" prop="name">
+      <emqx-table-column :label="$t('common.node_description')" prop="node_description" />
+      <emqx-table-column :label="$t('common.sign')" prop="name">
         <!-- <template #default="{ row }">{{ row.driver }}</template> -->
         <template #default="{ row }">{{ convertNodeName(row.driver) }}</template>
       </emqx-table-column>
@@ -95,6 +96,7 @@ const { isMQTTPugin, isGewuPugin } = useDriverInfo()
 
 const {
   node,
+  node_description,
   subscriptionList,
   subCheckedList,
   isListLoading,

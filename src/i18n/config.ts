@@ -577,6 +577,10 @@ export default {
     zh: '请选择南向设备',
     en: 'Select south device',
   },
+  signPlaceholder: {
+    zh: '请选择设备标识',
+    en: 'Select device sign',
+  },
   nodeDescriptionPlaceholder: {
     zh: '请选择设备名称',
     en: 'Select device name',
