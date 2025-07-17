@@ -85,12 +85,11 @@ import { useDriverInfo } from '@/composables/config/useDriver'
 import AddSubscriptionDialog from './components/AddSubscriptionDialog.vue'
 import AComWithDesc from '@/components/AComWithDesc.vue'
 import EditSubcriptionGroup from './components/EditSubcriptionGroup.vue'
-import { DriverDirection } from '@/types/enums'
 import { convertNodeName } from '@/utils/driverNames'
 import type { GroupData } from '@/types/config'
 import { queryTagList } from '@/api/config'
 import useGroupCommon from '@/composables/config/useGroupCommon'
-import useExportTagTable from '@/composables/config/useExportTagTable'
+import useExportPointExcel from '@/composables/config/useExportPointExcel'
 
 const { isMQTTPugin, isGewuPugin } = useDriverInfo()
 
@@ -117,13 +116,19 @@ const {
 const showAddSubscriptionDialog = ref(false)
 
 const { getTagsByGroups } = useGroupCommon()
-const { isExporting, exportTable } = useExportTagTable()
+const { isExporting, exportTable } = useExportPointExcel()
 
 // 导出点位excel
 const exportExcel = async () => {
-  console.log('导出Excel！')
   // 查询点位数据
-  const requesList = subCheckedList.value.map((group: any) => queryTagList({ node: group.driver, group: group.group }))
+  const requesList = subCheckedList.value.map(async (group: any) => {
+    const result = await queryTagList({ node: group.driver, group: group.group })
+    result.forEach((item: any) => {
+      item.deviceName = group.driver
+    })
+    return result
+  })
+
   // 数据格式转换
   const groupCheckedList = ref(JSON.parse(JSON.stringify(subCheckedList.value))) // 深拷贝
   groupCheckedList.value.forEach((item: GroupData) => {
