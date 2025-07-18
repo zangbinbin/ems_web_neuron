@@ -29,13 +29,13 @@ import type { Meta2dData } from '@meta2d/core'
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { EmqxMessage } from '@emqx/emqx-ui'
 import { ElDropdown } from 'element-plus'
+import { number } from 'echarts'
 
 const meta2dRef = ref<HTMLElement | null>(null)
 const containerRef = ref<HTMLElement | null>(null)
 const windowHeight = ref(window.innerHeight - 140)
 const isFullscreen = ref(false)
 let meta2dInstance: Meta2d | null = null
-let originalScale = 1
 const titleName = ref('')
 const timers = ref<Record<string, number>>({})
 const abortControllers = ref<Record<string, AbortController>>({})
@@ -44,10 +44,24 @@ const menuOptionsRef = ref<HTMLElement | null>(null)
 const jsonFiles = ref<string[]>([])
 const currentJsonData = ref<any>(null)
 const eventListenersAdded = ref(false) // 新增标志位
+const screenWidth = ref(window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth)
+const screenHeight = ref(window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight)
+const originScale = ref(0)
+const scaleVal = ref(0)
 
 // 更新窗口高度
 const updateWindowHeight = () => {
   windowHeight.value = isFullscreen.value ? window.innerHeight : window.innerHeight - 140
+  screenWidth.value = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+  screenHeight.value = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+  if (meta2dInstance != null) {
+    scaleVal.value = Number((screenWidth.value / 1920).toFixed(2))
+    if (isFullscreen.value) {
+      // 在原来基础上增加0.4的比例放大
+      scaleVal.value += 0.4
+    }
+    meta2dInstance.scale(scaleVal.value * originScale.value)
+  }
   if (meta2dInstance) {
     nextTick(() => {
       meta2dInstance?.resize()
@@ -111,22 +125,6 @@ const handleClickOutside = (event: MouseEvent) => {
 const handleFullscreenChange = () => {
   isFullscreen.value = !!document.fullscreenElement
   updateWindowHeight()
-
-  if (meta2dInstance) {
-    if (isFullscreen.value) {
-      originalScale = meta2dInstance.store.data.scale || 1
-      // 在原来基础上增加0.2的比例放大
-      meta2dInstance.scale(originalScale + 0.2)
-    } else {
-      meta2dInstance.scale(originalScale)
-    }
-
-    nextTick(() => {
-      meta2dInstance?.resize()
-      meta2dInstance?.render()
-      meta2dInstance?.centerView()
-    })
-  }
 }
 
 // 初始化一次接线图
@@ -148,10 +146,11 @@ const initMeta2d = () => {
     hoverColor: 'transparent',
   })
 
-  const meta2dData = currentJsonData.value as unknown as Meta2dData
+  const meta2dData = JSON.parse(JSON.stringify(currentJsonData.value))
   titleName.value = meta2dData.name || ''
   meta2dData.cancelFirstConnect = true
   meta2dInstance.open(meta2dData)
+  originScale.value = meta2dInstance.store.data.scale
   meta2dInstance.closeHttp()
 
   // 确保事件只绑定一次
@@ -159,10 +158,8 @@ const initMeta2d = () => {
     meta2dInstance.on('dblclick', dblclick)
     eventListenersAdded.value = true
   }
-
-  originalScale = meta2dInstance.store.data.scale || 1
-  meta2dInstance.lock(1)
   updateWindowHeight()
+  meta2dInstance.lock(1)
 }
 
 // 双击事件
