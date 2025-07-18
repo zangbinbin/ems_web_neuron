@@ -302,6 +302,7 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@import '@/styles/font.scss';
 /* 样式保持不变 */
 #meta2d-container {
   position: relative;

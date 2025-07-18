@@ -468,7 +468,7 @@ export default {
     en: 'Please stop the policy config first before configuring it',
   },
   wiringDiagram: {
-    zh: '一次接线图',
+    zh: '实时监控',
     en: 'Primary wiring diagram',
   },
 }

@@ -33,7 +33,7 @@ defineProps({
   .header-right {
     display: flex;
     flex-wrap: wrap; /* 允许内容换行 */
-    justify-content: flex-end; /* 保持右对齐 */
+    // justify-content: flex-end; /* 保持右对齐 */
   }
 
   :deep(.header-item) {
