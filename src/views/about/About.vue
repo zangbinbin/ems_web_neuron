@@ -141,7 +141,7 @@ const setTimer = () => {
 const init = () => {
   try {
     isDataLoading.value = true
-    Promise.allSettled([queryVersion(), queryHardwareToken(), getStatistic()])
+    Promise.allSettled([queryVersion(), getStatistic()])
       .then((values: any) => {
         const { data: versionInfo } = values[0]?.value || { version: '', build_date: '' }
         const { data: hwTokenInfo } = values[1]?.value || {}
