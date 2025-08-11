@@ -8,7 +8,7 @@ import {
 } from '@/api/config'
 import type { GroupData, SubscriptionData, SubscriptionsData, SubscriptionDataForm } from '@/types/config'
 import type { Ref } from 'vue'
-import { ref, computed, nextTick } from 'vue'
+import { ref, computed, nextTick, watch } from 'vue'
 import { EmqxMessage } from '@emqx/emqx-ui'
 import { MessageBoxConfirm } from '@/utils/element'
 import { useI18n } from 'vue-i18n'
@@ -22,6 +22,9 @@ import { cloneDeep, omit } from 'lodash'
 interface SubscriptionDataInTable extends SubscriptionData {
   checked: boolean
 }
+
+// 共享的响应式状态
+const sharedDeviceList = ref<any[]>([])
 
 export const useSubscriptionList = () => {
   const route = useRoute()
@@ -45,6 +48,20 @@ export const useSubscriptionList = () => {
 
   const node = computed(() => route.params.node.toString())
   const node_description = computed(() => route.params.node_description.toString())
+
+  // 监听共享的 deviceList
+  watch(
+    sharedDeviceList,
+    (newDevices) => {
+      // 更新 subscriptionList 的逻辑
+      subscriptionList.value = subscriptionList.value.map((item) => ({
+        ...item,
+        // 可以合并 deviceList 的数据
+        node_description: newDevices.find((d) => d.name === item.driver).node_description || null,
+      }))
+    },
+    { deep: true },
+  )
 
   const allChecked = computed({
     get() {
@@ -242,6 +259,16 @@ export const useAddSubscription = (props: AddSubscriptionProps) => {
   const isSubmitting = ref(false)
   const { totalSouthDriverList: deviceList } = useSouthDriver()
   const groupList: Ref<Array<GroupData>> = ref([])
+
+  // 监听共享的 deviceList
+  watch(
+    deviceList,
+    (newDevices) => {
+      // 更新 sharedDeviceList 的逻辑
+      sharedDeviceList.value = newDevices
+    },
+    { deep: true },
+  )
 
   const selectedNodeChanged = async () => {
     subscriptionForm.value.group = ''
