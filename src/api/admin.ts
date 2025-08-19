@@ -13,6 +13,15 @@ export const queryLog = (data: {
   return http.get('/log', { params: data })
 }
 
+export const queryAuditLog = (data: {
+  start_time: number
+  end_time: number
+  page: number
+  page_size: number
+}): Promise<AxiosResponse<{ error: number; audit_log: Array<string>; total_num: number }>> => {
+  return http.get('/audit_log', { params: data })
+}
+
 // export const queryLicense = (): Promise<AxiosResponse<License & { error: number }>> => {
 //   return http.get('/license', {
 //     _handleErrorSelf: true,

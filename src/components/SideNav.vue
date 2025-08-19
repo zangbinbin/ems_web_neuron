@@ -112,6 +112,10 @@ const navList = computed(() => {
         //   to: '/admin/log',
         //   label: ('admin.log'),
         // },
+        {
+          to: '/admin/auditlog',
+          label: 'admin.auditLog',
+        },
       ],
     },
   ]
