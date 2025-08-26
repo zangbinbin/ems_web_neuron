@@ -94,6 +94,7 @@ export default () => {
       [TypeOfPluginParam.File]: '',
       [TypeOfPluginParam.TimeRange]: '',
       [TypeOfPluginParam.MonthDayRange]: '',
+      [TypeOfPluginParam.MonthDay]: '',
       [TypeOfPluginParam.TimeSelect]: '',
       [TypeOfPluginParam.NameMap]: '',
       [TypeOfPluginParam.RichString]: '',

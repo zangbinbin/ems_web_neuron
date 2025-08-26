@@ -88,6 +88,18 @@
                 @change="handleChange"
               />
 
+              <!-- MonthDay -->
+              <el-date-picker
+                v-else-if="field.type === TypeOfPluginParam.MonthDay"
+                v-model="row[fieldName(field.name)]"
+                size="small"
+                value-format="MM:DD"
+                format="MM:DD"
+                :placeholder="$t('common.date')"
+                type="date"
+                @change="handleChange"
+              />
+
               <!-- Boolean -->
               <emqx-radio-group
                 v-else-if="field.type === TypeOfPluginParam.Boolean"
