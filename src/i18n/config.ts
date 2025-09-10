@@ -105,7 +105,11 @@ export default {
   },
   valueRange: {
     zh: '取值范围',
-    en: 'Precision',
+    en: 'ValueRange',
+  },
+  threshold: {
+    zh: '阈值',
+    en: 'Threshold',
   },
   tagValue: {
     zh: '值',

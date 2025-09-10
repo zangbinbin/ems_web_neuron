@@ -1,3 +1,5 @@
+import { message } from '@meta2d/core/src/diagrams'
+
 export default {
   admin: {
     zh: '管理',
@@ -7,13 +9,21 @@ export default {
     zh: '日志',
     en: 'Logs',
   },
+  auditLog: {
+    zh: '审计日志',
+    en: 'Audit Log',
+  },
   debugFiles: {
-    zh: '调试文件',
+    zh: '系统日志',
     en: 'Debug files',
   },
   logType: {
     zh: '日志类型',
     en: 'Log type',
+  },
+  auditLogType: {
+    zh: '审计日志类型',
+    en: 'Audit log type',
   },
   timeRange: {
     zh: '时间范围',
@@ -211,5 +221,29 @@ export default {
   memoryUsage: {
     zh: '内存使用情况',
     en: 'Memory usage',
+  },
+  module: {
+    zh: '模块',
+    en: 'module',
+  },
+  function: {
+    zh: '函数',
+    en: 'function',
+  },
+  line: {
+    zh: '行号',
+    en: 'line',
+  },
+  file: {
+    zh: '文件',
+    en: 'file',
+  },
+  createdTime: {
+    zh: '创建时间',
+    en: 'Created time',
+  },
+  message: {
+    zh: '信息',
+    en: 'Message',
   },
 }

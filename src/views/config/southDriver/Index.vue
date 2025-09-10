@@ -132,6 +132,10 @@
                       />
                       <span>{{ $t(`config.updateDebugLogLevel`) }}</span>
                     </emqx-dropdown-item>
+                    <emqx-dropdown-item command="downloadLog" class="operation-item-wrap">
+                      <i class="iconfont icondownload operation-icon" />
+                      <span>{{ $t(`common.downloadLog`) }}</span>
+                    </emqx-dropdown-item>
                     <emqx-dropdown-item class="operation-item-wrap" command="delete">
                       <i class="iconfont icondelete operation-icon" />
                       <span>{{ $t(`common.delete`) }}</span>
@@ -207,6 +211,9 @@ import {
   useDriverName,
 } from '@/composables/config/useDriver'
 import useSouthDriver from '@/composables/config/useSouthDriver'
+
+import { downloadLogs } from '@/api/admin'
+import { useDownload } from '@/composables/useDownload'
 import type { DriverItemInList } from '@/types/config'
 import { DriverDirection, NodeCatogery } from '@/types/enums'
 import DriverDialog from '@/views/config/components/DriverDialog.vue'
@@ -285,7 +292,13 @@ const setNodeStartStopStatus = async (node: DriverItemInList, status: boolean, n
     console.error(error)
   }
 }
-
+const { downloadFile } = useDownload()
+const downloadLogsFile = (node: DriverItemInList) => {
+  downloadLogs(`${node.name}.log`).then((res) => {
+    const { data, headers } = res
+    downloadFile(headers, data)
+  })
+}
 const getNodeValue = (node: DriverItemInList) => {
   const useDriverStatusSet = useDriverStatus({ data: node })
   return useDriverStatusSet
@@ -299,6 +312,7 @@ const handleClickOperator = async (command: string, row: DriverItemInList) => {
     ['dataStatistics', isShowDataStatistics],
     ['debugLogLevel', modifyNodeLogLevel],
     ['delete', deleteDriver],
+    ['downloadLog', downloadLogsFile],
   ])
   const apiFunc = apiMap.get(command)
   if (apiFunc && typeof apiFunc === 'function') {

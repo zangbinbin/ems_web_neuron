@@ -113,6 +113,10 @@
                     />
                     <span>{{ $t(`config.updateDebugLogLevel`) }}</span>
                   </emqx-dropdown-item>
+                  <emqx-dropdown-item command="downloadLog" class="operation-item-wrap">
+                    <i class="iconfont icondownload operation-icon" />
+                    <span>{{ $t(`common.downloadLog`) }}</span>
+                  </emqx-dropdown-item>
                   <emqx-dropdown-item
                     v-if="!isNotSupportRemoveNode(row.name)"
                     command="delete"
@@ -166,6 +170,8 @@ import {
   useDriverName,
 } from '@/composables/config/useDriver'
 import useNorthDriver from '@/composables/config/useNorthDriver'
+import { downloadLogs } from '@/api/admin'
+import { useDownload } from '@/composables/useDownload'
 import type { DriverItemInList } from '@/types/config'
 import { DriverDirection, NodeCatogery } from '@/types/enums'
 import DriverDialog from '@/views/config/components/DriverDialog.vue'
@@ -201,7 +207,6 @@ const {
   goNodeConfig,
   modifyNodeLogLevel,
   deleteDriver,
-
   sortBy,
   sortDataByKey,
   changeListShowMode,
@@ -245,13 +250,20 @@ const rowClassName = (data: { row: DriverItemInList; rowIndex: number }) => {
   const { row: node } = data
   return isMonitorNode(node.name) ? 'row-disabled' : 'table-row-click'
 }
-
+const { downloadFile } = useDownload()
+const downloadLogsFile = (node: DriverItemInList) => {
+  downloadLogs(`${node.name}.log`).then((res) => {
+    const { data, headers } = res
+    downloadFile(headers, data)
+  })
+}
 const handleClickOperator = async (command: string, row: DriverItemInList) => {
   const apiMap = new Map([
     ['edit', editDialog],
     ['dataStatistics', isShowDataStatistics],
     ['debugLogLevel', modifyNodeLogLevel],
     ['delete', deleteDriver],
+    ['downloadLog', downloadLogsFile],
   ])
   const apiFunc = apiMap.get(command)
   if (apiFunc && typeof apiFunc === 'function') {

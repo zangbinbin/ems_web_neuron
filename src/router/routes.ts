@@ -245,6 +245,12 @@ const routes: Array<RouteRecordRaw> = [
       //   meta: { title: 'admin.log', requireAuth: true, hiddenBreadcrumb: true },
       //   component: () => import('@/views/admin/Log.vue'),
       // },
+      {
+        path: 'auditlog',
+        name: 'AuditLog',
+        meta: { title: 'admin.auditLog', requireAuth: true, hiddenBreadcrumb: true },
+        component: () => import('@/views/admin/AuditLog.vue'),
+      },
     ],
   },
 

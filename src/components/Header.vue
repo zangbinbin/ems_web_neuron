@@ -21,10 +21,10 @@
                 <i class="iconfont iconabout"></i>
                 <span> {{ $t('common.about') }}</span>
               </emqx-dropdown-item>
-              <!-- <emqx-dropdown-item @click="downloadLogsFile">
+              <emqx-dropdown-item @click="downloadLogsFile">
                 <i class="iconfont icondownload"></i>
                 <span> {{ $t('admin.debugFiles') }}</span>
-              </emqx-dropdown-item> -->
+              </emqx-dropdown-item>
             </emqx-dropdown-menu>
           </template>
         </emqx-dropdown>
@@ -78,17 +78,13 @@ import { EN_LANG } from '@/config/index'
 const store = useStore()
 const router = useRouter()
 
-const goLicense = () => {
-  router.push({ name: 'License' })
-}
-
 const goAbout = () => {
   router.push({ name: 'About' })
 }
 
 const { downloadFile } = useDownload()
 const downloadLogsFile = () => {
-  downloadLogs().then((res) => {
+  downloadLogs('cse_ems.log').then((res) => {
     const { data, headers } = res
     downloadFile(headers, data)
   })

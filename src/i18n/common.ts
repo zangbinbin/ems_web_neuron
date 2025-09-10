@@ -1,3 +1,5 @@
+import { downloadLogs } from '@/api/admin'
+
 export default {
   device: {
     zh: '设备',
@@ -114,6 +116,10 @@ export default {
   delete: {
     zh: '删除',
     en: 'Delete',
+  },
+  downloadLog: {
+    zh: '下载日志',
+    en: 'DownloadLog',
   },
   batchDelete: {
     zh: '批量删除',
