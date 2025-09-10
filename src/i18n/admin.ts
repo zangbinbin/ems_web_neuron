@@ -14,7 +14,7 @@ export default {
     en: 'Audit Log',
   },
   debugFiles: {
-    zh: '调试文件',
+    zh: '系统日志',
     en: 'Debug files',
   },
   logType: {

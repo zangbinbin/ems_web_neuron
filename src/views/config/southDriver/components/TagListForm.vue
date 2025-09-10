@@ -82,6 +82,13 @@
           <emqx-input v-model="row.valueRange" />
         </template>
       </el-table-column>
+      <el-table-column :label="$t('config.threshold')" width="110">
+        <template #default="{ row, $index }">
+          <el-form-item :prop="`tagList.${$index}.threshold`">
+            <emqx-input-number v-model="row.threshold" :step="0.1" controls-position="right" />
+          </el-form-item>
+        </template>
+      </el-table-column>
       <!-- value -->
       <el-table-column width="110" :rules="rules.value">
         <template #header>

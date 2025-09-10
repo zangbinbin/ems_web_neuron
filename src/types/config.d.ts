@@ -253,6 +253,7 @@ export interface TagForm {
   type: number | null
   description: string
   valueRange: string
+  threshold?: number | undefined
   precision?: number | undefined
   decimal?: number | null
   offset?: number | null

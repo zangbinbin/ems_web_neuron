@@ -85,6 +85,9 @@
         <emqx-table-column :label="$t('config.valueRange')">
           <template #default="{ row }">{{ row.valueRange }}</template>
         </emqx-table-column>
+        <emqx-table-column :label="$t('config.threshold')">
+          <template #default="{ row }">{{ tagDecimalValue(row.threshold) }}</template>
+        </emqx-table-column>
         <emqx-table-column prop="valueToShow" min-width="100">
           <template #header>
             <div class="value-column-hd">
