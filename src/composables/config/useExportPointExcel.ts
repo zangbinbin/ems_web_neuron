@@ -24,6 +24,7 @@ export default () => {
     precision?: number | undefined
     decimal?: number | null
     offset?: number | null
+    threshold?: number | undefined
     value?: string | number | undefined
     deviceName: string
     group: string
@@ -44,6 +45,7 @@ export default () => {
       precision?: number | undefined
       decimal?: number | null
       offset?: number | null
+      threshold?: number | undefined
       value?: string | number | undefined
     }>
     merges: Array<{
@@ -77,8 +79,8 @@ export default () => {
       }, {})
 
       // 2. 对每个device分组内的数据按point排序
-      const sortedDevices = Object.entries(deviceGroups).map(([device, items]) => {
-        return items.sort((a, b) => {
+      const sortedDevices = Object.entries(deviceGroups).map(([device, itemArrays]) => {
+        return itemArrays.sort((a, b) => {
           if (!a.point && !b.point) return 0
           if (!a.point) return 1
           if (!b.point) return -1
@@ -99,7 +101,7 @@ export default () => {
       let mergeStart = 1 // Excel行号从1开始
       let currentDevice = finalData[0]?.deviceName
 
-      for (let i = 1; i <= finalData.length; i++) {
+      for (let i = 1; i <= finalData.length; i += 1) {
         if (i === finalData.length || finalData[i].deviceName !== currentDevice) {
           if (i - mergeStart > 0) {
             merges.push({
@@ -128,6 +130,7 @@ export default () => {
           type: item.type ? findLabelByValue(item.type) : '',
           description: item.description,
           valueRange: item.valueRange,
+          threshold: item.threshold,
           precision: item.precision,
           decimal: item.decimal,
           offset: item.offset,

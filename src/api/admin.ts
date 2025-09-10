@@ -1,4 +1,3 @@
-import type { License } from '@/types/admin'
 import type { LogType } from '@/types/enums'
 import http from '@/utils/http'
 import type { AxiosRequestConfig, AxiosResponse } from 'axios'
@@ -52,9 +51,9 @@ export const queryHardwareToken = (): Promise<AxiosResponse<any>> => {
   return http.get('/hwtoken')
 }
 
-export const downloadLogs = (): Promise<AxiosResponse<any>> => {
+export const downloadLogs = (file_name: string): Promise<AxiosResponse<any>> => {
   return http({
-    url: '/logs',
+    url: `/log/file?name=${file_name}`,
     method: 'get',
     responseType: 'blob',
     timeout: 1800000,
