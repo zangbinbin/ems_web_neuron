@@ -12,7 +12,7 @@ export default () => {
 
   const pageController = ref({
     num: 1,
-    size: 100,
+    size: 10,
     totalPageNum: 0,
     total: 0,
   })

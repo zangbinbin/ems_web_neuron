@@ -31,7 +31,7 @@
       hide-on-single-page
       layout="total, sizes, prev, pager, next, jumper"
       v-model:current-page="pageController.num"
-      :page-sizes="[50, 100, 500]"
+      :page-sizes="[10, 15, 20]"
       :page-count="pageController.totalPageNum"
       :page-size="pageController.size"
       :total="pageController.total"
