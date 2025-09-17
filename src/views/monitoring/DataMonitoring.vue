@@ -105,11 +105,13 @@
               </el-popover>
             </div>
           </template>
-
           <template #default="{ row }">
             <span v-if="!row.error">{{ row.valueToShow }}</span>
             <span v-else class="has-error"> Error({{ row.error }}): {{ getErrorMsg(row.error) }} </span>
           </template>
+        </emqx-table-column>
+        <emqx-table-column :label="$t('data.updated')">
+          <template #default="{ row }">{{ dateformat(row.timestamp, 'yyyy-mm-dd HH:MM:ss') }}</template>
         </emqx-table-column>
         <emqx-table-column :label="$t('config.desc')" prop="description" min-width="100" />
 
