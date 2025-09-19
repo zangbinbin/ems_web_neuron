@@ -14,15 +14,14 @@
           />
         </div>
       </div>
-      <emqx-button type="primary" @click="getAuditLogs">{{ $t('common.submit') }}</emqx-button>
+      <emqx-button type="primary" @click="getAuditLogs">{{ $t('common.query') }}</emqx-button>
     </div>
     <div class="table-container">
       <emqx-table :data="tableData" :empty-text="$t('common.emptyData')">
-        <emqx-table-column label="Id" prop="id"></emqx-table-column>
+        <emqx-table-column :label="$t('admin.line')" prop="line"></emqx-table-column>
         <emqx-table-column :label="$t('admin.module')" prop="module"></emqx-table-column>
         <emqx-table-column :label="$t('admin.message')" prop="message"></emqx-table-column>
         <emqx-table-column :label="$t('admin.function')" prop="function"></emqx-table-column>
-        <emqx-table-column :label="$t('admin.line')" prop="line"></emqx-table-column>
         <emqx-table-column :label="$t('admin.file')" prop="file"></emqx-table-column>
         <emqx-table-column :label="$t('admin.createdTime')" prop="created_time"></emqx-table-column>
       </emqx-table>
