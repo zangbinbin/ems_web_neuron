@@ -9,7 +9,7 @@ export default () => {
   const startTime: Ref<number | undefined> = ref(new Date(Date.now() - 1000 * 60 * 60 * 24).getTime())
   const endTime: Ref<number | undefined> = ref(new Date().getTime())
   const tableData: Ref<Array<string>> = ref([])
-
+  const keyword: Ref<string> = ref('')
   const pageController = ref({
     num: 1,
     size: 10,
@@ -48,6 +48,7 @@ export default () => {
     const data: {
       start_time: number
       end_time: number
+      keyword?: string
       page: number
       page_size: number
     } = {
@@ -55,6 +56,9 @@ export default () => {
       end_time: dateformat(endTime.value, 'yyyy-mm-dd HH:MM:ss'),
       page: num == null ? 1 : num,
       page_size: size,
+    }
+    if (keyword.value !== '') {
+      data.keyword = keyword.value
     }
     tableData.value = []
     const { data: ret } = await queryAuditLog(data)
@@ -87,6 +91,7 @@ export default () => {
   getAuditLogs()
 
   return {
+    keyword,
     timeRange,
     pageController,
     tableData,

@@ -14,7 +14,8 @@
           />
         </div>
       </div>
-      <emqx-button type="primary" @click="getAuditLogs">{{ $t('common.submit') }}</emqx-button>
+      <KeywordSerachInput v-model="keyword" class="search_input" />
+      <emqx-button type="primary" @click="getAuditLogs">{{ $t('config.query') }}</emqx-button>
     </div>
     <div class="table-container">
       <emqx-table :data="tableData" :empty-text="$t('common.emptyData')">
@@ -43,9 +44,10 @@
 
 <script setup lang="ts">
 import useAuditLog from '@/composables/admin/useAuditLog'
+import KeywordSerachInput from '@/components/KeywordSearchInput.vue'
 import { ElDatePicker } from 'element-plus'
 
-const { timeRange, tableData, pageController, getAuditLogs, refreshData, handleSizeChange } = useAuditLog()
+const { keyword, timeRange, tableData, pageController, getAuditLogs, refreshData, handleSizeChange } = useAuditLog()
 </script>
 
 <style lang="scss">
