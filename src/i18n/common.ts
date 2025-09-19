@@ -133,6 +133,10 @@ export default {
     zh: '清空',
     en: 'Clear',
   },
+  query: {
+    zh: '查询',
+    en: 'Query',
+  },
   submit: {
     zh: '提交',
     en: 'Submit',
