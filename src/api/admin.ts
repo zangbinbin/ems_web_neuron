@@ -15,6 +15,7 @@ export const queryLog = (data: {
 export const queryAuditLog = (data: {
   start_time: number
   end_time: number
+  keyword?: string
   page: number
   page_size: number
 }): Promise<AxiosResponse<{ error: number; audit_log: Array<string>; total_num: number }>> => {
