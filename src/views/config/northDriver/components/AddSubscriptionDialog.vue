@@ -38,7 +38,7 @@
       </emqx-form-item>
 
       <emqx-form-item v-if="isSupportBatchSub" prop="driverGroups" :label="$t('config.subscribeSouthDriverData')">
-        <SouthGroupsCheckbox v-model="subscriptionForm.driverGroups" />
+        <SouthGroupsCheckbox v-if="showDialog" v-model="subscriptionForm.driverGroups" />
       </emqx-form-item>
     </emqx-form>
 
