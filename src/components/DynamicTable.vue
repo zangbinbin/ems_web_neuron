@@ -53,7 +53,7 @@
                 style="width: 130px"
                 v-else-if="field.type === TypeOfPluginParam.TimeSelect"
                 v-model="row[fieldTimeRangeName(field.name)]"
-                format="HH时:mm分"
+                format="HH:mm"
                 value-format="HH:mm"
                 :placeholder="$t('common.time')"
               >
@@ -65,7 +65,7 @@
                 v-model="row[fieldTimeRangeName(field.name)]"
                 is-range
                 size="small"
-                format="HH时:mm分"
+                format="HH:mm"
                 value-format="HH:mm"
                 arrow-control
                 range-separator="-"
@@ -90,11 +90,9 @@
 
               <!-- MonthDay -->
               <el-date-picker
+                style="width: 150px"
                 v-else-if="field.type === TypeOfPluginParam.MonthDay"
                 v-model="row[fieldName(field.name)]"
-                size="small"
-                value-format="MM:DD"
-                format="MM-DD"
                 :placeholder="$t('common.date')"
                 type="date"
                 @change="handleChange"
