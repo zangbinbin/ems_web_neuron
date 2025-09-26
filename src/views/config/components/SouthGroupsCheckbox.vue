@@ -49,6 +49,7 @@
 <script lang="ts" setup>
 import { defineProps, defineEmits, ref, watch, nextTick, computed } from 'vue'
 import type { Ref, PropType } from 'vue'
+import { useRoute } from 'vue-router'
 import { convertNodeName } from '@/utils/driverNames'
 import { ElCollapse, ElCollapseItem, ElCheckbox, ElCheckboxGroup, ElRadioGroup, ElRadioButton } from 'element-plus'
 import { queryGroupList, querySouthDriverList } from '@/api/config'
@@ -160,10 +161,11 @@ const initCollapse = () => {
   isCollapseAll.value = 'collapse'
   activeNames.value = []
 }
-
+const route = useRoute()
+const node_name = computed(() => route.params.node.toString())
 const getGroupList = async (nodeName: string) => {
   try {
-    const data = await queryGroupList(nodeName.toString())
+    const data = await queryGroupList(nodeName.toString(), node_name.value)
     const list = data.map((item) => item.name)
     return Promise.resolve({ node: nodeName, groups: list })
   } catch (error) {

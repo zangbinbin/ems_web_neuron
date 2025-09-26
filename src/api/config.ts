@@ -194,9 +194,9 @@ export const updateNodeLogLevelToDebug = (nodeName: string, logLevel: string) =>
 }
 
 /* GROUP */
-export const queryGroupList = async (node: string): Promise<Array<GroupData>> => {
+export const queryGroupList = async (node: string, app?: string): Promise<Array<GroupData>> => {
   const { data }: AxiosResponse<{ error: number; groups: Array<GroupData> }> = await http.get('/group', {
-    params: { node },
+    params: { node, app },
   })
   return Promise.resolve((data?.groups || []).map((item) => ({ ...item, group: item.name })))
 }
