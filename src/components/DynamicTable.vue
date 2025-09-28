@@ -95,6 +95,8 @@
                 v-model="row[fieldName(field.name)]"
                 :placeholder="$t('common.date')"
                 type="date"
+                format="YYYY-MM-DD"
+                value-format="YYYY-MM-DD"
                 @change="handleChange"
               />
 
