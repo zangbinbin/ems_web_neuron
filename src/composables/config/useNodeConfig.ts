@@ -53,6 +53,7 @@ export default (props: Props) => {
     'peak-shave-valley-fill-day-config-list',
     'peak-shave-valley-fill-specific-config-list',
     'peak-shave-valley-fill-universal-config-list',
+    'peak-shave-valley-fill-month-config-list',
   ])
 
   const setParamRef = (el: any) => {

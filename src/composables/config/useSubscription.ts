@@ -89,6 +89,11 @@ export const useSubscriptionList = () => {
     subscriptionList.value = list.map((item) => {
       return Object.assign(item, { checked: false })
     })
+    // 直接更新 subscriptionList 中的 node_description
+    subscriptionList.value = subscriptionList.value.map((item) => ({
+      ...item,
+      node_description: sharedDeviceList.value.find((d) => d.name === item.driver)?.node_description || null,
+    }))
     isListLoading.value = false
   }
 
@@ -347,6 +352,12 @@ export const useAddSubscription = (props: AddSubscriptionProps) => {
         await addSubscription(data)
       }
 
+      // 刷新 deviceList 以更新 sharedDeviceList，从而更新 subscriptionList 中的 node_description
+      const { getSouthDriverList } = useSouthDriver()
+      await getSouthDriverList()
+      // 手动触发 subscriptionList 的更新
+      const { getSubscriptionList } = useSubscriptionList()
+      await getSubscriptionList()
       EmqxMessage.success(t('common.submitSuccess'))
       return Promise.resolve()
     } catch (error) {

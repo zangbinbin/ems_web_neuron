@@ -68,7 +68,11 @@
       </emqx-table-column>
     </emqx-table>
   </emqx-card>
-  <AddSubscriptionDialog v-model="showAddSubscriptionDialog" :current-node="node" @submitted="getSubscriptionList" />
+  <AddSubscriptionDialog
+    v-model="showAddSubscriptionDialog"
+    :current-node="node"
+    @submitted="handleAddSubscriptionSubmitted"
+  />
 
   <EditSubcriptionGroup
     v-model="editGroupForm"
@@ -144,6 +148,10 @@ const exportExcel = async () => {
 
 const addSubscription = () => {
   showAddSubscriptionDialog.value = true
+}
+const handleAddSubscriptionSubmitted = () => {
+  // 重新加载订阅列表
+  getSubscriptionList()
 }
 </script>
 

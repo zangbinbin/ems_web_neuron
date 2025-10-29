@@ -85,14 +85,14 @@ const navList = computed(() => {
           to: '/configuration/north-driver',
           label: 'config.northAppSetup',
         },
-        {
-          to: '/configuration/template',
-          label: 'config.templateManagement',
-        },
-        {
-          to: '/configuration/plugin',
-          label: 'config.plugin',
-        },
+        // {
+        //   to: '/configuration/template',
+        //   label: 'config.templateManagement',
+        // },
+        // {
+        //   to: '/configuration/plugin',
+        //   label: 'config.plugin',
+        // },
       ],
     },
     {
