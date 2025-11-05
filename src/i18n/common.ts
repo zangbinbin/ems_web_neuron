@@ -481,4 +481,36 @@ export default {
     zh: '实时监控',
     en: 'Primary wiring diagram',
   },
+  alarmRules: {
+    zh: '报警规则',
+    en: 'Alarm Rules',
+  },
+  pointNameSearchPlaceholder: {
+    zh: '请输入点位名称',
+    en: 'Please enter the point name',
+  },
+  groupName: {
+    zh: '分组名称',
+    en: 'Group Name',
+  },
+  tagName: {
+    zh: '点位名称',
+    en: 'Tag Name',
+  },
+  operator: {
+    zh: '运算符',
+    en: 'Operator',
+  },
+  processingMethod: {
+    zh: '处理方式',
+    en: 'Processing Method',
+  },
+  gapValue: {
+    zh: '回差值',
+    en: 'Gap Value',
+  },
+  faultLevel: {
+    zh: '故障等级',
+    en: 'Fault Level',
+  },
 }

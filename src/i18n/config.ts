@@ -774,4 +774,12 @@ export default {
     zh: '查询',
     en: 'Query',
   },
+  alarmRules: {
+    zh: '报警规则',
+    en: 'Alarm Rules',
+  },
+  addAlarmRules: {
+    zh: '添加报警规则',
+    en: 'Add Alarm Rules',
+  },
 }

@@ -126,6 +126,16 @@ const routes: Array<RouteRecordRaw> = [
         meta: { title: 'config.deviceConfig' },
       },
       {
+        // path: 'components/AlarmRules',
+        path: '',
+        name: 'AlarmRules',
+        component: () => import('@/views/config/southDriver/components/AlarmRules.vue'),
+        props: {
+          direction: DriverDirection.South,
+        },
+        meta: { title: 'config.alarmRules' },
+      },
+      {
         path: ':node/:plugin',
         name: 'SouthDriverGroupG',
         component: () => import('@/components/LayoutContent.vue'),

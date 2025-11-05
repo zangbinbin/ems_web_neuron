@@ -136,6 +136,10 @@
                       <i class="iconfont icondownload operation-icon" />
                       <span>{{ $t(`common.downloadLog`) }}</span>
                     </emqx-dropdown-item>
+                    <emqx-dropdown-item class="operation-item-wrap" command="alarmRules">
+                      <i class="iconfont iconalarm operation-icon" />
+                      <span>{{ $t(`common.alarmRules`) }}</span>
+                    </emqx-dropdown-item>
                     <emqx-dropdown-item class="operation-item-wrap" command="delete">
                       <i class="iconfont icondelete operation-icon" />
                       <span>{{ $t(`common.delete`) }}</span>
@@ -260,6 +264,7 @@ const {
   goNodeConfig,
   deleteDriver,
   modifyNodeLogLevel,
+  editAlarmRules,
 
   sortBy,
   sortDataByKey,
@@ -311,6 +316,7 @@ const handleClickOperator = async (command: string, row: DriverItemInList) => {
     ['edit', editDialog],
     ['dataStatistics', isShowDataStatistics],
     ['debugLogLevel', modifyNodeLogLevel],
+    ['alarmRules', editAlarmRules],
     ['delete', deleteDriver],
     ['downloadLog', downloadLogsFile],
   ])
