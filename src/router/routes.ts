@@ -103,6 +103,21 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+  /* 策略管理 */
+  {
+    path: '/configuration/strategy-config',
+    name: 'StrategyManagement',
+    meta: { title: 'config.strategyConfig' },
+    component: Home,
+    children: [
+      {
+        path: '',
+        name: 'StrategyConfig',
+        component: () => import('@/views/config/strategyConfig/Index.vue'),
+        meta: { hiddenBreadcrumb: true },
+      },
+    ],
+  },
   /* CONFIG- SouthDevice */
   {
     path: '/configuration/south-driver',

@@ -19,6 +19,10 @@ export default {
     zh: '应用管理',
     en: 'Strategy Management',
   },
+  strategyConfig: {
+    zh: '策略管理',
+    en: 'Strategy Config',
+  },
   southDeviceManagement: {
     zh: '设备管理',
     en: 'Device Management',
