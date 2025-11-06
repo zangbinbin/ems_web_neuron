@@ -37,8 +37,8 @@ export default (nodePluginInfo: PluginInfo) => {
   const { readTagListFile, handleTagListInTableFile, batchAddTags } = useUploadTagList(nodePluginInfo)
   const { isExporting, exportTable } = useExportTagTable()
 
-  const node = computed(() => route.params.node.toString())
-  const node_description = computed(() => route.params.node_description.toString())
+  const node = computed(() => route.params.node?.toString() || '')
+  const node_description = computed(() => route.params.node_description?.toString() || '')
   const allChecked = computed({
     get() {
       if (groupList.value.length === 0) {
