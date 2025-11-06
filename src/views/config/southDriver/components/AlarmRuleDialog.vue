@@ -11,12 +11,12 @@
         <emqx-input type="input" v-model.trim="alarmRuleForm.device_name" disabled />
       </emqx-form-item>
       <emqx-form-item prop="group_name" :label="$t('common.groupName')" required>
-        <emqx-select v-model="alarmRuleForm.group_name">
+        <emqx-select v-model="alarmRuleForm.group_name" :disabled="alarmRuleForm.id ? true : false">
           <emqx-option v-for="item in groupList" :key="item.value" :value="item.value" :label="item.key" />
         </emqx-select>
       </emqx-form-item>
       <emqx-form-item prop="tag_name" :label="$t('common.tagName')" required>
-        <emqx-input type="input" v-model.trim="alarmRuleForm.tag_name" />
+        <emqx-input type="input" v-model.trim="alarmRuleForm.tag_name" :disabled="alarmRuleForm.id ? true : false" />
       </emqx-form-item>
       <emqx-form-item prop="operator" :label="$t('common.operator')" required>
         <emqx-select v-model="alarmRuleForm.operator">
@@ -24,10 +24,10 @@
         </emqx-select>
       </emqx-form-item>
       <emqx-form-item prop="abnormal_value" :label="$t('common.abnormalValue')" required>
-        <emqx-input type="input" v-model.trim="alarmRuleForm.abnormal_value" />
+        <emqx-input type="number" v-model.number="alarmRuleForm.abnormal_value" />
       </emqx-form-item>
       <emqx-form-item prop="gap_value" :label="$t('common.gapValue')" required>
-        <emqx-input type="input" v-model.trim="alarmRuleForm.gap_value" />
+        <emqx-input type="number" v-model.number="alarmRuleForm.gap_value" />
       </emqx-form-item>
       <emqx-form-item prop="processing_method" :label="$t('common.processingMethod')" required>
         <emqx-select v-model="alarmRuleForm.processing_method">
