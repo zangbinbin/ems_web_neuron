@@ -138,6 +138,7 @@ import http from '@/utils/http'
 import { EmqxMessage } from '@emqx/emqx-ui'
 import { queryAlarmRluleList, addAlarmRlule, updateAlarmRlule, deleteAlarmRlule } from '@/api/alarmRules'
 import { forEach } from 'lodash'
+import { useRouter } from 'vue-router'
 
 const AlarmRuleDialog = defineAsyncComponent(() => import('@/views/config/southDriver/components/AlarmRuleDialog.vue'))
 const { downloadFile } = useDownload()
@@ -145,8 +146,9 @@ const { fileReader } = useTableFileReader()
 const route = useRoute()
 const { t } = useI18n()
 const { isExporting, exportTable } = useExportAlarmRule()
+const router = useRouter()
 // 路由传递参数
-const node = computed(() => route.params)
+const node = computed(() => route.query)
 // 是否正在加载列表数据
 const isListLoading = ref(false)
 // 点位名称查询条件
@@ -171,6 +173,9 @@ const alarmRules = ref([] as any)
 
 // 查询报警规则列表
 const dbGetAlarmRules = async () => {
+  if (!node.value.name) {
+    router.push({ name: 'SouthDriver' })
+  }
   const parms: any = {
     page: pageController.value.num,
     page_size: pageController.value.size,

@@ -613,4 +613,8 @@ export default {
     zh: 'Profinet IO 等待 HELLO 响应',
     en: 'Profinet IO wait HELLO',
   },
+  5007: {
+    zh: '数据不存在',
+    en: 'No Data',
+  }
 }

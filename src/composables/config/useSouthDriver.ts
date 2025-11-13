@@ -196,7 +196,7 @@ export default (autoLoad = true, needRefreshStatus = false) => {
   }
 
   const editAlarmRules = (node: DriverItemInList) => {
-    router.push({ name: 'AlarmRules', params: node })
+    router.push({ name: 'AlarmRules', query: node })
   }
 
   const reloadDriverList = () => {

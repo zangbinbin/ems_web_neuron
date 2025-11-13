@@ -108,7 +108,7 @@ export default defineComponent({
 }
 :deep(.el-aside) {
   position: fixed;
-  z-index: 999999;
+  z-index: 10;
 }
 :deep(.nav-container) {
   top: 100px !important;
