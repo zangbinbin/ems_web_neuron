@@ -76,6 +76,7 @@ import { ref, computed, nextTick, defineAsyncComponent, watch } from 'vue'
 import { ElLink } from 'element-plus'
 import { queryNorthDriverList } from '@/api/config'
 import { useRouter } from 'vue-router'
+
 const router = useRouter()
 const isListLoading = ref(false)
 const activeTab = ref('')
@@ -118,9 +119,8 @@ const defaultActiveTab = computed(() => {
   if (pluginList.value.length > 0) {
     pluginInfo.value = pluginList.value[0]
     return pluginList.value[0].name
-  } else {
-    return ''
   }
+  return ''
 })
 
 // 监听 pluginList 变化设置初始值
@@ -153,7 +153,7 @@ const switchTab = async (tab: any) => {
 
 // 编辑策略状态
 const editStatus = (item: any) => {
-  console.log('编辑' + item.name + '状态')
+  console.log(`编辑${item.name}状态`)
 }
 
 // 编辑策略信息

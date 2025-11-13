@@ -12,10 +12,10 @@ export const addInfo = (data: any) => {
   } as AxiosRequestConfig)
 }
 
-export const updateInfo = (data:any) => {
+export const updateInfo = (data: any) => {
   return http.put('/pervent_setting', data)
 }
 
-export const deleteInfo = (data:any) => {
-  return http.delete('/pervent_setting', { data: data })
+export const deleteInfo = (data: any) => {
+  return http.delete('/pervent_setting', { data })
 }

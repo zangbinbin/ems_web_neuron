@@ -9,17 +9,16 @@ export const queryList = (params: any): Promise<AxiosResponse<any>> => {
 }
 
 // 更新通用计划曲线
-export const updateTYInfo = (data:any) => {
+export const updateTYInfo = (data: any) => {
   return http.put('/plan_curve/common', data)
 }
 
 // 更新特定日计划曲线
-export const updateTDRInfo = (data:any) => {
+export const updateTDRInfo = (data: any) => {
   return http.put('/plan_curve/assign', data)
 }
 
 // 更新日期范围计划曲线
-export const updateRQFWInfo = (data:any) => {
+export const updateRQFWInfo = (data: any) => {
   return http.put('/plan_curve/date_range', data)
 }
-

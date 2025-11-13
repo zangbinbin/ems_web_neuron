@@ -616,5 +616,5 @@ export default {
   5007: {
     zh: '数据不存在',
     en: 'No Data',
-  }
+  },
 }

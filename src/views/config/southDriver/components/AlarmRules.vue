@@ -125,7 +125,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, nextTick, defineAsyncComponent } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { MessageBoxConfirm } from '@/utils/element'
 import ViewHeaderBar from '@/components/ViewHeaderBar.vue'
@@ -138,7 +138,6 @@ import http from '@/utils/http'
 import { EmqxMessage } from '@emqx/emqx-ui'
 import { queryAlarmRluleList, addAlarmRlule, updateAlarmRlule, deleteAlarmRlule } from '@/api/alarmRules'
 import { forEach } from 'lodash'
-import { useRouter } from 'vue-router'
 
 const AlarmRuleDialog = defineAsyncComponent(() => import('@/views/config/southDriver/components/AlarmRuleDialog.vue'))
 const { downloadFile } = useDownload()

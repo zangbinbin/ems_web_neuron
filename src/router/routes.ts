@@ -120,19 +120,19 @@ const routes: Array<RouteRecordRaw> = [
         path: 'components/PlannedCurve',
         name: 'PlannedCurve',
         component: () => import('@/views/config/strategyConfig/components/PlannedCurve.vue'),
-        meta: { title: '计划曲线配置',hiddenBreadcrumb: false },
+        meta: { title: '计划曲线配置', hiddenBreadcrumb: false },
       },
       {
         path: 'components/BackflowPrevention',
         name: 'BackflowPrevention',
         component: () => import('@/views/config/strategyConfig/components/BackflowPrevention.vue'),
-        meta: { title: '防逆流配置',hiddenBreadcrumb: false },
+        meta: { title: '防逆流配置', hiddenBreadcrumb: false },
       },
       {
         path: 'components/LoadControl',
         name: 'LoadControl',
         component: () => import('@/views/config/strategyConfig/components/LoadControl.vue'),
-        meta: { title: '需量控制配置',hiddenBreadcrumb: false },
+        meta: { title: '需量控制配置', hiddenBreadcrumb: false },
       },
     ],
   },
@@ -166,7 +166,7 @@ const routes: Array<RouteRecordRaw> = [
         props: {
           direction: DriverDirection.South,
         },
-        meta: { title: 'config.alarmRules',hiddenBreadcrumb: false },
+        meta: { title: 'config.alarmRules', hiddenBreadcrumb: false },
       },
       {
         path: ':node/:plugin',
