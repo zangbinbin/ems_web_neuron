@@ -26,11 +26,11 @@
             <div class="node-card setup-item-card">
               <emqx-row>
                 <emqx-col :span="20" class="align-center">
-                  <span style="font-size: 20px; font-weight: 900">{{ item.name }}</span>
+                  <span style="font-size: 20px; font-weight: 900">{{ getConfigByType(item.strategy_name).name }}</span>
                 </emqx-col>
                 <emqx-col :span="4">
                   <img
-                    :src="require(`../../../assets/images/${item.iconName}.png`)"
+                    :src="require(`../../../assets/images/${item.icon}.png`)"
                     alt="neuron-logo"
                     width="70"
                     height="70"
@@ -47,13 +47,13 @@
                       <label>{{ $t('config.workStatus') }}</label>
                       <div>
                         <svg class="iconfont icon-svg" aria-hidden="true">
-                          <use :xlink:href="item.status ? '#iconrunning' : '#iconstopped'" />
+                          <use :xlink:href="item.open ? '#iconrunning' : '#iconstopped'" />
                         </svg>
-                        <span>{{ item.status ? '启用' : '停用' }}</span>
+                        <span>{{ item.open ? '启用' : '停用' }}</span>
                       </div>
                     </div>
                     <div class="common-flex">
-                      <emqx-switch v-model="item.status" @click="editStatus(item)" />
+                      <emqx-switch v-model="item.open" @click="editStatus(item)" />
                     </div>
                   </div>
                 </emqx-col>
@@ -75,8 +75,13 @@
 import { ref, computed, nextTick, defineAsyncComponent, watch } from 'vue'
 import { ElLink } from 'element-plus'
 import { queryNorthDriverList } from '@/api/config'
+import { queryList, updateInfo } from '@/api/strategyConfig'
 import { useRouter } from 'vue-router'
+import { getConfigByType } from '@/utils/strategyConfig'
+import { EmqxMessage } from '@emqx/emqx-ui'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const router = useRouter()
 const isListLoading = ref(false)
 const activeTab = ref('')
@@ -85,75 +90,51 @@ const backflowPreventionStatus = ref(true)
 const loadControlStatus = ref(true)
 const pluginList = ref([] as any)
 const pluginInfo = ref({} as any)
-const strategyList = ref([
-  {
-    id: 1,
-    name: '计划曲线',
-    type: 'plannedCurve',
-    description:
-      '系统根据预设的计划曲线，智能调整光伏发电和储能系统的出力。通过计划曲线策略，系统可以根据实际需求提前规划电力供应，提高能源利用效率。',
-    status: true,
-    iconName: '1',
-  },
-  {
-    id: 2,
-    name: '防逆流',
-    type: 'backflowPrevention',
-    description: '放电过程中，EMS通过监测并网点功率自动调整放电功率让其保持小于负荷功率避免PCS接入点发生逆流。',
-    status: false,
-    iconName: '3',
-  },
-  {
-    id: 3,
-    name: '需量控制',
-    type: 'loadControl',
-    description:
-      '需量控制是监测电网用电功率与需量功率实时对比，通过储能输出减少从电网购电以消除需量电费的计费,降低峰值时的电费支出。',
-    status: true,
-    iconName: '2',
-  },
-])
-
-// 计算属性确保有数据时才设置默认值
-const defaultActiveTab = computed(() => {
-  if (pluginList.value.length > 0) {
-    pluginInfo.value = pluginList.value[0]
-    return pluginList.value[0].name
-  }
-  return ''
-})
-
-// 监听 pluginList 变化设置初始值
-watch(
-  pluginList,
-  (newList) => {
-    if (newList.length > 0 && !activeTab.value) {
-      activeTab.value = newList[0].name
-      pluginInfo.value = newList[0]
-    }
-  },
-  { immediate: true },
-)
+const strategyList = ref([])
 
 // 查询站点列表
 const queryPluginList = async () => {
   const listArray = await Promise.all([await queryNorthDriverList({ plugin: 'primary' })])
   pluginList.value = listArray.flat()
+  if (pluginList.value && pluginList.value.length > 0) {
+    activeTab.value = pluginList.value[0].name
+    pluginInfo.value = pluginList.value[0]
+    queryStategyInfo()
+  }
+}
+
+// 查询策略信息
+const queryStategyInfo = async () => {
+  isListLoading.value = true
+  const result = await queryList({ node_name: activeTab.value })
+  if (result.data.strategy_switch && result.data.strategy_switch.length > 0) {
+    strategyList.value = result.data.strategy_switch
+    strategyList.value.forEach((item: any) => {
+      item.open = item.open === 1 ? true : false
+    })
+  }
+  isListLoading.value = false
 }
 
 // 切换站点
 const switchTab = async (tab: any) => {
   activeTab.value = tab.name
   pluginInfo.value = tab
-  isListLoading.value = true
-  setInterval(() => {
-    isListLoading.value = false
-  }, 500)
+  queryStategyInfo()
 }
 
 // 编辑策略状态
-const editStatus = (item: any) => {
-  console.log(`编辑${item.name}状态`)
+const editStatus = async (item: any) => {
+  isListLoading.value = true
+  try {
+    await updateInfo({ node_name: activeTab.value, strategy_name: item.strategy_name, open: item.open ? 1 : 0 })
+    EmqxMessage.success(t('common.operateSuccessfully'))
+  } catch (error) {
+    return Promise.reject()
+  } finally {
+    isListLoading.value = false
+    queryStategyInfo()
+  }
 }
 
 // 编辑策略信息
@@ -161,19 +142,11 @@ const editInfo = (item: any) => {
   // 赋值站点名称及描述
   item.siteName = pluginInfo.value.name
   item.siteDescription = pluginInfo.value.node_description
-  switch (item.type) {
-    case 'plannedCurve':
-      router.push({ name: 'PlannedCurve', query: item })
-      break
-    case 'backflowPrevention':
-      router.push({ name: 'BackflowPrevention', query: item })
-      break
-    case 'loadControl':
-      router.push({ name: 'LoadControl', query: item })
-      break
-    default:
-      console.log('编辑未知策略信息')
-      break
+  const config = getConfigByType(item.strategy_name)
+  if (config && config.routerName) {
+    router.push({ name: config.routerName, query: item })
+  } else {
+    EmqxMessage.error('该策略暂无编辑页面')
   }
 }
 

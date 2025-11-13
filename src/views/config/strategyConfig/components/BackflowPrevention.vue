@@ -80,11 +80,12 @@ const formRules = computed(() => {
 
 // 获取数据
 const doGetData = async () => {
-  if (!params.value.name) {
+  if (!params.value.siteName) {
     router.push({ name: 'StrategyConfig' })
   }
   isListLoading.value = true
   try {
+    console.log('防逆流配置：', params.value)
     const result = await queryList({ node_name: params.value.siteName })
     formData.value = result.data
   } catch (error: any) {

@@ -7,10 +7,10 @@
       <div class="bar-left common-flex">
         <p class="driver-name">
           <label>当前站点</label>
-          <span v-if="params.siteDescription && params.siteDescription != ''">
-            {{ params.siteName }}（{{ params.siteDescription }}）
+          <span v-if="siteInfo.siteDescription && siteInfo.siteDescription != ''">
+            {{ siteInfo.siteName }}（{{ siteInfo.siteDescription }}）
           </span>
-          <span v-else>{{ params.siteName }}</span>
+          <span v-else>{{ siteInfo.siteName }}</span>
         </p>
       </div>
       <!-- 头部右侧内容 -->
@@ -61,7 +61,7 @@ const isListLoading = ref(false)
 const route = useRoute()
 const router = useRouter()
 // 路由传递参数
-const params = computed(() => route.query)
+const siteInfo = computed(() => route.query)
 
 const formCom = ref()
 
@@ -72,7 +72,7 @@ const formData = ref({
   threshold_value_charging: 0,
   charge_adjust_step_value: 0,
   chargingpower_limit_is_open: 0, // 开关：默认关闭
-  node_name: params.value.siteName || '', // 站点名称
+  node_name: siteInfo.value.siteName || '', // 站点名称
 } as any)
 const formRules = computed(() => {
   return {
@@ -86,12 +86,12 @@ const formRules = computed(() => {
 
 // 获取数据
 const doGetData = async () => {
-  if (!params.value.name) {
+  if (!siteInfo.value.siteName) {
     router.push({ name: 'StrategyConfig' })
   }
   isListLoading.value = true
   try {
-    const result = await queryList({ node_name: params.value.siteName })
+    const result = await queryList({ node_name: siteInfo.value.siteName })
     formData.value = result.data
   } catch (error: any) {
     return Promise.reject()
@@ -104,7 +104,7 @@ const submit = async () => {
   try {
     await formCom.value.validate()
     isListLoading.value = true
-    formData.value.node_name = params.value.siteName // 站点名称
+    formData.value.node_name = siteInfo.value.siteName // 站点名称
     formData.value.chargingpower_limit_is_open = 0 // 开关：默认关闭
 
     await addInfo(formData.value)

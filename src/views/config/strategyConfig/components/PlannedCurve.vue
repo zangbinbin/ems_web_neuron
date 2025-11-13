@@ -7,10 +7,10 @@
       <div class="bar-left common-flex">
         <p class="driver-name">
           <label>当前站点 </label>
-          <span v-if="params.siteDescription && params.siteDescription != ''">
-            {{ params.siteName }}（{{ params.siteDescription }}）
+          <span v-if="siteInfo.siteDescription && siteInfo.siteDescription != ''">
+            {{ siteInfo.siteName }}（{{ siteInfo.siteDescription }}）
           </span>
-          <span v-else>{{ params.siteName }}</span>
+          <span v-else>{{ siteInfo.siteName }}</span>
         </p>
       </div>
       <!-- 头部右侧内容 -->
@@ -172,7 +172,7 @@ const isListLoading = ref(false)
 const route = useRoute()
 const router = useRouter()
 // 路由传递参数
-const params = computed(() => route.query)
+const siteInfo = computed(() => route.query)
 const type = ref('general')
 
 // 默认计划曲线表单对象
@@ -188,7 +188,7 @@ const defaultForm = ref({
   end_time: '', // 通用计划曲线案例："10:00" ，特定日计划曲线案例：1762362000
   charge_discharge: 1,
   power: 0,
-  node_name: params.value.siteName,
+  node_name: siteInfo.value.siteName,
   start_date: '', // 日期范围计划曲线专用字段
   end_date: '', // 日期范围计划曲线专用字段
 })
@@ -198,7 +198,7 @@ const formDataList = ref([cloneDeep(defaultForm.value)] as any)
 
 // 获取数据
 const doGetData = async () => {
-  if (!params.value.name) {
+  if (!siteInfo.value.siteName) {
     router.push({ name: 'StrategyConfig' })
   }
   isListLoading.value = true
@@ -215,7 +215,7 @@ const doGetData = async () => {
   }
 
   try {
-    const result = await queryList({ node_name: params.value.siteName, plan_type: planType })
+    const result = await queryList({ node_name: siteInfo.value.siteName, plan_type: planType })
     if (result.data.plan_curve.length > 0) {
       formDataList.value = result.data.plan_curve
       // 特定日计划曲线专用字段处理
@@ -293,7 +293,7 @@ const submit = async () => {
   if (type.value == 'general') {
     // 通用计划曲线
     await MessageBoxConfirm('确定保存通用计划曲线信息吗？')
-    await updateTYInfo({ node_name: params.value.siteName, records: formDataList.value })
+    await updateTYInfo({ node_name: siteInfo.value.siteName, records: formDataList.value })
   } else if (type.value == 'specificDay') {
     // 特定日计划曲线
     await MessageBoxConfirm('确定保存特定日计划曲线信息吗？')
@@ -311,7 +311,7 @@ const submit = async () => {
         item.end_time = Math.floor(date.getTime() / 1000)
       }
     })
-    await updateTDRInfo({ node_name: params.value.siteName, records: dataInfo })
+    await updateTDRInfo({ node_name: siteInfo.value.siteName, records: dataInfo })
   } else {
     // 日期范围计划曲线
     await MessageBoxConfirm('确定保存日期范围计划曲线信息吗？')
@@ -328,7 +328,7 @@ const submit = async () => {
         item.end_time = end
       }
     })
-    await updateRQFWInfo({ node_name: params.value.siteName, records: formDataList.value })
+    await updateRQFWInfo({ node_name: siteInfo.value.siteName, records: formDataList.value })
   }
   EmqxMessage.success(t('common.operateSuccessfully'))
   isListLoading.value = false
