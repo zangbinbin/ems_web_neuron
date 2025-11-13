@@ -110,7 +110,7 @@ const queryStategyInfo = async () => {
   if (result.data.strategy_switch && result.data.strategy_switch.length > 0) {
     strategyList.value = result.data.strategy_switch
     strategyList.value.forEach((item: any) => {
-      item.open = item.open === 1 ? true : false
+      item.open = item.open === 1
     })
   }
   isListLoading.value = false
