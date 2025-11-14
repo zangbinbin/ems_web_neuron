@@ -70,7 +70,7 @@
           {{ t('config.clearUploadedFile') }}
         </emqx-button>
         <emqx-button v-if="inputValue" size="mini" @click="downloadFile" type="text">{{
-          t('config.downloadTemplate')
+          t('config.download')
         }}</emqx-button>
         <div class="file-content-preview" v-if="inputValue">
           <label>Content-MD5:</label>

@@ -481,6 +481,10 @@ export default {
     zh: '下载模版',
     en: 'Download template',
   },
+  download: {
+    zh: '下载',
+    en: 'Download',
+  },
   tagTypeError: {
     zh: '当前设备插件能添加的点位的类型为 {typesStr}, 请调整表格数据后再尝试提交',
     en: 'The type of the tag that can be added by the current device plugin is {typesStr}, please try to upload after adjusting the table data',
