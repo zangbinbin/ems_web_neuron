@@ -103,6 +103,39 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+  /* 策略管理 */
+  {
+    path: '/configuration/strategy-config',
+    name: 'StrategyManagement',
+    meta: { title: 'config.strategyConfig' },
+    component: Home,
+    children: [
+      {
+        path: '',
+        name: 'StrategyConfig',
+        component: () => import('@/views/config/strategyConfig/Index.vue'),
+        meta: { hiddenBreadcrumb: true },
+      },
+      {
+        path: 'components/PlannedCurve',
+        name: 'PlannedCurve',
+        component: () => import('@/views/config/strategyConfig/components/PlannedCurve.vue'),
+        meta: { title: '计划曲线配置', hiddenBreadcrumb: false },
+      },
+      {
+        path: 'components/BackflowPrevention',
+        name: 'BackflowPrevention',
+        component: () => import('@/views/config/strategyConfig/components/BackflowPrevention.vue'),
+        meta: { title: '防逆流配置', hiddenBreadcrumb: false },
+      },
+      {
+        path: 'components/LoadControl',
+        name: 'LoadControl',
+        component: () => import('@/views/config/strategyConfig/components/LoadControl.vue'),
+        meta: { title: '需量控制配置', hiddenBreadcrumb: false },
+      },
+    ],
+  },
   /* CONFIG- SouthDevice */
   {
     path: '/configuration/south-driver',
@@ -126,14 +159,14 @@ const routes: Array<RouteRecordRaw> = [
         meta: { title: 'config.deviceConfig' },
       },
       {
-        // path: 'components/AlarmRules',
-        path: '',
+        path: 'components/AlarmRules',
+        // path: '',
         name: 'AlarmRules',
         component: () => import('@/views/config/southDriver/components/AlarmRules.vue'),
         props: {
           direction: DriverDirection.South,
         },
-        meta: { title: 'config.alarmRules' },
+        meta: { title: 'config.alarmRules', hiddenBreadcrumb: false },
       },
       {
         path: ':node/:plugin',

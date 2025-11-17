@@ -125,7 +125,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, nextTick, defineAsyncComponent } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { MessageBoxConfirm } from '@/utils/element'
 import ViewHeaderBar from '@/components/ViewHeaderBar.vue'
@@ -145,8 +145,9 @@ const { fileReader } = useTableFileReader()
 const route = useRoute()
 const { t } = useI18n()
 const { isExporting, exportTable } = useExportAlarmRule()
+const router = useRouter()
 // 路由传递参数
-const node = computed(() => route.params)
+const node = computed(() => route.query)
 // 是否正在加载列表数据
 const isListLoading = ref(false)
 // 点位名称查询条件
@@ -171,6 +172,9 @@ const alarmRules = ref([] as any)
 
 // 查询报警规则列表
 const dbGetAlarmRules = async () => {
+  if (!node.value.name) {
+    router.push({ name: 'SouthDriver' })
+  }
   const parms: any = {
     page: pageController.value.num,
     page_size: pageController.value.size,
