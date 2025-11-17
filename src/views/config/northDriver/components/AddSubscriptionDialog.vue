@@ -123,9 +123,15 @@ const topicSuggest = (keyword: string, callback: any) => {
 const { isMQTTPugin, isGewuPugin, isSupportBatchSub } = useDriverInfo()
 
 const submit = async () => {
-  await submitData()
-  showDialog.value = false
-  emit('submitted')
+  try {
+    await submitData()
+    showDialog.value = false
+    emit('submitted')
+  } catch (error) {
+    // 错误已经在 submitData 中处理，这里不需要额外处理
+    // 保持弹窗打开状态，让用户可以看到表单中的验证错误信息
+    console.error('Submit error:', error)
+  }
 }
 
 watch(showDialog, (val) => {
