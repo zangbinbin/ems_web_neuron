@@ -29,7 +29,19 @@
 
       <!-- mqtt -->
       <emqx-form-item v-if="isMQTTPugin" prop="topic" :label="$t('config.topic')">
-        <emqx-input v-model="subscriptionForm.topic" />
+        <el-autocomplete
+          class="topic-with-select"
+          v-model="subscriptionForm.topic"
+          :trigger-on-focus="true"
+          :fetch-suggestions="topicSuggest"
+        >
+          <template v-slot="{ item }">
+            <slot name="content" :item="item">
+              <span class="item title">{{ item.value }}({{ item.type }})</span>
+            </slot>
+          </template>
+        </el-autocomplete>
+        <!-- <emqx-input v-model="subscriptionForm.topic" /> -->
       </emqx-form-item>
 
       <!-- gewu -->
@@ -55,7 +67,7 @@
 
 <script lang="ts" setup>
 import { computed, defineProps, defineEmits, watch } from 'vue'
-import { ElDialog, ElAlert } from 'element-plus'
+import { ElDialog, ElAlert, ElAutocomplete } from 'element-plus'
 import { useAddSubscription } from '@/composables/config/useSubscription'
 import { useDriverInfo } from '@/composables/config/useDriver'
 import SouthGroupsCheckbox from '@/views/config/components/SouthGroupsCheckbox.vue'
@@ -92,6 +104,22 @@ const {
   submitData,
 } = useAddSubscription(props)
 
+const restaurants = [
+  {
+    value: 'v1/gateway/telemetry',
+    type: '网关模式',
+  },
+  {
+    value: 'v1/devices/me/telemetry',
+    type: '设备模式',
+  },
+]
+
+const topicSuggest = (keyword: string, callback: any) => {
+  const res = keyword ? restaurants.filter((item: any) => item.value?.includes(keyword)) : restaurants
+  callback(res)
+}
+
 const { isMQTTPugin, isGewuPugin, isSupportBatchSub } = useDriverInfo()
 
 const submit = async () => {
@@ -114,6 +142,9 @@ watch(showDialog, (val) => {
 :deep {
   .auto-selector {
     display: block;
+    width: 100%;
+  }
+  .el-autocomplete.topic-with-select {
     width: 100%;
   }
 }
