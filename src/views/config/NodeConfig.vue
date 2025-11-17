@@ -12,30 +12,30 @@
       <div v-if="pluginName === 'primary'">
         <!-- Tab Nav -->
         <div class="tab-nav">
-          <div @click="changeTab(99)" :class="{ active: currentIndex === 99 }" style="border-radius: 0px 5px 5px 0px">
+          <div @click="changeTab(99)" :class="{ active: currentIndex === 99 }" style="border-radius: 5px 0px 0px 5px">
             {{ $t('config.tabOther') }}
           </div>
-          <div @click="changeTab(1)" :class="{ active: currentIndex === 1 }" style="border-radius: 5px 0px 0px 5px">
+          <div @click="changeTab(1)" :class="{ active: currentIndex === 1 }" style="border-radius: 0px 5px 5px 0px">
             {{ $t('config.tabCore') }}
           </div>
-          <div @click="changeTab(5)" :class="{ active: currentIndex === 5 }">
+          <!-- <div @click="changeTab(5)" :class="{ active: currentIndex === 5 }">
             {{ $t('config.tabPeakShaveValleyFill') }}
-          </div>
+          </div> -->
           <div @click="changeTab(6)" :class="{ active: currentIndex === 6 }">
             {{ $t('config.tabPeakShaveValleyFillMS') }}
           </div>
           <div @click="changeTab(7)" :class="{ active: currentIndex === 7 }">
             {{ $t('config.lightStoragePriority') }}
           </div>
-          <div @click="changeTab(9)" :class="{ active: currentIndex === 9 }">{{ $t('config.tabDemandManage') }}</div>
-          <div @click="changeTab(10)" :class="{ active: currentIndex === 10 }">
+          <!-- <div @click="changeTab(9)" :class="{ active: currentIndex === 9 }">{{ $t('config.tabDemandManage') }}</div> -->
+          <!-- <div @click="changeTab(10)" :class="{ active: currentIndex === 10 }">
             {{ $t('config.tabBackFlowPrevente') }}
-          </div>
+          </div> -->
           <!-- <div @click="changeTab(44)" :class="{ active: currentIndex === 44 }">{{ $t('config.tabEconomyWork') }}</div>
           <div @click="changeTab(45)" :class="{ active: currentIndex === 45 }">
             {{ $t('config.tabGridConnectOff') }}
           </div> -->
-          <div @click="changeTab(50)" :class="{ active: currentIndex === 50 }">{{ $t('config.tabAbnormalList') }}</div>
+          <!-- <div @click="changeTab(50)" :class="{ active: currentIndex === 50 }">{{ $t('config.tabAbnormalList') }}</div> -->
           <div @click="changeTab(55)" :class="{ active: currentIndex === 55 }">
             {{ $t('config.tabDataStorageList') }}
           </div>
