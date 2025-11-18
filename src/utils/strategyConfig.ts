@@ -8,7 +8,7 @@ export const STRATEGY_TYPE_CONFIGS = [
   {
     type: 'demand_control',
     name: '需量控制',
-    routerName: 'BackflowPrevention',
+    routerName: 'LoadControl',
   },
   {
     type: 'plan_curve',
