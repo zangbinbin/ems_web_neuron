@@ -1,6 +1,6 @@
 <template>
   <emqx-card v-emqx-loading="isListLoading">
-    <emqx-row>
+    <emqx-row v-if="pluginList.length > 0">
       <emqx-col :span="4" class="mb10">
         <div class="tabs-wrapper">
           <div class="tabs-left" id="tabsLeft">
@@ -66,6 +66,11 @@
             </div>
           </emqx-col>
         </emqx-row>
+      </emqx-col>
+    </emqx-row>
+    <emqx-row v-else>
+      <emqx-col :span="24" class="mb10">
+        <emqx-empty class="empty" description="请先在应用管理中添加站点应用" />
       </emqx-col>
     </emqx-row>
   </emqx-card>

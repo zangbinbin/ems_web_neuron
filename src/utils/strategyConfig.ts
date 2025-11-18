@@ -1,4 +1,4 @@
-// 定义设备类型配置数组
+// 定义策略类型配置数组
 export const STRATEGY_TYPE_CONFIGS = [
   {
     type: 'backflow_preventer',
@@ -6,9 +6,9 @@ export const STRATEGY_TYPE_CONFIGS = [
     routerName: 'BackflowPrevention',
   },
   {
-    type: 'demand_control',
-    name: '需量控制',
-    routerName: 'BackflowPrevention',
+    type: 'overload_control',
+    name: '防过容',
+    routerName: 'LoadControl',
   },
   {
     type: 'plan_curve',
