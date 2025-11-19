@@ -36,9 +36,9 @@
             {{ $t('config.tabGridConnectOff') }}
           </div> -->
           <!-- <div @click="changeTab(50)" :class="{ active: currentIndex === 50 }">{{ $t('config.tabAbnormalList') }}</div> -->
-          <div @click="changeTab(55)" :class="{ active: currentIndex === 55 }">
+          <!-- <div @click="changeTab(55)" :class="{ active: currentIndex === 55 }">
             {{ $t('config.tabDataStorageList') }}
-          </div>
+          </div> -->
           <div @click="changeTab(70)" :class="{ active: currentIndex === 70 }">{{ $t('config.tabPoint') }}</div>
           <div @click="changeTab(80)" :class="{ active: currentIndex === 80 }" style="border-radius: 0px 5px 5px 0px">
             {{ $t('config.tabConnection') }}
