@@ -559,4 +559,76 @@ export default {
     zh: '功率值',
     en: 'Power Value',
   },
+  capacityLimit: {
+    zh: '容量限制',
+    en: 'Capacity Limit',
+  },
+  restrictedChargeLimit: {
+    zh: '限充禁值',
+    en: 'Restricted Charge Limit',
+  },
+  chargeLimit: {
+    zh: '限充限值',
+    en: 'Charge Limit',
+  },
+  chargeLimitThreshold: {
+    zh: '限充阈值',
+    en: 'Charge Limit Threshold',
+  },
+  PowerAdjustmentStep: {
+    zh: '功率调整步长',
+    en: 'Power Adjustment Step',
+  },
+  capacityLimitTip: {
+    zh: '容量限值不能为空',
+    en: 'Capacity limit cannot be empty',
+  },
+  forbiddenValueChargingTip: {
+    zh: '限充禁值不能为空',
+    en: 'The limit charge restriction value cannot be empty',
+  },
+  limitedValueChargingTip: {
+    zh: '限充限值不能为空',
+    en: 'The charge limit cannot be empty',
+  },
+  thresholdValueCharging: {
+    zh: '限充阈值不能为空',
+    en: 'The charging limit threshold cannot be empty',
+  },
+  chargeAdjustStepValue: {
+    zh: '功率调节步长不能为空',
+    en: 'Power adjustment step length cannot be empty',
+  },
+  thresholdValueDischarge: {
+    zh: '限制放电的阈值',
+    en: 'Threshold value for restricting discharge',
+  },
+  limitedValueDischarge: {
+    zh: '限放限值',
+    en: 'Limit value for discharge',
+  },
+  forbiddenValueDischarge: {
+    zh: '限制放电的禁值',
+    en: 'Forbidden value for restricting discharge',
+  },
+  dischargeAdjustStepValue: {
+    zh: '限制放电功率调节步长的阈值',
+    en: 'Threshold value for discharge power adjustment step length',
+  },
+  thresholdValueDischargeTip: {
+    zh: '限制放电的阈值不能为空',
+    en: 'Threshold value for restricting discharge cannot be empty',
+  },
+  limitedValueDischargeTip: {
+    zh: '限放限值不能为空',
+    en: 'Limit value for discharge cannot be empty',
+  },
+  forbiddenValueDischargeTip: {
+    zh: '限制放电的禁值不能为空',
+    en: 'Forbidden value for restricting discharge cannot be empty',
+  },
+  dischargeAdjustStepValueTip: {
+    zh: '限制放电功率调节步长的阈值不能为空',
+    en: 'Threshold value for discharge power adjustment step length cannot be empty',
+  },
 }
