@@ -6,7 +6,7 @@ export const STRATEGY_TYPE_CONFIGS = [
     routerName: 'BackflowPrevention',
   },
   {
-    type: 'demand_control',
+    type: 'overload_control',
     name: '防过容',
     routerName: 'LoadControl',
   },

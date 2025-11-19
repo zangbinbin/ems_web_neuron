@@ -6,7 +6,7 @@
       <!-- 头部左侧内容 -->
       <div class="bar-left common-flex">
         <p class="driver-name">
-          <label>当前站点</label>
+          <label>{{ $t('common.currentSite') }}</label>
           <span v-if="siteInfo.siteDescription && siteInfo.siteDescription != ''">
             {{ siteInfo.siteName }}（{{ siteInfo.siteDescription }}）
           </span>

@@ -1,5 +1,3 @@
-import { downloadLogs } from '@/api/admin'
-
 export default {
   device: {
     zh: '设备',
@@ -517,7 +515,7 @@ export default {
     zh: '计划曲线',
     en: 'Plan Curve',
   },
-  demand_control: {
+  overload_control: {
     zh: '防过容',
     en: 'Overload Control',
   },
@@ -532,5 +530,33 @@ export default {
   disenable: {
     zh: '停用',
     en: 'Disable',
+  },
+  currentSite: {
+    zh: '当前站点',
+    en: 'Current Site',
+  },
+  general: {
+    zh: '通用',
+    en: 'General',
+  },
+  specificDay: {
+    zh: '特定天',
+    en: 'Specific Day',
+  },
+  dateRange: {
+    zh: '日期范围',
+    en: 'Date Range',
+  },
+  dayMonth: {
+    zh: '日月',
+    en: 'Day Month',
+  },
+  chargeDischarge: {
+    zh: '充放电',
+    en: 'Charge Discharge',
+  },
+  powerValue: {
+    zh: '功率值',
+    en: 'Power Value',
   },
 }

@@ -6,7 +6,7 @@
       <!-- 头部左侧内容 -->
       <div class="bar-left common-flex">
         <p class="driver-name">
-          <label>当前站点 </label>
+          <label>{{ $t('common.currentSite') }}</label>
           <span v-if="siteInfo.siteDescription && siteInfo.siteDescription != ''">
             {{ siteInfo.siteName }}（{{ siteInfo.siteDescription }}）
           </span>
@@ -24,13 +24,13 @@
       <emqx-col :span="24">
         <el-radio-group v-model="type" size="medium" @change="typeChange">
           <el-radio-button label="general">
-            <span>通用</span>
+            <span>{{ $t('common.general') }}</span>
           </el-radio-button>
           <el-radio-button label="specificDay">
-            <span>特定日</span>
+            <span>{{ $t('common.specificDay') }}</span>
           </el-radio-button>
           <el-radio-button label="dateRange">
-            <span>日期范围</span>
+            <span>{{ $t('common.dateRange') }}</span>
           </el-radio-button>
         </el-radio-group>
       </emqx-col>
@@ -41,7 +41,7 @@
       <el-col :span="24">
         <br />
         <emqx-table :data="formDataList" :empty-text="$t('common.emptyData')" :row-class-name="'table-row-click'">
-          <emqx-table-column label="日期范围" prop="dateRange" v-if="type == 'dateRange'" width="280px">
+          <emqx-table-column label=" $t('common.dateRange') " prop="dateRange" v-if="type == 'dateRange'" width="280px">
             <template #default="{ row }">
               <el-date-picker
                 style="width: 250px"
@@ -56,7 +56,7 @@
               />
             </template>
           </emqx-table-column>
-          <emqx-table-column label="时间范围" prop="timeRange" v-if="type == 'dateRange'" width="280px">
+          <emqx-table-column label=" $t('admin.timeRange') " prop="timeRange" v-if="type == 'dateRange'" width="280px">
             <template #default="{ row }">
               <el-time-picker
                 style="width: 250px"
@@ -72,7 +72,7 @@
               />
             </template>
           </emqx-table-column>
-          <emqx-table-column label="月日" prop="month_day" v-if="type == 'specificDay'">
+          <emqx-table-column label="$t('common.dayMonth')" prop="month_day" v-if="type == 'specificDay'">
             <template #default="{ row }">
               <el-date-picker
                 style="width: 150px"
@@ -86,7 +86,7 @@
             </template>
           </emqx-table-column>
           <emqx-table-column
-            label="开始时间"
+            label="$t('common.startTime')"
             prop="start_time"
             v-if="type == 'specificDay' || type == 'general'"
             width="250px"
@@ -103,7 +103,7 @@
             </template>
           </emqx-table-column>
           <emqx-table-column
-            label="结束时间"
+            label="$t('common.endTime')"
             prop="end_time"
             v-if="type == 'specificDay' || type == 'general'"
             width="250px"
@@ -119,15 +119,18 @@
               </el-time-picker>
             </template>
           </emqx-table-column>
-          <emqx-table-column label="充放电" prop="charge_discharge">
+          <emqx-table-column label="$t('common.chargeDischarge')" prop="charge_discharge">
             <template #default="{ row }">
               <emqx-radio-group v-model="row.charge_discharge">
-                <emqx-radio :label="1">充电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</emqx-radio>
-                <emqx-radio :label="-1">放电</emqx-radio>
+                <emqx-radio
+:label="1"
+                  >{{ $t('config.charge') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</emqx-radio
+                >
+                <emqx-radio :label="-1">{{ $t('config.discharge') }}</emqx-radio>
               </emqx-radio-group>
             </template>
           </emqx-table-column>
-          <emqx-table-column label="功率值" prop="power">
+          <emqx-table-column label="$t('common.powerValue')" prop="power">
             <template #default="{ row }">
               <emqx-input type="number" size="mini" v-model.number="row.power"></emqx-input>
             </template>
@@ -203,10 +206,10 @@ const doGetData = async () => {
   }
   isListLoading.value = true
   let planType = 0
-  if (type.value == 'general') {
+  if (type.value === 'general') {
     // 通用计划曲线
     planType = 0
-  } else if (type.value == 'specificDay') {
+  } else if (type.value === 'specificDay') {
     // 特定日计划曲线
     planType = 1
   } else {
@@ -219,7 +222,7 @@ const doGetData = async () => {
     if (result.data.plan_curve.length > 0) {
       formDataList.value = result.data.plan_curve
       // 特定日计划曲线专用字段处理
-      if (planType == 1) {
+      if (planType === 1) {
         formDataList.value.forEach((item: any) => {
           if (item.start_time) {
             const date = new Date(item.start_time * 1000)
@@ -245,7 +248,7 @@ const doGetData = async () => {
       }
 
       // 日期范围计划曲线专用字段处理
-      if (planType == 2) {
+      if (planType === 2) {
         formDataList.value.forEach((item: any) => {
           item.dateRange = [item.start_date, item.end_date]
           item.timeRange = [item.start_time, item.end_time]
@@ -290,23 +293,23 @@ const reset = () => {
 // 提交表单数据
 const submit = async () => {
   isListLoading.value = true
-  if (type.value == 'general') {
+  if (type.value === 'general') {
     // 通用计划曲线
     await MessageBoxConfirm('确定保存通用计划曲线信息吗？')
     await updateTYInfo({ node_name: siteInfo.value.siteName, records: formDataList.value })
-  } else if (type.value == 'specificDay') {
+  } else if (type.value === 'specificDay') {
     // 特定日计划曲线
     await MessageBoxConfirm('确定保存特定日计划曲线信息吗？')
     // 处理特定日计划曲线时间戳
     const dataInfo = cloneDeep(formDataList.value)
     dataInfo.forEach((item: any) => {
       // 合并开始时间
-      if (item.month_day && item.month_day != '' && item.start_time && item.start_time != '') {
+      if (item.month_day && item.month_day !== '' && item.start_time && item.start_time !== '') {
         const date = new Date(`${item.month_day}T${item.start_time}`)
         item.start_time = Math.floor(date.getTime() / 1000)
       }
       // 合并结束时间
-      if (item.month_day && item.month_day != '' && item.end_time && item.end_time != '') {
+      if (item.month_day && item.month_day !== '' && item.end_time && item.end_time !== '') {
         const date = new Date(`${item.month_day}T${item.end_time}`)
         item.end_time = Math.floor(date.getTime() / 1000)
       }

@@ -794,7 +794,7 @@ export default {
     zh: '系统根据预设的计划曲线，智能调整系统的充放电功率。系统可以根据实际需求提前规划电力调度，满足削峰填谷或其它生产用能需求。',
     en: 'Planned Curve allows the system to intelligently adjust the charging and discharging power according to preset planned curves. The system can plan power scheduling in advance according to actual needs to meet peak shaving, valley filling, or other production energy needs.',
   },
-  demand_control: {
+  overload_control: {
     zh: '通过持续监测并网点功率并结合变压器的可用容量，系统动态调整充放电行为以避免超容带来的潜在风险。',
     en: 'Overload Control continuously monitors the grid connection point power and combines it with the available capacity of the transformer. The system dynamically adjusts the charging and discharging behavior to avoid potential risks brought by overload.',
   },
@@ -805,5 +805,17 @@ export default {
   notConfigured: {
     zh: '未配置',
     en: 'Not configured description',
+  },
+  planCurveConfig: {
+    zh: '计划曲线配置',
+    en: 'Plan Curve Config',
+  },
+  overloadControlConfig: {
+    zh: '防过容配置',
+    en: 'Overload Control Config',
+  },
+  backflowPreventerConfig: {
+    zh: '防逆流配置',
+    en: 'Backflow Preventer Config',
   },
 }
