@@ -341,7 +341,7 @@ const {
   reset,
   validateFileds,
 } = useNodeConfig(props)
-const currentIndex = ref(1)
+const currentIndex = ref(99)
 const changeTab = (index: number) => {
   // 切换当前选中的Tab
   currentIndex.value = index
