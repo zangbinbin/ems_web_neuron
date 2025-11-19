@@ -51,7 +51,7 @@
                         <svg class="iconfont icon-svg" aria-hidden="true">
                           <use :xlink:href="item.open ? '#iconrunning' : '#iconstopped'" />
                         </svg>
-                        <span>{{ item.open ? $t('common.enable') : $t('common.disable') }}</span>
+                        <span>{{ item.open ? $t('common.enable') : $t('common.disenable') }}</span>
                       </div>
                     </div>
                     <div class="common-flex">

@@ -41,7 +41,7 @@
       <el-col :span="24">
         <br />
         <emqx-table :data="formDataList" :empty-text="$t('common.emptyData')" :row-class-name="'table-row-click'">
-          <emqx-table-column label=" $t('common.dateRange') " prop="dateRange" v-if="type == 'dateRange'" width="280px">
+          <emqx-table-column :label="$t('common.dateRange')" prop="dateRange" v-if="type == 'dateRange'" width="280px">
             <template #default="{ row }">
               <el-date-picker
                 style="width: 250px"
@@ -56,7 +56,7 @@
               />
             </template>
           </emqx-table-column>
-          <emqx-table-column label=" $t('admin.timeRange') " prop="timeRange" v-if="type == 'dateRange'" width="280px">
+          <emqx-table-column :label="$t('admin.timeRange')" prop="timeRange" v-if="type == 'dateRange'" width="280px">
             <template #default="{ row }">
               <el-time-picker
                 style="width: 250px"
@@ -72,7 +72,7 @@
               />
             </template>
           </emqx-table-column>
-          <emqx-table-column label="$t('common.dayMonth')" prop="month_day" v-if="type == 'specificDay'">
+          <emqx-table-column :label="$t('common.dayMonth')" prop="month_day" v-if="type == 'specificDay'">
             <template #default="{ row }">
               <el-date-picker
                 style="width: 150px"
@@ -86,7 +86,7 @@
             </template>
           </emqx-table-column>
           <emqx-table-column
-            label="$t('common.startTime')"
+            :label="$t('common.startTime')"
             prop="start_time"
             v-if="type == 'specificDay' || type == 'general'"
             width="250px"
@@ -103,7 +103,7 @@
             </template>
           </emqx-table-column>
           <emqx-table-column
-            label="$t('common.endTime')"
+            :label="$t('common.endTime')"
             prop="end_time"
             v-if="type == 'specificDay' || type == 'general'"
             width="250px"
@@ -119,7 +119,7 @@
               </el-time-picker>
             </template>
           </emqx-table-column>
-          <emqx-table-column label="$t('common.chargeDischarge')" prop="charge_discharge">
+          <emqx-table-column :label="$t('common.chargeDischarge')" prop="charge_discharge">
             <template #default="{ row }">
               <emqx-radio-group v-model="row.charge_discharge">
                 <emqx-radio
@@ -130,7 +130,7 @@
               </emqx-radio-group>
             </template>
           </emqx-table-column>
-          <emqx-table-column label="$t('common.powerValue')" prop="power">
+          <emqx-table-column :label="$t('common.powerValue')" prop="power">
             <template #default="{ row }">
               <emqx-input type="number" size="mini" v-model.number="row.power"></emqx-input>
             </template>

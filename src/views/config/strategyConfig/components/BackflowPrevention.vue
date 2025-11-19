@@ -22,16 +22,16 @@
     <emqx-row>
       <emqx-col :span="12">
         <emqx-form ref="formCom" :model="formData" :rules="formRules">
-          <emqx-form-item prop="threshold_value_discharge" label="$t('common.thresholdValueDischarge')" required>
+          <emqx-form-item prop="threshold_value_discharge" :label="$t('common.thresholdValueDischarge')" required>
             <emqx-input type="number" v-model.number="formData.threshold_value_discharge" />
           </emqx-form-item>
-          <emqx-form-item prop="limited_value_discharge" label="$t('common.limitedValueDischarge')" required>
+          <emqx-form-item prop="limited_value_discharge" :label="$t('common.limitedValueDischarge')" required>
             <emqx-input type="number" v-model.number="formData.limited_value_discharge" />
           </emqx-form-item>
-          <emqx-form-item prop="forbidden_value_discharge" label="$t('common.forbiddenValueDischarge')" required>
+          <emqx-form-item prop="forbidden_value_discharge" :label="$t('common.forbiddenValueDischarge')" required>
             <emqx-input type="number" v-model.number="formData.forbidden_value_discharge" />
           </emqx-form-item>
-          <emqx-form-item prop="discharge_adjust_step_value" label="$t('common.dischargeAdjustStepValue')" required>
+          <emqx-form-item prop="discharge_adjust_step_value" :label="$t('common.dischargeAdjustStepValue')" required>
             <emqx-input type="number" v-model.number="formData.discharge_adjust_step_value" />
           </emqx-form-item>
         </emqx-form>

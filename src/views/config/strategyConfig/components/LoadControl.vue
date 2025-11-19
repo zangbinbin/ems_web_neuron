@@ -22,19 +22,19 @@
     <emqx-row>
       <emqx-col :span="12">
         <emqx-form ref="formCom" :model="formData" :rules="formRules">
-          <emqx-form-item prop="limit_value_power_capacity" label="$t('common.capacityLimit')" required>
+          <emqx-form-item prop="limit_value_power_capacity" :label="$t('common.capacityLimit')" required>
             <emqx-input type="number" v-model.number="formData.limit_value_power_capacity" />
           </emqx-form-item>
-          <emqx-form-item prop="forbidden_value_charging" label="$t('common.restrictedChargeLimit')" required>
+          <emqx-form-item prop="forbidden_value_charging" :label="$t('common.restrictedChargeLimit')" required>
             <emqx-input type="number" v-model.number="formData.forbidden_value_charging" />
           </emqx-form-item>
-          <emqx-form-item prop="limited_value_charging" label="$t('common.chargeLimit')" required>
+          <emqx-form-item prop="limited_value_charging" :label="$t('common.chargeLimit')" required>
             <emqx-input type="number" v-model.number="formData.limited_value_charging" />
           </emqx-form-item>
-          <emqx-form-item prop="threshold_value_charging" label="$t('common.chargeLimitThreshold')" required>
+          <emqx-form-item prop="threshold_value_charging" :label="$t('common.chargeLimitThreshold')" required>
             <emqx-input type="number" v-model.number="formData.threshold_value_charging" />
           </emqx-form-item>
-          <emqx-form-item prop="charge_adjust_step_value" label="$t('common.PowerAdjustmentStep')" required>
+          <emqx-form-item prop="charge_adjust_step_value" :label="$t('common.PowerAdjustmentStep')" required>
             <emqx-input type="number" v-model.number="formData.charge_adjust_step_value" />
           </emqx-form-item>
         </emqx-form>
