@@ -20,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/overview',
     name: 'Overview',
-    meta: { title: 'common.overview' },
+    meta: { title: 'config.overview' },
     component: Home,
     children: [
       {
@@ -132,7 +132,7 @@ const routes: Array<RouteRecordRaw> = [
         path: 'components/LoadControl',
         name: 'LoadControl',
         component: () => import('@/views/config/strategyConfig/components/LoadControl.vue'),
-        meta: { title: '需量控制配置', hiddenBreadcrumb: false },
+        meta: { title: '防过容配置', hiddenBreadcrumb: false },
       },
     ],
   },
