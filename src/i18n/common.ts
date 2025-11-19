@@ -513,4 +513,24 @@ export default {
     zh: '故障等级',
     en: 'Fault Level',
   },
+  plan_curve: {
+    zh: '计划曲线',
+    en: 'Plan Curve',
+  },
+  demand_control: {
+    zh: '防过容',
+    en: 'Overload Control',
+  },
+  backflow_preventer: {
+    zh: '防逆流',
+    en: 'Backflow Preventer',
+  },
+  enable: {
+    zh: '启用',
+    en: 'Enable',
+  },
+  disenable: {
+    zh: '停用',
+    en: 'Disable',
+  },
 }

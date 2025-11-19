@@ -26,7 +26,9 @@
             <div class="node-card setup-item-card">
               <emqx-row>
                 <emqx-col :span="20" class="align-center">
-                  <span style="font-size: 20px; font-weight: 900">{{ getConfigByType(item.strategy_name).name }}</span>
+                  <span style="font-size: 20px; font-weight: 900">{{
+                    $t(`common.${item.strategy_name}`, $t('config.notConfigured'))
+                  }}</span>
                 </emqx-col>
                 <emqx-col :span="4">
                   <img
@@ -38,7 +40,7 @@
                 </emqx-col>
                 <emqx-col :span="24" class="mb10">
                   <span>
-                    {{ item.description }}
+                    {{ $t(`config.${item.strategy_name}`, $t('config.notConfigured')) }}
                   </span>
                 </emqx-col>
                 <emqx-col :span="20" class="mb10">
@@ -49,7 +51,7 @@
                         <svg class="iconfont icon-svg" aria-hidden="true">
                           <use :xlink:href="item.open ? '#iconrunning' : '#iconstopped'" />
                         </svg>
-                        <span>{{ item.open ? '启用' : '停用' }}</span>
+                        <span>{{ item.open ? $t('common.enable') : $t('common.disable') }}</span>
                       </div>
                     </div>
                     <div class="common-flex">
@@ -59,7 +61,7 @@
                 </emqx-col>
                 <emqx-col :span="4" style="text-align: center">
                   <el-link type="primary" href="javascript:;" style="font-size: 16px" @click="editInfo(item)">
-                    编辑
+                    {{ $t('common.edit') }}
                   </el-link>
                 </emqx-col>
               </emqx-row>
