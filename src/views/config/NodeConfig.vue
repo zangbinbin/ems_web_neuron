@@ -15,7 +15,7 @@
           <div @click="changeTab(99)" :class="{ active: currentIndex === 99 }" style="border-radius: 5px 0px 0px 5px">
             {{ $t('config.tabOther') }}
           </div>
-          <div @click="changeTab(1)" :class="{ active: currentIndex === 1 }" style="border-radius: 0px 5px 5px 0px">
+          <div @click="changeTab(1)" :class="{ active: currentIndex === 1 }">
             {{ $t('config.tabCore') }}
           </div>
           <!-- <div @click="changeTab(5)" :class="{ active: currentIndex === 5 }">
@@ -40,7 +40,9 @@
             {{ $t('config.tabDataStorageList') }}
           </div>
           <div @click="changeTab(70)" :class="{ active: currentIndex === 70 }">{{ $t('config.tabPoint') }}</div>
-          <div @click="changeTab(80)" :class="{ active: currentIndex === 80 }">{{ $t('config.tabConnection') }}</div>
+          <div @click="changeTab(80)" :class="{ active: currentIndex === 80 }" style="border-radius: 0px 5px 5px 0px">
+            {{ $t('config.tabConnection') }}
+          </div>
         </div>
         <!-- Tab Content -->
         <div>
