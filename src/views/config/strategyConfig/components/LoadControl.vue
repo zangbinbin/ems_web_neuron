@@ -1,7 +1,7 @@
 <template>
   <emqx-card class="group" v-emqx-loading="isListLoading">
     <!-- 头部内容 -->
-    <h3 class="card-title">需量控制</h3>
+    <h3 class="card-title">防过容</h3>
     <div class="card-bar-under-title common-flex">
       <!-- 头部左侧内容 -->
       <div class="bar-left common-flex">
@@ -22,16 +22,16 @@
     <emqx-row>
       <emqx-col :span="12">
         <emqx-form ref="formCom" :model="formData" :rules="formRules">
-          <emqx-form-item prop="limit_value_power_capacity" label="需量管理容量限值" required>
+          <emqx-form-item prop="limit_value_power_capacity" label="容量限值" required>
             <emqx-input type="number" v-model.number="formData.limit_value_power_capacity" />
           </emqx-form-item>
-          <emqx-form-item prop="forbidden_value_charging" label="需量管理限充禁值" required>
+          <emqx-form-item prop="forbidden_value_charging" label="限充禁值" required>
             <emqx-input type="number" v-model.number="formData.forbidden_value_charging" />
           </emqx-form-item>
-          <emqx-form-item prop="limited_value_charging" label="需量管理限充限值" required>
+          <emqx-form-item prop="limited_value_charging" label="限充限值" required>
             <emqx-input type="number" v-model.number="formData.limited_value_charging" />
           </emqx-form-item>
-          <emqx-form-item prop="threshold_value_charging" label="需量管理限充阈值" required>
+          <emqx-form-item prop="threshold_value_charging" label="限充阈值" required>
             <emqx-input type="number" v-model.number="formData.threshold_value_charging" />
           </emqx-form-item>
           <emqx-form-item prop="charge_adjust_step_value" label="功率调节步长" required>
@@ -76,10 +76,10 @@ const formData = ref({
 } as any)
 const formRules = computed(() => {
   return {
-    limit_value_power_capacity: [{ required: true, message: '需量管理容量限值不能为空' }],
-    forbidden_value_charging: [{ required: true, message: '需量管理限充禁值不能为空' }],
-    limited_value_charging: [{ required: true, message: '需量管理限充限值不能为空' }],
-    threshold_value_charging: [{ required: true, message: '需量管理限充阈值不能为空' }],
+    limit_value_power_capacity: [{ required: true, message: '容量限值不能为空' }],
+    forbidden_value_charging: [{ required: true, message: '限充禁值不能为空' }],
+    limited_value_charging: [{ required: true, message: '限充限值不能为空' }],
+    threshold_value_charging: [{ required: true, message: '限充阈值不能为空' }],
     charge_adjust_step_value: [{ required: true, message: '功率调节步长不能为空' }],
   }
 })
