@@ -5,7 +5,7 @@
         <emqx-input type="input" v-model.trim="form.node_description" />
       </emqx-form-item>
       <emqx-form-item prop="name" :label="$t('common.sign')" required>
-        <emqx-input v-model.trim="form.name" />
+        <emqx-input v-model.trim="form.name" disabled />
       </emqx-form-item>
     </emqx-form>
     <template #footer>
