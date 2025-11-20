@@ -1,12 +1,12 @@
 <template>
   <emqx-card class="group" v-emqx-loading="isListLoading">
     <!-- 头部内容 -->
-    <h3 class="card-title">防过容</h3>
+    <h3 class="card-title">{{ $t('common.overload_control') }}</h3>
     <div class="card-bar-under-title common-flex">
       <!-- 头部左侧内容 -->
       <div class="bar-left common-flex">
         <p class="driver-name">
-          <label>当前站点</label>
+          <label>{{ $t('common.currentSite') }}</label>
           <span v-if="siteInfo.siteDescription && siteInfo.siteDescription != ''">
             {{ siteInfo.siteName }}（{{ siteInfo.siteDescription }}）
           </span>
@@ -22,19 +22,19 @@
     <emqx-row>
       <emqx-col :span="12">
         <emqx-form ref="formCom" :model="formData" :rules="formRules">
-          <emqx-form-item prop="limit_value_power_capacity" label="容量限值" required>
+          <emqx-form-item prop="limit_value_power_capacity" :label="$t('common.capacityLimit')" required>
             <emqx-input type="number" v-model.number="formData.limit_value_power_capacity" />
           </emqx-form-item>
-          <emqx-form-item prop="forbidden_value_charging" label="限充禁值" required>
+          <emqx-form-item prop="forbidden_value_charging" :label="$t('common.restrictedChargeLimit')" required>
             <emqx-input type="number" v-model.number="formData.forbidden_value_charging" />
           </emqx-form-item>
-          <emqx-form-item prop="limited_value_charging" label="限充限值" required>
+          <emqx-form-item prop="limited_value_charging" :label="$t('common.chargeLimit')" required>
             <emqx-input type="number" v-model.number="formData.limited_value_charging" />
           </emqx-form-item>
-          <emqx-form-item prop="threshold_value_charging" label="限充阈值" required>
+          <emqx-form-item prop="threshold_value_charging" :label="$t('common.chargeLimitThreshold')" required>
             <emqx-input type="number" v-model.number="formData.threshold_value_charging" />
           </emqx-form-item>
-          <emqx-form-item prop="charge_adjust_step_value" label="功率调节步长" required>
+          <emqx-form-item prop="charge_adjust_step_value" :label="$t('common.PowerAdjustmentStep')" required>
             <emqx-input type="number" v-model.number="formData.charge_adjust_step_value" />
           </emqx-form-item>
         </emqx-form>
@@ -76,11 +76,11 @@ const formData = ref({
 } as any)
 const formRules = computed(() => {
   return {
-    limit_value_power_capacity: [{ required: true, message: '容量限值不能为空' }],
-    forbidden_value_charging: [{ required: true, message: '限充禁值不能为空' }],
-    limited_value_charging: [{ required: true, message: '限充限值不能为空' }],
-    threshold_value_charging: [{ required: true, message: '限充阈值不能为空' }],
-    charge_adjust_step_value: [{ required: true, message: '功率调节步长不能为空' }],
+    limit_value_power_capacity: [{ required: true, message: t('common.capacityLimitTip') }],
+    forbidden_value_charging: [{ required: true, message: t('common.forbiddenValueChargingTip') }],
+    limited_value_charging: [{ required: true, message: t('common.limitedValueChargingTip') }],
+    threshold_value_charging: [{ required: true, message: t('common.thresholdValueCharging') }],
+    charge_adjust_step_value: [{ required: true, message: t('common.chargeAdjustStepValue') }],
   }
 })
 

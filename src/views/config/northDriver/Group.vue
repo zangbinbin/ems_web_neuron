@@ -87,6 +87,7 @@
 import { ref } from 'vue'
 import { useSubscriptionList } from '@/composables/config/useSubscription'
 import { useDriverInfo } from '@/composables/config/useDriver'
+import useSouthDriver from '@/composables/config/useSouthDriver'
 import AddSubscriptionDialog from './components/AddSubscriptionDialog.vue'
 import AComWithDesc from '@/components/AComWithDesc.vue'
 import EditSubcriptionGroup from './components/EditSubcriptionGroup.vue'
@@ -149,9 +150,17 @@ const exportExcel = async () => {
 const addSubscription = () => {
   showAddSubscriptionDialog.value = true
 }
-const handleAddSubscriptionSubmitted = () => {
+const handleAddSubscriptionSubmitted = async () => {
   // 重新加载订阅列表
-  getSubscriptionList()
+  await getSubscriptionList()
+
+  // 手动刷新设备列表以确保最新数据
+  try {
+    const { getSouthDriverList } = useSouthDriver()
+    await getSouthDriverList()
+  } catch (error) {
+    console.error('Failed to refresh south driver list:', error)
+  }
 }
 </script>
 

@@ -57,12 +57,21 @@
       </emqx-radio-group>
       <!-- File -->
       <div class="file-param" v-else-if="paramInfo.type === TypeOfPluginParam.File">
-        <emqx-upload action="" class="file-upload" :show-file-list="false" :before-upload="handleUpload">
+        <emqx-upload
+          action=""
+          class="file-upload"
+          :show-file-list="true"
+          :before-upload="handleUpload"
+          :on-preview="handlePreview"
+        >
           <emqx-button size="mini">{{ t('common.uploadFile') }}</emqx-button>
         </emqx-upload>
         <emqx-button v-if="inputValue" size="mini" @click="clearFile" type="text">
           {{ t('config.clearUploadedFile') }}
         </emqx-button>
+        <emqx-button v-if="inputValue" size="mini" @click="downloadFile" type="text">{{
+          t('config.download')
+        }}</emqx-button>
         <div class="file-content-preview" v-if="inputValue">
           <label>Content-MD5:</label>
           <span>{{ fileContentPreview(inputValue) }}</span>
@@ -105,7 +114,7 @@
 import { ref, computed, defineEmits, defineProps, defineExpose } from 'vue'
 import type { PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { fromByteArray } from 'base64-js'
+import { fromByteArray, toByteArray } from 'base64-js'
 import md5 from 'blueimp-md5'
 import { ElPopover, ElInput } from 'element-plus'
 import useNodeConfigParamItem from '@/composables/config/useNodeConfigParamItem'
@@ -172,6 +181,17 @@ const handleUpload = async (file: any) => {
 
 const clearFile = () => {
   inputValue.value = ''
+}
+
+const downloadFile = () => {
+  const uint8 = toByteArray(inputValue.value) // 直接解码
+  const blob = new Blob([uint8])
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = 'script.lua'
+  a.click()
+  URL.revokeObjectURL(url)
 }
 
 const fileContentPreview = md5

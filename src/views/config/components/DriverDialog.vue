@@ -14,12 +14,12 @@
         <emqx-input v-model.trim="driverForm.sn" />
       </emqx-form-item>
       <!-- 1. Supports dual modes: plug-in and template  -->
-      <emqx-form-item v-if="isDualMode" :label="$t('config.addDriverMode')">
+      <!-- <emqx-form-item v-if="isDualMode" :label="$t('config.addDriverMode')">
         <emqx-radio-group v-model="activeDriverMode" class="mode-radio-group" @change="changeMode">
           <emqx-radio :label="addDriverModes[0]">{{ $t('config.pluginMode') }}</emqx-radio>
           <emqx-radio :label="addDriverModes[1]">{{ $t('config.templateMode') }}</emqx-radio>
         </emqx-radio-group>
-      </emqx-form-item>
+      </emqx-form-item> -->
 
       <!--  Plugin mode-->
       <emqx-form-item v-if="activeDriverMode === addDriverModes[0]" prop="plugin" :label="$t('config.plugin')" required>

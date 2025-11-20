@@ -6,7 +6,7 @@
       <!-- 头部左侧内容 -->
       <div class="bar-left common-flex">
         <p class="driver-name">
-          <label>当前站点</label>
+          <label>{{ $t('common.currentSite') }}</label>
           <span v-if="params.siteDescription && params.siteDescription != ''">
             {{ params.siteName }}（{{ params.siteDescription }}）
           </span>
@@ -22,16 +22,16 @@
     <emqx-row>
       <emqx-col :span="12">
         <emqx-form ref="formCom" :model="formData" :rules="formRules">
-          <emqx-form-item prop="threshold_value_discharge" label="限制放电的阈值" required>
+          <emqx-form-item prop="threshold_value_discharge" :label="$t('common.thresholdValueDischarge')" required>
             <emqx-input type="number" v-model.number="formData.threshold_value_discharge" />
           </emqx-form-item>
-          <emqx-form-item prop="limited_value_discharge" label="限放限值" required>
+          <emqx-form-item prop="limited_value_discharge" :label="$t('common.limitedValueDischarge')" required>
             <emqx-input type="number" v-model.number="formData.limited_value_discharge" />
           </emqx-form-item>
-          <emqx-form-item prop="forbidden_value_discharge" label="限制放电的禁值" required>
+          <emqx-form-item prop="forbidden_value_discharge" :label="$t('common.forbiddenValueDischarge')" required>
             <emqx-input type="number" v-model.number="formData.forbidden_value_discharge" />
           </emqx-form-item>
-          <emqx-form-item prop="discharge_adjust_step_value" label="限制放电功率调节步长的阈值" required>
+          <emqx-form-item prop="discharge_adjust_step_value" :label="$t('common.dischargeAdjustStepValue')" required>
             <emqx-input type="number" v-model.number="formData.discharge_adjust_step_value" />
           </emqx-form-item>
         </emqx-form>
@@ -71,10 +71,10 @@ const formData = ref({
 } as any)
 const formRules = computed(() => {
   return {
-    threshold_value_discharge: [{ required: true, message: '限制放电的阈值不能为空' }],
-    limited_value_discharge: [{ required: true, message: '限放限值不能为空' }],
-    forbidden_value_discharge: [{ required: true, message: '限制放电的禁值不能为空' }],
-    discharge_adjust_step_value: [{ required: true, message: '限制放电功率调节步长的阈值不能为空' }],
+    threshold_value_discharge: [{ required: true, message: t('common.thresholdValueDischargeTip') }],
+    limited_value_discharge: [{ required: true, message: t('common.limitedValueDischargeTip') }],
+    forbidden_value_discharge: [{ required: true, message: t('common.forbiddenValueDischargeTip') }],
+    discharge_adjust_step_value: [{ required: true, message: t('common.dischargeAdjustStepValueTip') }],
   }
 })
 

@@ -29,7 +29,7 @@ export default (pluginInfo: PluginInfo) => {
   const { readTagListFile, handleTagListInTableFile, batchAddTags } = useUploadTagList(pluginInfo)
   const { isExporting, exportTable } = useExportTagTable()
 
-  const template = computed(() => route.params.template.toString())
+  const template = computed(() => route.params.template?.toString() || '')
 
   // selected all groups
   const allChecked = computed({
