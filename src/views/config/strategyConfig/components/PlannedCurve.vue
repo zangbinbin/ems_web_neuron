@@ -289,7 +289,6 @@ const reset = () => {
 
 // 提交表单数据
 const submit = async () => {
-  isListLoading.value = true
   if (type.value == 'general') {
     // 通用计划曲线
     await MessageBoxConfirm('确定保存通用计划曲线信息吗？')
@@ -331,7 +330,6 @@ const submit = async () => {
     await updateRQFWInfo({ node_name: siteInfo.value.siteName, records: formDataList.value })
   }
   EmqxMessage.success(t('common.operateSuccessfully'))
-  isListLoading.value = false
   cancel()
 }
 
