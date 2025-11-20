@@ -540,7 +540,7 @@ export default {
     en: 'General',
   },
   specificDay: {
-    zh: '特定天',
+    zh: '特定日',
     en: 'Specific Day',
   },
   dateRange: {
