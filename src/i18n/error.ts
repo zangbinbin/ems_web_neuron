@@ -621,4 +621,8 @@ export default {
     zh: '策略未配置，请先进行配置',
     en: 'The strategy is not configured, please configure it first',
   },
+  5008: {
+    zh: '报警规则已存在',
+    en: 'The alarm rule already exists',
+  },
 }
