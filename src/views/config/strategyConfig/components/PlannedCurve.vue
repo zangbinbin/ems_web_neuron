@@ -56,7 +56,20 @@
               />
             </template>
           </emqx-table-column>
-          <emqx-table-column :label="$t('admin.timeRange')" prop="timeRange" v-if="type == 'dateRange'" width="280px">
+          <emqx-table-column :label="$t('common.date')" prop="month_day" v-if="type == 'specificDay'">
+            <template #default="{ row }">
+              <el-date-picker
+                style="width: 150px"
+                v-model="row.month_day"
+                size="mini"
+                :placeholder="$t('common.date')"
+                type="date"
+                format="YYYY-MM-DD"
+                value-format="YYYY-MM-DD"
+              />
+            </template>
+          </emqx-table-column>
+          <emqx-table-column :label="$t('admin.timeRange')" prop="timeRange" width="280px">
             <template #default="{ row }">
               <el-time-picker
                 style="width: 250px"
@@ -72,20 +85,7 @@
               />
             </template>
           </emqx-table-column>
-          <emqx-table-column :label="$t('common.dayMonth')" prop="month_day" v-if="type == 'specificDay'">
-            <template #default="{ row }">
-              <el-date-picker
-                style="width: 150px"
-                v-model="row.month_day"
-                size="mini"
-                :placeholder="$t('common.date')"
-                type="date"
-                format="MM-DD"
-                value-format="YYYY-MM-DD"
-              />
-            </template>
-          </emqx-table-column>
-          <emqx-table-column
+          <!-- <emqx-table-column
             :label="$t('common.startTime')"
             prop="start_time"
             v-if="type == 'specificDay' || type == 'general'"
@@ -101,8 +101,8 @@
               >
               </el-time-picker>
             </template>
-          </emqx-table-column>
-          <emqx-table-column
+          </emqx-table-column> -->
+          <!-- <emqx-table-column
             :label="$t('common.endTime')"
             prop="end_time"
             v-if="type == 'specificDay' || type == 'general'"
@@ -118,12 +118,11 @@
               >
               </el-time-picker>
             </template>
-          </emqx-table-column>
+          </emqx-table-column> -->
           <emqx-table-column :label="$t('common.chargeDischarge')" prop="charge_discharge">
             <template #default="{ row }">
               <emqx-radio-group v-model="row.charge_discharge">
-                <emqx-radio
-:label="1"
+                <emqx-radio :label="1"
                   >{{ $t('config.charge') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</emqx-radio
                 >
                 <emqx-radio :label="-1">{{ $t('config.discharge') }}</emqx-radio>
@@ -221,6 +220,15 @@ const doGetData = async () => {
     const result = await queryList({ node_name: siteInfo.value.siteName, plan_type: planType })
     if (result.data.plan_curve.length > 0) {
       formDataList.value = result.data.plan_curve
+      // 通用计划曲线专用字段处理
+      if (planType === 0) {
+        formDataList.value.forEach((item: any) => {
+          if (item.start_time && item.end_time) {
+            item.timeRange = [item.start_time, item.end_time == '00:00' ? '23:59' : item.end_time]
+          }
+        })
+      }
+
       // 特定日计划曲线专用字段处理
       if (planType === 1) {
         formDataList.value.forEach((item: any) => {
@@ -244,14 +252,21 @@ const doGetData = async () => {
             item.month_day = `${year}-${month}-${day}`
             item.end_time = `${hours}:${minutes}`
           }
+          if (item.start_time && item.end_time) {
+            item.timeRange = [item.start_time, item.end_time == '00:00' ? '23:59' : item.end_time]
+          }
         })
       }
 
       // 日期范围计划曲线专用字段处理
       if (planType === 2) {
         formDataList.value.forEach((item: any) => {
-          item.dateRange = [item.start_date, item.end_date]
-          item.timeRange = [item.start_time, item.end_time]
+          if (item.start_date && item.end_date) {
+            item.dateRange = [item.start_date, item.end_date]
+          }
+          if (item.start_time && item.end_time) {
+            item.timeRange = [item.start_time, item.end_time == '00:00' ? '23:59' : item.end_time]
+          }
         })
       }
     } else {
@@ -292,10 +307,18 @@ const reset = () => {
 
 // 提交表单数据
 const submit = async () => {
-  isListLoading.value = true
-  if (type.value === 'general') {
+  if (type.value == 'general') {
     // 通用计划曲线
     await MessageBoxConfirm('确定保存通用计划曲线信息吗？')
+    // 处理时间范围
+    formDataList.value.forEach((item: any) => {
+      if (item.timeRange && item.timeRange.length > 0) {
+        const [start, end] = item.timeRange
+        item.start_time = start
+        // 23:59 转 00:00
+        item.end_time = end == '23:59' ? '00:00' : end
+      }
+    })
     await updateTYInfo({ node_name: siteInfo.value.siteName, records: formDataList.value })
   } else if (type.value === 'specificDay') {
     // 特定日计划曲线
@@ -303,6 +326,12 @@ const submit = async () => {
     // 处理特定日计划曲线时间戳
     const dataInfo = cloneDeep(formDataList.value)
     dataInfo.forEach((item: any) => {
+      if (item.timeRange && item.timeRange.length > 0) {
+        const [start, end] = item.timeRange
+        item.start_time = start
+        // 23:59 转 00:00
+        item.end_time = end == '23:59' ? '00:00' : end
+      }
       // 合并开始时间
       if (item.month_day && item.month_day !== '' && item.start_time && item.start_time !== '') {
         const date = new Date(`${item.month_day}T${item.start_time}`)
@@ -328,13 +357,13 @@ const submit = async () => {
       if (item.timeRange && item.timeRange.length > 0) {
         const [start, end] = item.timeRange
         item.start_time = start
-        item.end_time = end
+        // 23:59 转 00:00
+        item.end_time = end == '23:59' ? '00:00' : end
       }
     })
     await updateRQFWInfo({ node_name: siteInfo.value.siteName, records: formDataList.value })
   }
   EmqxMessage.success(t('common.operateSuccessfully'))
-  isListLoading.value = false
   cancel()
 }
 
