@@ -340,7 +340,11 @@ const submit = async () => {
       // 合并结束时间
       if (item.month_day && item.month_day !== '' && item.end_time && item.end_time !== '') {
         const date = new Date(`${item.month_day}T${item.end_time}`)
-        item.end_time = Math.floor(date.getTime() / 1000)
+        if (item.end_time === '00:00') {
+          item.end_time = Math.floor(date.getTime() / 1000) + 86400
+        } else {
+          item.end_time = Math.floor(date.getTime() / 1000)
+        }
       }
     })
     await updateTDRInfo({ node_name: siteInfo.value.siteName, records: dataInfo })
