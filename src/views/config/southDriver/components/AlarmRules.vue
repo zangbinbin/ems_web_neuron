@@ -22,11 +22,13 @@
             @clear="dbGetAlarmRules"
             @enter="dbGetAlarmRules"
           />
-          <!-- 清空按钮 -->
-          <emqx-button size="small" type="warning" @click="clearQuery">{{ $t('common.clear') }}</emqx-button>
           <!-- 创建按钮 -->
           <emqx-button size="small" type="primary" @click="addAlarmRules()">
             {{ $t('common.create') }}
+          </emqx-button>
+          <!-- 删除按钮 -->
+          <emqx-button size="small" type="danger" :disabled="!subCheckedList.length" @click="bartchDelete">
+            {{ $t('common.delete') }}
           </emqx-button>
 
           <emqx-dropdown :hide-timeout="512" popper-class="btn-download-temp-popper">
@@ -138,6 +140,7 @@ import http from '@/utils/http'
 import { EmqxMessage } from '@emqx/emqx-ui'
 import { queryAlarmRluleList, addAlarmRlule, updateAlarmRlule, deleteAlarmRlule } from '@/api/alarmRules'
 import { forEach } from 'lodash'
+import { OmitArrayFields } from '@/utils/utils'
 
 const AlarmRuleDialog = defineAsyncComponent(() => import('@/views/config/southDriver/components/AlarmRuleDialog.vue'))
 const { downloadFile } = useDownload()
@@ -188,9 +191,15 @@ const dbGetAlarmRules = async () => {
   pageController.value.total = result.data.total_num
 }
 
-// 清除查询条件并刷新列表数据
-const clearQuery = () => {
-  pointName.value = ''
+// 批量删除报警规则
+const bartchDelete = async () => {
+  if (!subCheckedList.value.length) {
+    return EmqxMessage.warning('请选择要删除的报警规则')
+  }
+  await MessageBoxConfirm('确定删除选中的报警规则吗？')
+  subCheckedList.value.forEach((item: any) => {
+    deleteAlarmRlule({ device_name: item.device_name, group_name: item.group_name, tag_name: item.tag_name })
+  })
   dbGetAlarmRules()
 }
 
@@ -205,7 +214,19 @@ const importAlarmRules = async (file: File) => {
   const importList = ((data[0] && data[0].sheet) || []) as Array<any>
   if (!importList.length) {
     EmqxMessage.warning(t('config.validTableError'))
-    return false
+    return
+  }
+
+  // 数据非空校验
+  if (!validateData(importList)) {
+    return // 结束当前函数
+  }
+
+  // 判断是否有重复（基于 group_name, tag_name 两个属性）
+  const hasDuplicate = hasDuplicates(importList, ['group_name', 'tag_name'])
+  if (hasDuplicate) {
+    EmqxMessage.warning('存在重复的报警规则，请检查后重新导入！')
+    return
   }
 
   try {
@@ -220,6 +241,15 @@ const importAlarmRules = async (file: File) => {
         item.processing_method = getDictValue(item.processing_method, alarmRuleDialog.value?.processingMethodList)
         // 转化故障等级
         item.fault_level = getDictValue(item.fault_level, alarmRuleDialog.value?.faultLevelList)
+        if (!item.description) {
+          item.description = ''
+        }
+        // 转化点位名称为字符串
+        item.tag_name = item.tag_name.toString()
+        // 转化异常值类型为数字
+        item.abnormal_value = Number(item.abnormal_value)
+        // 转化回查值为数字
+        item.gap_value = Number(item.gap_value)
         // 保存信息
         await addAlarmRlule(item)
       }),
@@ -229,6 +259,54 @@ const importAlarmRules = async (file: File) => {
     // 错误处理
     EmqxMessage.warning('导入出现错误！')
   }
+}
+
+const validateData = (importList: any) => {
+  for (const item of importList) {
+    if (!item.group_name || item.group_name === '') {
+      EmqxMessage.warning('请填写group_name！')
+      return false
+    }
+    if (!item.tag_name || item.tag_name === '') {
+      EmqxMessage.warning('请填写tag_name！')
+      return false
+    }
+    if (!item.processing_method || item.processing_method === '') {
+      EmqxMessage.warning('请填写processing_method！')
+      return false
+    }
+    if (!item.abnormal_value || item.abnormal_value === '') {
+      EmqxMessage.warning('请填写abnormal_value！')
+      return false
+    }
+    if (!item.fault_level || item.fault_level === '') {
+      EmqxMessage.warning('请填写fault_level！')
+      return false
+    }
+    if (!item.operator || item.operator === '') {
+      EmqxMessage.warning('请填写operator！')
+      return false
+    }
+    if (!item.gap_value || item.gap_value === '') {
+      EmqxMessage.warning('请填写gap_value！')
+      return false
+    }
+  }
+  return true
+}
+
+// 判断是否有重复（基于 group_name, tag_name 两个属性）
+function hasDuplicates(arr: any, keys: any) {
+  const seen = new Set()
+  for (const item of arr) {
+    // 创建基于指定属性的标识字符串
+    const key = keys.map((k: any) => item[k]).join('|')
+    if (seen.has(key)) {
+      return true
+    }
+    seen.add(key)
+  }
+  return false
 }
 
 // 下载导入模板
@@ -297,6 +375,12 @@ const getDictValue = (node: any, dictList?: any[]) => {
 
   return node
 }
+
+const subCheckedList = computed(() => {
+  const checkedList: Array<[]> = alarmRules.value.filter((item: any) => item.checked)
+  const newCheckedList: Array<[]> = OmitArrayFields(checkedList, ['checked'])
+  return newCheckedList
+})
 
 const allChecked = computed({
   get() {
