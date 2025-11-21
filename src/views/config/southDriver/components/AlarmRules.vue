@@ -193,14 +193,17 @@ const dbGetAlarmRules = async () => {
 
 // 批量删除报警规则
 const bartchDelete = async () => {
+  isListLoading.value = true
   if (!subCheckedList.value.length) {
+    isListLoading.value = false
     return EmqxMessage.warning('请选择要删除的报警规则')
   }
   await MessageBoxConfirm('确定删除选中的报警规则吗？')
-  subCheckedList.value.forEach((item: any) => {
-    deleteAlarmRlule({ device_name: item.device_name, group_name: item.group_name, tag_name: item.tag_name })
-  })
-  dbGetAlarmRules()
+  for (const item of subCheckedList.value as any[]) {
+    await deleteAlarmRlule({ device_name: item.device_name, group_name: item.group_name, tag_name: item.tag_name })
+  }
+  await dbGetAlarmRules()
+  isListLoading.value = false
 }
 
 // 添加报警规则
@@ -210,15 +213,18 @@ const addAlarmRules = () => {
 
 // 导入报警规则模板数据并解析为列表数据
 const importAlarmRules = async (file: File) => {
+  isListLoading.value = true
   const data = await fileReader(file)
   const importList = ((data[0] && data[0].sheet) || []) as Array<any>
   if (!importList.length) {
     EmqxMessage.warning(t('config.validTableError'))
+    isListLoading.value = false
     return
   }
 
   // 数据非空校验
   if (!validateData(importList)) {
+    isListLoading.value = false
     return // 结束当前函数
   }
 
@@ -226,6 +232,7 @@ const importAlarmRules = async (file: File) => {
   const hasDuplicate = hasDuplicates(importList, ['group_name', 'tag_name'])
   if (hasDuplicate) {
     EmqxMessage.warning('存在重复的报警规则，请检查后重新导入！')
+    isListLoading.value = false
     return
   }
 
@@ -258,41 +265,78 @@ const importAlarmRules = async (file: File) => {
   } catch (error) {
     // 错误处理
     EmqxMessage.warning('导入出现错误！')
+  } finally {
+    isListLoading.value = false
   }
 }
 
 const validateData = (importList: any) => {
   for (const item of importList) {
-    if (!item.group_name || item.group_name === '') {
+    if (isEmpty(item.group_name)) {
       EmqxMessage.warning('请填写group_name！')
       return false
     }
-    if (!item.tag_name || item.tag_name === '') {
+    if (isEmpty(item.tag_name)) {
       EmqxMessage.warning('请填写tag_name！')
       return false
     }
-    if (!item.processing_method || item.processing_method === '') {
+    if (isEmpty(item.processing_method)) {
       EmqxMessage.warning('请填写processing_method！')
       return false
     }
-    if (!item.abnormal_value || item.abnormal_value === '') {
+    if (isEmpty(item.abnormal_value)) {
       EmqxMessage.warning('请填写abnormal_value！')
       return false
     }
-    if (!item.fault_level || item.fault_level === '') {
+    if (isEmpty(item.fault_level)) {
       EmqxMessage.warning('请填写fault_level！')
       return false
     }
-    if (!item.operator || item.operator === '') {
+    if (isEmpty(item.operator)) {
       EmqxMessage.warning('请填写operator！')
       return false
     }
-    if (!item.gap_value || item.gap_value === '') {
+    if (isEmpty(item.gap_value)) {
       EmqxMessage.warning('请填写gap_value！')
       return false
     }
   }
   return true
+}
+
+// 完整的空值判断工具函数
+const isEmpty = (value: any) => {
+  // null 和 undefined
+  if (value == null) {
+    return true
+  }
+
+  // 数字：只有 NaN 视为空，0 不为空
+  if (typeof value === 'number') {
+    return isNaN(value)
+  }
+
+  // 字符串：去除空格后为空
+  if (typeof value === 'string') {
+    return value.trim() === ''
+  }
+
+  // 布尔值：永远不为空
+  if (typeof value === 'boolean') {
+    return false
+  }
+
+  // 数组：空数组视为空
+  if (Array.isArray(value)) {
+    return value.length === 0
+  }
+
+  // 对象：空对象视为空
+  if (typeof value === 'object') {
+    return Object.keys(value).length === 0
+  }
+
+  return false
 }
 
 // 判断是否有重复（基于 group_name, tag_name 两个属性）
