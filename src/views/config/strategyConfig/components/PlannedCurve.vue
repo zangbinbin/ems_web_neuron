@@ -123,10 +123,10 @@
             <template #default="{ row }">
               <emqx-radio-group v-model="row.charge_discharge">
                 <emqx-radio
-label="1"
+:label="1"
                   >{{ $t('config.charge') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</emqx-radio
                 >
-                <emqx-radio label="-1">{{ $t('config.discharge') }}</emqx-radio>
+                <emqx-radio :label="-1">{{ $t('config.discharge') }}</emqx-radio>
               </emqx-radio-group>
             </template>
           </emqx-table-column>
@@ -250,7 +250,7 @@ const doGetData = async () => {
             const day = String(date.getDate()).padStart(2, '0')
             const hours = String(date.getHours()).padStart(2, '0')
             const minutes = String(date.getMinutes()).padStart(2, '0')
-            item.month_day = `${year}-${month}-${day}`
+            // item.month_day = `${year}-${month}-${day}`
             item.end_time = `${hours}:${minutes}`
           }
           if (item.start_time && item.end_time) {
@@ -341,6 +341,9 @@ const submit = async () => {
       // 合并结束时间
       if (item.month_day && item.month_day !== '' && item.end_time && item.end_time !== '') {
         const date = new Date(`${item.month_day}T${item.end_time}`)
+        if (item.end_time === '00:00') {
+          date.setDate(date.getDate() + 1)
+        }
         item.end_time = Math.floor(date.getTime() / 1000)
       }
     })
