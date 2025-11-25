@@ -122,10 +122,11 @@
           <emqx-table-column :label="$t('common.chargeDischarge')" prop="charge_discharge">
             <template #default="{ row }">
               <emqx-radio-group v-model="row.charge_discharge">
-                <emqx-radio :label="1"
+                <emqx-radio
+label="1"
                   >{{ $t('config.charge') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</emqx-radio
                 >
-                <emqx-radio :label="-1">{{ $t('config.discharge') }}</emqx-radio>
+                <emqx-radio label="-1">{{ $t('config.discharge') }}</emqx-radio>
               </emqx-radio-group>
             </template>
           </emqx-table-column>
@@ -224,7 +225,7 @@ const doGetData = async () => {
       if (planType === 0) {
         formDataList.value.forEach((item: any) => {
           if (item.start_time && item.end_time) {
-            item.timeRange = [item.start_time, item.end_time == '00:00' ? '23:59' : item.end_time]
+            item.timeRange = [item.start_time, item.end_time === '00:00' ? '23:59' : item.end_time]
           }
         })
       }
@@ -253,7 +254,7 @@ const doGetData = async () => {
             item.end_time = `${hours}:${minutes}`
           }
           if (item.start_time && item.end_time) {
-            item.timeRange = [item.start_time, item.end_time == '00:00' ? '23:59' : item.end_time]
+            item.timeRange = [item.start_time, item.end_time === '00:00' ? '23:59' : item.end_time]
           }
         })
       }
@@ -265,7 +266,7 @@ const doGetData = async () => {
             item.dateRange = [item.start_date, item.end_date]
           }
           if (item.start_time && item.end_time) {
-            item.timeRange = [item.start_time, item.end_time == '00:00' ? '23:59' : item.end_time]
+            item.timeRange = [item.start_time, item.end_time === '00:00' ? '23:59' : item.end_time]
           }
         })
       }
@@ -307,7 +308,7 @@ const reset = () => {
 
 // 提交表单数据
 const submit = async () => {
-  if (type.value == 'general') {
+  if (type.value === 'general') {
     // 通用计划曲线
     await MessageBoxConfirm('确定保存通用计划曲线信息吗？')
     // 处理时间范围
@@ -316,7 +317,7 @@ const submit = async () => {
         const [start, end] = item.timeRange
         item.start_time = start
         // 23:59 转 00:00
-        item.end_time = end == '23:59' ? '00:00' : end
+        item.end_time = end === '23:59' ? '00:00' : end
       }
     })
     await updateTYInfo({ node_name: siteInfo.value.siteName, records: formDataList.value })
@@ -330,7 +331,7 @@ const submit = async () => {
         const [start, end] = item.timeRange
         item.start_time = start
         // 23:59 转 00:00
-        item.end_time = end == '23:59' ? '00:00' : end
+        item.end_time = end === '23:59' ? '00:00' : end
       }
       // 合并开始时间
       if (item.month_day && item.month_day !== '' && item.start_time && item.start_time !== '') {
@@ -340,11 +341,7 @@ const submit = async () => {
       // 合并结束时间
       if (item.month_day && item.month_day !== '' && item.end_time && item.end_time !== '') {
         const date = new Date(`${item.month_day}T${item.end_time}`)
-        if (item.end_time === '00:00') {
-          item.end_time = Math.floor(date.getTime() / 1000) + 86400
-        } else {
-          item.end_time = Math.floor(date.getTime() / 1000)
-        }
+        item.end_time = Math.floor(date.getTime() / 1000)
       }
     })
     await updateTDRInfo({ node_name: siteInfo.value.siteName, records: dataInfo })
@@ -362,7 +359,7 @@ const submit = async () => {
         const [start, end] = item.timeRange
         item.start_time = start
         // 23:59 转 00:00
-        item.end_time = end == '23:59' ? '00:00' : end
+        item.end_time = end === '23:59' ? '00:00' : end
       }
     })
     await updateRQFWInfo({ node_name: siteInfo.value.siteName, records: formDataList.value })
