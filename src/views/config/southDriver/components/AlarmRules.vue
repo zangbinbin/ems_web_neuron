@@ -111,7 +111,6 @@
       </emqx-table-column>
     </emqx-table>
     <emqx-pagination
-      v-if="pageController.total > 10"
       layout="total, sizes, prev, pager, next, jumper"
       v-model:current-page="pageController.num"
       :page-sizes="[10, 20, 30, 40, 50]"
@@ -202,6 +201,7 @@ const bartchDelete = async () => {
   for (const item of subCheckedList.value as any[]) {
     await deleteAlarmRlule({ device_name: item.device_name, group_name: item.group_name, tag_name: item.tag_name })
   }
+  pageController.value.num = 1
   await dbGetAlarmRules()
   isListLoading.value = false
 }
@@ -214,29 +214,38 @@ const addAlarmRules = () => {
 // 导入报警规则模板数据并解析为列表数据
 const importAlarmRules = async (file: File) => {
   isListLoading.value = true
-  const data = await fileReader(file)
-  const importList = ((data[0] && data[0].sheet) || []) as Array<any>
-  if (!importList.length) {
-    EmqxMessage.warning(t('config.validTableError'))
-    isListLoading.value = false
-    return
-  }
 
-  // 数据非空校验
-  if (!validateData(importList)) {
-    isListLoading.value = false
-    return // 结束当前函数
-  }
-
-  // 判断是否有重复（基于 group_name, tag_name 两个属性）
-  const hasDuplicate = hasDuplicates(importList, ['group_name', 'tag_name'])
-  if (hasDuplicate) {
-    EmqxMessage.warning('存在重复的报警规则，请检查后重新导入！')
+  // 校验文件后缀
+  const nameStrings = file.name.split('.')
+  const type = nameStrings[nameStrings.length - 1]
+  if (type !== 'xls' && type !== 'xlsx') {
+    EmqxMessage.warning(t('admin.uploadExcelTypeError'))
     isListLoading.value = false
     return
   }
 
   try {
+    const data = await fileReader(file)
+    const importList = ((data[0] && data[0].sheet) || []) as Array<any>
+    if (!importList.length) {
+      EmqxMessage.warning(t('config.validTableError'))
+      isListLoading.value = false
+      return
+    }
+
+    // 数据非空校验
+    if (!validateData(importList)) {
+      isListLoading.value = false
+      return // 结束当前函数
+    }
+
+    // 判断是否有重复（基于 group_name, tag_name 两个属性）
+    const hasDuplicate = hasDuplicates(importList, ['group_name', 'tag_name'])
+    if (hasDuplicate) {
+      EmqxMessage.warning('存在重复的报警规则，请检查后重新导入！')
+      isListLoading.value = false
+      return
+    }
     // 使用 Promise.all 替代循环内的 await
     await Promise.all(
       importList.map(async (item) => {
@@ -288,6 +297,11 @@ const validateData = (importList: any) => {
       EmqxMessage.warning('请填写abnormal_value！')
       return false
     }
+    const abnormal_value = Number(item.abnormal_value)
+    if (isNaN(abnormal_value)) {
+      EmqxMessage.warning('abnormal_value不是有效的数字！')
+      return false
+    }
     if (isEmpty(item.fault_level)) {
       EmqxMessage.warning('请填写fault_level！')
       return false
@@ -298,6 +312,11 @@ const validateData = (importList: any) => {
     }
     if (isEmpty(item.gap_value)) {
       EmqxMessage.warning('请填写gap_value！')
+      return false
+    }
+    const gap_value = Number(item.gap_value)
+    if (isNaN(gap_value)) {
+      EmqxMessage.warning('gap_value不是有效的数字！')
       return false
     }
   }
