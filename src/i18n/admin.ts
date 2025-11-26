@@ -97,6 +97,10 @@ export default {
     zh: `请上传 '.lic' 类型文件`,
     en: `Please upload '.lic' type file`,
   },
+  uploadExcelTypeError: {
+    zh: `请上传 '.xls'或者'.xlsx' 类型文件`,
+    en: `Please upload '.xls' or '.xlsx' type file`,
+  },
   licenseEvaluationTip: {
     zh: `您现在正在使用 30 个标签评估许可证。 请许可证。`,
     en: `You are now using the 30 tags evaluation license. Please license.`,
