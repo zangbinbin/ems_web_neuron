@@ -123,10 +123,10 @@
             <template #default="{ row }">
               <emqx-radio-group v-model="row.charge_discharge">
                 <emqx-radio
-:label="1"
+:label="-1"
                   >{{ $t('config.charge') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</emqx-radio
                 >
-                <emqx-radio :label="-1">{{ $t('config.discharge') }}</emqx-radio>
+                <emqx-radio :label="1">{{ $t('config.discharge') }}</emqx-radio>
               </emqx-radio-group>
             </template>
           </emqx-table-column>
