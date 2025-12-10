@@ -392,6 +392,13 @@ const exportAlarmRules = () => {
     EmqxMessage.warning('请先选择需要导出的数据！')
     return false
   }
+  // 填充字典数据
+  exportList.forEach((item: any) => {
+    item.processing_method = getDictName(item.processing_method, alarmRuleDialog.value?.processingMethodList)
+    item.fault_level = getDictName(item.fault_level, alarmRuleDialog.value?.faultLevelList)
+    item.operator = getDictName(item.operator, alarmRuleDialog.value?.operatorList)
+  })
+
   exportTable(exportList, `${node.value.name}报警规则`)
 }
 
@@ -415,7 +422,8 @@ const handleSizeChange = (size: number) => {
 }
 
 // 字典转化(值转文本)
-const getDictName = (node: any, dictList: any[]) => {
+const getDictName = (node: any, dictList?: any[]) => {
+  if (!dictList) return node
   const index = dictList.findIndex((item: any) => {
     return item.value === node
   })
