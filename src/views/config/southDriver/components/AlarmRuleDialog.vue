@@ -83,9 +83,9 @@ const operatorList = ref([
 
 const processingMethodList = ref([
   { key: '待机', value: 1 },
-  //{ key: '待机&打开故障灯', value: 2 },
-  { key: '停机', value: 3 },
-  //{ key: '停机&打开故障灯', value: 4 },
+  // { key: '待机&打开故障灯', value: 2 },
+  { key: '停机&打开故障灯', value: 3 },
+  // { key: '停机&打开故障灯', value: 4 },
   { key: '禁止充电', value: 5 },
   { key: '禁止放电', value: 6 },
   { key: '降功率（*0.5）', value: 7 },
