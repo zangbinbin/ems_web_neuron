@@ -113,9 +113,9 @@
                     />
                     <span>{{ $t(`config.updateDebugLogLevel`) }}</span>
                   </emqx-dropdown-item>
-                  <emqx-dropdown-item command="downloadLog" class="operation-item-wrap">
-                    <i class="iconfont icondownload operation-icon" />
-                    <span>{{ $t(`common.downloadLog`) }}</span>
+                  <emqx-dropdown-item command="logViewer" class="operation-item-wrap">
+                    <i class="iconfont iconconfig operation-icon" />
+                    <span>{{ $t(`common.logViewer`) }}</span>
                   </emqx-dropdown-item>
                   <emqx-dropdown-item
                     v-if="!isNotSupportRemoveNode(row.name)"
@@ -155,7 +155,6 @@
     @updated="reloadDriverList"
   />
 </template>
-
 <script lang="ts">
 import { defineComponent } from 'vue'
 import store from '@/store'
@@ -170,8 +169,6 @@ import {
   useDriverName,
 } from '@/composables/config/useDriver'
 import useNorthDriver from '@/composables/config/useNorthDriver'
-import { downloadLogs } from '@/api/admin'
-import { useDownload } from '@/composables/useDownload'
 import type { DriverItemInList } from '@/types/config'
 import { DriverDirection, NodeCatogery } from '@/types/enums'
 import DriverDialog from '@/views/config/components/DriverDialog.vue'
@@ -183,6 +180,7 @@ import ListCardSwitch from '@/components/ListCardSwitch.vue'
 import AComWithDesc from '@/components/AComWithDesc.vue'
 import DataStatisticsDrawer from '../components/dataStatisticsDrawer.vue'
 import { isTheSameParentRoute } from '@/utils/utils'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   beforeRouteEnter(to, from, next) {
@@ -196,6 +194,7 @@ export default defineComponent({
 </script>
 
 <script lang="ts" setup>
+const router = useRouter()
 const { t } = useI18n()
 const {
   northDriverList,
@@ -250,23 +249,35 @@ const rowClassName = (data: { row: DriverItemInList; rowIndex: number }) => {
   const { row: node } = data
   return isMonitorNode(node.name) ? 'row-disabled' : 'table-row-click'
 }
-const { downloadFile } = useDownload()
-const downloadLogsFile = (node: DriverItemInList) => {
-  downloadLogs(`${node.name}.log`).then((res) => {
-    const { data, headers } = res
-    downloadFile(headers, data)
-  })
+
+// 打开独立的日志查看页面
+const openLogViewerInNewTab = (node?: DriverItemInList) => {
+  let routeData
+  if (node) {
+    // 如果有传递节点信息，则将节点信息作为查询参数传递
+    routeData = router.resolve({
+      name: 'LogViewerPage',
+      query: {
+        nodeName: node.name,
+      },
+    })
+  } else {
+    routeData = router.resolve({ name: 'LogViewerPage' })
+  }
+  window.open(routeData.href, '_blank')
 }
+
 const handleClickOperator = async (command: string, row: DriverItemInList) => {
   const apiMap = new Map([
     ['edit', editDialog],
     ['dataStatistics', isShowDataStatistics],
     ['debugLogLevel', modifyNodeLogLevel],
     ['delete', deleteDriver],
-    ['downloadLog', downloadLogsFile],
+    ['logViewer', openLogViewerInNewTab],
   ])
   const apiFunc = apiMap.get(command)
   if (apiFunc && typeof apiFunc === 'function') {
+    // 传递节点数据给新页面
     apiFunc(row)
   }
 }

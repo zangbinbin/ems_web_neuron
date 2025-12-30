@@ -132,9 +132,9 @@
                       />
                       <span>{{ $t(`config.updateDebugLogLevel`) }}</span>
                     </emqx-dropdown-item>
-                    <emqx-dropdown-item command="downloadLog" class="operation-item-wrap">
-                      <i class="iconfont icondownload operation-icon" />
-                      <span>{{ $t(`common.downloadLog`) }}</span>
+                    <emqx-dropdown-item command="logViewer" class="operation-item-wrap">
+                      <i class="iconfont iconconfig operation-icon" />
+                      <span>{{ $t(`common.logViewer`) }}</span>
                     </emqx-dropdown-item>
                     <emqx-dropdown-item class="operation-item-wrap" command="alarmRules">
                       <i class="iconfont iconalarm operation-icon" />
@@ -216,8 +216,6 @@ import {
 } from '@/composables/config/useDriver'
 import useSouthDriver from '@/composables/config/useSouthDriver'
 
-import { downloadLogs } from '@/api/admin'
-import { useDownload } from '@/composables/useDownload'
 import type { DriverItemInList } from '@/types/config'
 import { DriverDirection, NodeCatogery } from '@/types/enums'
 import DriverDialog from '@/views/config/components/DriverDialog.vue'
@@ -234,6 +232,7 @@ import { isTheSameParentRoute } from '@/utils/utils'
 // import LicenseTipDialog from '@/components/LicenseTipDialog.vue'
 import Cookies from 'js-cookie'
 import { convertNodeName } from '@/utils/driverNames'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   beforeRouteEnter(to, from, next) {
@@ -249,6 +248,7 @@ export default defineComponent({
 </script>
 
 <script lang="ts" setup>
+const router = useRouter()
 const {
   queryKeyword,
   pageController,
@@ -297,12 +297,22 @@ const setNodeStartStopStatus = async (node: DriverItemInList, status: boolean, n
     console.error(error)
   }
 }
-const { downloadFile } = useDownload()
-const downloadLogsFile = (node: DriverItemInList) => {
-  downloadLogs(`${node.name}.log`).then((res) => {
-    const { data, headers } = res
-    downloadFile(headers, data)
-  })
+
+// 打开独立的日志查看页面
+const openLogViewerInNewTab = (node?: DriverItemInList) => {
+  let routeData
+  if (node) {
+    // 如果有传递节点信息，则将节点信息作为查询参数传递
+    routeData = router.resolve({
+      name: 'LogViewerPage',
+      query: {
+        nodeName: node.name,
+      },
+    })
+  } else {
+    routeData = router.resolve({ name: 'LogViewerPage' })
+  }
+  window.open(routeData.href, '_blank')
 }
 const getNodeValue = (node: DriverItemInList) => {
   const useDriverStatusSet = useDriverStatus({ data: node })
@@ -318,7 +328,7 @@ const handleClickOperator = async (command: string, row: DriverItemInList) => {
     ['debugLogLevel', modifyNodeLogLevel],
     ['alarmRules', editAlarmRules],
     ['delete', deleteDriver],
-    ['downloadLog', downloadLogsFile],
+    ['logViewer', openLogViewerInNewTab],
   ])
   const apiFunc = apiMap.get(command)
   if (apiFunc && typeof apiFunc === 'function') {

@@ -21,8 +21,8 @@
                 <i class="iconfont iconabout"></i>
                 <span> {{ $t('common.about') }}</span>
               </emqx-dropdown-item>
-              <emqx-dropdown-item @click="downloadLogsFile">
-                <i class="iconfont icondownload"></i>
+              <emqx-dropdown-item @click="openLogViewerInNewTab">
+                <i class="iconfont iconconfig"></i>
                 <span> {{ $t('admin.debugFiles') }}</span>
               </emqx-dropdown-item>
             </emqx-dropdown-menu>
@@ -83,11 +83,11 @@ const goAbout = () => {
 }
 
 const { downloadFile } = useDownload()
-const downloadLogsFile = () => {
-  downloadLogs('cse_ems.log').then((res) => {
-    const { data, headers } = res
-    downloadFile(headers, data)
-  })
+
+// 打开独立的日志查看页面
+const openLogViewerInNewTab = () => {
+  const routeData = router.resolve({ name: 'LogViewerPage' })
+  window.open(routeData.href, '_blank')
 }
 
 const { langList } = useLang()

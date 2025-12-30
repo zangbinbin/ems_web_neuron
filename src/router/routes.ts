@@ -335,6 +335,12 @@ const routes: Array<RouteRecordRaw> = [
     component: Login,
     meta: { hiddenBreadcrumb: true },
   },
+  {
+    path: '/log-viewer',
+    name: 'LogViewerPage',
+    component: () => import('@/views/config/logViewer/index.vue'),
+    meta: { hiddenBreadcrumb: true },
+  },
 ]
 
 export default routes

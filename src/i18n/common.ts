@@ -119,6 +119,10 @@ export default {
     zh: '下载日志',
     en: 'DownloadLog',
   },
+  logViewer: {
+    zh: '日志查看',
+    en: 'Log Viewer',
+  },
   batchDelete: {
     zh: '批量删除',
     en: 'Batch Delete',
