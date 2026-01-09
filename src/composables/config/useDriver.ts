@@ -282,7 +282,9 @@ export const useDriverInfo = (node?: Record<string, any>) => {
     return (
       isMQTTPugin.value ||
       isGewuPugin.value ||
-      ['ekuiper', 'websocket', 'sparkplugb', 'iec104', 'taos'].includes(nodePlugin.value.toLocaleLowerCase())
+      ['ekuiper', 'websocket', 'primary', 'sparkplugb', 'IEC 60870-5-104', 'taos'].includes(
+        nodePlugin.value.toLocaleLowerCase(),
+      )
     )
   })
 
