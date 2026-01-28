@@ -115,6 +115,10 @@ export default {
     zh: '删除',
     en: 'Delete',
   },
+  downloadLog: {
+    zh: '下载日志',
+    en: 'DownloadLog',
+  },
   batchDelete: {
     zh: '批量删除',
     en: 'Batch Delete',
@@ -126,6 +130,10 @@ export default {
   clear: {
     zh: '清空',
     en: 'Clear',
+  },
+  query: {
+    zh: '查询',
+    en: 'Query',
   },
   submit: {
     zh: '提交',
@@ -470,5 +478,157 @@ export default {
   wiringDiagram: {
     zh: '实时监控',
     en: 'Primary wiring diagram',
+  },
+  alarmRules: {
+    zh: '报警规则',
+    en: 'Alarm Rules',
+  },
+  pointNameSearchPlaceholder: {
+    zh: '请输入点位名称',
+    en: 'Please enter the point name',
+  },
+  groupName: {
+    zh: '分组名称',
+    en: 'Group Name',
+  },
+  tagName: {
+    zh: '点位名称',
+    en: 'Tag Name',
+  },
+  operator: {
+    zh: '运算符',
+    en: 'Operator',
+  },
+  processingMethod: {
+    zh: '处理方式',
+    en: 'Processing Method',
+  },
+  gapValue: {
+    zh: '回差值',
+    en: 'Gap Value',
+  },
+  faultLevel: {
+    zh: '故障等级',
+    en: 'Fault Level',
+  },
+  plan_curve: {
+    zh: '计划曲线',
+    en: 'Plan Curve',
+  },
+  overload_control: {
+    zh: '防过容',
+    en: 'Overload Control',
+  },
+  backflow_preventer: {
+    zh: '防逆流',
+    en: 'Backflow Preventer',
+  },
+  enable: {
+    zh: '启用',
+    en: 'Enable',
+  },
+  disenable: {
+    zh: '停用',
+    en: 'Disable',
+  },
+  currentSite: {
+    zh: '当前站点',
+    en: 'Current Site',
+  },
+  general: {
+    zh: '通用',
+    en: 'General',
+  },
+  specificDay: {
+    zh: '特定日',
+    en: 'Specific Day',
+  },
+  dateRange: {
+    zh: '日期范围',
+    en: 'Date Range',
+  },
+  dayMonth: {
+    zh: '日月',
+    en: 'Day Month',
+  },
+  chargeDischarge: {
+    zh: '充放电',
+    en: 'Charge Discharge',
+  },
+  powerValue: {
+    zh: '功率值',
+    en: 'Power Value',
+  },
+  capacityLimit: {
+    zh: '容量限制',
+    en: 'Capacity Limit',
+  },
+  restrictedChargeLimit: {
+    zh: '限充禁值',
+    en: 'Restricted Charge Limit',
+  },
+  chargeLimit: {
+    zh: '限充限值',
+    en: 'Charge Limit',
+  },
+  chargeLimitThreshold: {
+    zh: '限充阈值',
+    en: 'Charge Limit Threshold',
+  },
+  PowerAdjustmentStep: {
+    zh: '功率调整步长',
+    en: 'Power Adjustment Step',
+  },
+  capacityLimitTip: {
+    zh: '容量限值不能为空',
+    en: 'Capacity limit cannot be empty',
+  },
+  forbiddenValueChargingTip: {
+    zh: '限充禁值不能为空',
+    en: 'The limit charge restriction value cannot be empty',
+  },
+  limitedValueChargingTip: {
+    zh: '限充限值不能为空',
+    en: 'The charge limit cannot be empty',
+  },
+  thresholdValueCharging: {
+    zh: '限充阈值不能为空',
+    en: 'The charging limit threshold cannot be empty',
+  },
+  chargeAdjustStepValue: {
+    zh: '功率调节步长不能为空',
+    en: 'Power adjustment step length cannot be empty',
+  },
+  thresholdValueDischarge: {
+    zh: '限放阈值',
+    en: 'Threshold value for restricting discharge',
+  },
+  limitedValueDischarge: {
+    zh: '限放限值',
+    en: 'Limit value for discharge',
+  },
+  forbiddenValueDischarge: {
+    zh: '限放禁值',
+    en: 'Forbidden value for restricting discharge',
+  },
+  dischargeAdjustStepValue: {
+    zh: '功率调节步长',
+    en: 'Threshold value for discharge power adjustment step length',
+  },
+  thresholdValueDischargeTip: {
+    zh: '限放阈值不能为空',
+    en: 'Threshold value for restricting discharge cannot be empty',
+  },
+  limitedValueDischargeTip: {
+    zh: '限放限值不能为空',
+    en: 'Limit value for discharge cannot be empty',
+  },
+  forbiddenValueDischargeTip: {
+    zh: '限制放电的禁值不能为空',
+    en: 'Forbidden value for restricting discharge cannot be empty',
+  },
+  dischargeAdjustStepValueTip: {
+    zh: '功率调节步长不能为空',
+    en: 'Threshold value for discharge power adjustment step length cannot be empty',
   },
 }

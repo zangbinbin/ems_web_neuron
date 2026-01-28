@@ -1,3 +1,5 @@
+import { message } from '@meta2d/core/src/diagrams'
+
 export default {
   admin: {
     zh: '管理',
@@ -7,13 +9,21 @@ export default {
     zh: '日志',
     en: 'Logs',
   },
+  auditLog: {
+    zh: '审计日志',
+    en: 'Audit Log',
+  },
   debugFiles: {
-    zh: '调试文件',
+    zh: '系统日志',
     en: 'Debug files',
   },
   logType: {
     zh: '日志类型',
     en: 'Log type',
+  },
+  auditLogType: {
+    zh: '审计日志类型',
+    en: 'Audit log type',
   },
   timeRange: {
     zh: '时间范围',
@@ -86,6 +96,10 @@ export default {
   uploadFileTypeError: {
     zh: `请上传 '.lic' 类型文件`,
     en: `Please upload '.lic' type file`,
+  },
+  uploadExcelTypeError: {
+    zh: `请上传 '.xls'或者'.xlsx' 类型文件`,
+    en: `Please upload '.xls' or '.xlsx' type file`,
   },
   licenseEvaluationTip: {
     zh: `您现在正在使用 30 个标签评估许可证。 请许可证。`,
@@ -211,5 +225,29 @@ export default {
   memoryUsage: {
     zh: '内存使用情况',
     en: 'Memory usage',
+  },
+  module: {
+    zh: '模块',
+    en: 'module',
+  },
+  function: {
+    zh: '函数',
+    en: 'function',
+  },
+  line: {
+    zh: '行号',
+    en: 'line',
+  },
+  file: {
+    zh: '文件',
+    en: 'file',
+  },
+  createdTime: {
+    zh: '创建时间',
+    en: 'Created time',
+  },
+  message: {
+    zh: '信息',
+    en: 'Message',
   },
 }

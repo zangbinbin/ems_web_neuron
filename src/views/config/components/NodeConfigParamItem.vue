@@ -30,7 +30,7 @@
       <emqx-input
         v-else-if="paramInfo.type === TypeOfPluginParam.Float"
         oninput="value=value .replace(/[^0-9.]/g, '').replace(/\.{2,}/g, '.').replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3')"
-        @blur="limitInput"
+        @blur="handleFloatBlur"
         v-model="inputValue"
         :placeholder="String(defaultData[paramKey] || '')"
       />
@@ -57,12 +57,21 @@
       </emqx-radio-group>
       <!-- File -->
       <div class="file-param" v-else-if="paramInfo.type === TypeOfPluginParam.File">
-        <emqx-upload action="" class="file-upload" :show-file-list="false" :before-upload="handleUpload">
+        <emqx-upload
+          action=""
+          class="file-upload"
+          :show-file-list="true"
+          :before-upload="handleUpload"
+          :on-preview="handlePreview"
+        >
           <emqx-button size="mini">{{ t('common.uploadFile') }}</emqx-button>
         </emqx-upload>
         <emqx-button v-if="inputValue" size="mini" @click="clearFile" type="text">
           {{ t('config.clearUploadedFile') }}
         </emqx-button>
+        <emqx-button v-if="inputValue" size="mini" @click="downloadFile" type="text">{{
+          t('config.download')
+        }}</emqx-button>
         <div class="file-content-preview" v-if="inputValue">
           <label>Content-MD5:</label>
           <span>{{ fileContentPreview(inputValue) }}</span>
@@ -105,7 +114,7 @@
 import { ref, computed, defineEmits, defineProps, defineExpose } from 'vue'
 import type { PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { fromByteArray } from 'base64-js'
+import { fromByteArray, toByteArray } from 'base64-js'
 import md5 from 'blueimp-md5'
 import { ElPopover, ElInput } from 'element-plus'
 import useNodeConfigParamItem from '@/composables/config/useNodeConfigParamItem'
@@ -151,7 +160,25 @@ const inputValue = computed({
     emit('update:modelValue', value)
   },
 })
+const handleFloatBlur = () => {
+  if (props.paramInfo.type === TypeOfPluginParam.Float) {
+    const numValue = parseFloat(inputValue.value)
+    if (!Number.isNaN(numValue)) {
+      // 获取参数的有效范围
+      const { min, max } = props.paramInfo.valid || { min: -Infinity, max: Infinity }
 
+      // 根据有效范围限制值
+      let finalValue = numValue
+      if (finalValue < min) {
+        finalValue = min
+      } else if (finalValue > max) {
+        finalValue = max
+      }
+
+      inputValue.value = finalValue
+    }
+  }
+}
 const isFieldRequired = computed(() => {
   return props.paramInfo?.attribute === 'required'
 })
@@ -174,6 +201,17 @@ const clearFile = () => {
   inputValue.value = ''
 }
 
+const downloadFile = () => {
+  const uint8 = toByteArray(inputValue.value) // 直接解码
+  const blob = new Blob([uint8])
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = 'script.lua'
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
 const fileContentPreview = md5
 
 const validateFileds = () => {
@@ -188,58 +226,6 @@ const validateArrayParam = async () => {
   } catch (error) {
     return Promise.reject(error)
   }
-}
-
-const limitInput = (e: any) => {
-  let val: any = `${e.target.value}`
-  // 处理只有一位小数的数字
-  if (val.indexOf('.') !== -1) {
-    const str = val.split('.')
-    // 检查'.'左侧数据长度
-    if (str[0].length > 0) {
-      const arr = str[0].split('')
-      const res = arr.every((item: any) => {
-        return item === 0 || item === '0'
-      })
-      if (res) {
-        if (str[1]) {
-          val = `0.${str[1]}`
-        } else {
-          val = '0.00'
-        }
-      } else if (str[1]) {
-        // 检查'.'右侧数据长度为1时
-        if (str[1].length === 1) {
-          val = `${str[0].replace(/\b(0+)/g, '')}.${str[1]}0`
-        }
-        // 检查'.'右侧数据长度为2时
-        else {
-          val = `${str[0].replace(/\b(0+)/g, '')}.${str[1]}`
-        }
-      } else {
-        val = `${str[0].replace(/\b(0+)/g, '')}.00`
-      }
-    }
-    // 检查'.'左侧数据长度为0时，视为异常
-    else {
-      val = '' // 异常时，置空，强制让用户重新输入
-    }
-  }
-  // 处理纯整数
-  else {
-    const arr = val.split('')
-    const res = arr.every((item: any) => {
-      return item === 0 || item === '0'
-    })
-    if (res) {
-      // 异常时，置空，强制让用户重新输入
-      val = '0.00'
-    } else {
-      val = `${val.replace(/\b(0+)/g, '')}.00`
-    }
-  }
-  // 给输入框换值
-  inputValue.value = val
 }
 
 defineExpose({

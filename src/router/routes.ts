@@ -20,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/overview',
     name: 'Overview',
-    meta: { title: 'common.overview' },
+    meta: { title: 'config.overview' },
     component: Home,
     children: [
       {
@@ -103,6 +103,39 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+  /* 策略管理 */
+  {
+    path: '/configuration/strategy-config',
+    name: 'StrategyManagement',
+    meta: { title: 'config.strategyConfig' },
+    component: Home,
+    children: [
+      {
+        path: '',
+        name: 'StrategyConfig',
+        component: () => import('@/views/config/strategyConfig/Index.vue'),
+        meta: { hiddenBreadcrumb: true },
+      },
+      {
+        path: 'components/PlannedCurve',
+        name: 'PlannedCurve',
+        component: () => import('@/views/config/strategyConfig/components/PlannedCurve.vue'),
+        meta: { title: 'config.planCurveConfig', hiddenBreadcrumb: false },
+      },
+      {
+        path: 'components/BackflowPrevention',
+        name: 'BackflowPrevention',
+        component: () => import('@/views/config/strategyConfig/components/BackflowPrevention.vue'),
+        meta: { title: 'config.backflowPreventerConfig', hiddenBreadcrumb: false },
+      },
+      {
+        path: 'components/LoadControl',
+        name: 'LoadControl',
+        component: () => import('@/views/config/strategyConfig/components/LoadControl.vue'),
+        meta: { title: 'config.overloadControlConfig', hiddenBreadcrumb: false },
+      },
+    ],
+  },
   /* CONFIG- SouthDevice */
   {
     path: '/configuration/south-driver',
@@ -124,6 +157,16 @@ const routes: Array<RouteRecordRaw> = [
           direction: DriverDirection.South,
         },
         meta: { title: 'config.deviceConfig' },
+      },
+      {
+        path: 'components/AlarmRules',
+        // path: '',
+        name: 'AlarmRules',
+        component: () => import('@/views/config/southDriver/components/AlarmRules.vue'),
+        props: {
+          direction: DriverDirection.South,
+        },
+        meta: { title: 'config.alarmRules', hiddenBreadcrumb: false },
       },
       {
         path: ':node/:plugin',
@@ -245,6 +288,12 @@ const routes: Array<RouteRecordRaw> = [
       //   meta: { title: 'admin.log', requireAuth: true, hiddenBreadcrumb: true },
       //   component: () => import('@/views/admin/Log.vue'),
       // },
+      {
+        path: 'auditlog',
+        name: 'AuditLog',
+        meta: { title: 'admin.auditLog', requireAuth: true, hiddenBreadcrumb: true },
+        component: () => import('@/views/admin/AuditLog.vue'),
+      },
     ],
   },
 

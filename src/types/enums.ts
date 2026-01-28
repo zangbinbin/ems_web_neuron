@@ -39,6 +39,7 @@ export enum TypeOfPluginParam {
   Array = 'array',
   TimeRange = 'timerange',
   MonthDayRange = 'monthdayrange',
+  MonthDay = 'monthday',
   TimeSelect = 'timeselect',
   NameMap = 'namemap',
   RichString = 'richstring',

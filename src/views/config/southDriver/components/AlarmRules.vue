@@ -1,0 +1,501 @@
+<template>
+  <emqx-card class="group" v-emqx-loading="isListLoading">
+    <!-- 头部内容 -->
+    <h3 class="card-title">{{ $t('config.alarmRules') }}</h3>
+    <div class="card-bar-under-title common-flex">
+      <!-- 头部左侧内容 -->
+      <div class="bar-left common-flex">
+        <p class="driver-name">
+          <label>{{ $t('config.deviceName') }}</label>
+          <span>{{ node.node_description ? node.node_description : node.name }}</span>
+        </p>
+      </div>
+      <!-- 头部右侧内容 -->
+      <div class="btns common-flex">
+        <div class="btn-group">
+          <!-- 点位名称查询条件 -->
+          <KeywordSerachInput
+            v-model="pointName"
+            class="search-input"
+            :placeholder="$t('common.pointNameSearchPlaceholder')"
+            @input="dbGetAlarmRules"
+            @clear="dbGetAlarmRules"
+            @enter="dbGetAlarmRules"
+          />
+          <!-- 创建按钮 -->
+          <emqx-button size="small" type="primary" @click="addAlarmRules()">
+            {{ $t('common.create') }}
+          </emqx-button>
+          <!-- 删除按钮 -->
+          <emqx-button size="small" type="danger" :disabled="!subCheckedList.length" @click="bartchDelete">
+            {{ $t('common.delete') }}
+          </emqx-button>
+
+          <emqx-dropdown :hide-timeout="512" popper-class="btn-download-temp-popper">
+            <!-- 导入按钮 -->
+            <emqx-upload
+              class="uploader-tag"
+              :before-upload="importAlarmRules"
+              :show-file-list="false"
+              action="placeholder"
+            >
+              <emqx-button size="small">
+                <i class="iconfont icon-import icondownload"></i>
+                <span>{{ $t('common.import') }}</span>
+              </emqx-button>
+            </emqx-upload>
+            <!-- 下载模板按钮 -->
+            <template #dropdown>
+              <emqx-dropdown-menu>
+                <emqx-button plain class="btn-download-temp" @click="downloadTemplate">
+                  <span>{{ $t('config.downloadTemplate') }}</span>
+                </emqx-button>
+              </emqx-dropdown-menu>
+            </template>
+          </emqx-dropdown>
+
+          <!-- 导出按钮 -->
+          <emqx-button
+            size="small"
+            class="export-tags--btn"
+            :disabled="!alarmRules.length"
+            :loading="isExporting"
+            @click="exportAlarmRules"
+          >
+            <i class="iconfont icon-import iconsubmit"></i>
+            <span>{{ $t('common.export') }}</span>
+          </emqx-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 数据列表 -->
+    <emqx-table :data="alarmRules" :empty-text="$t('common.emptyData')" :row-class-name="'table-row-click'">
+      <emqx-table-column :width="28">
+        <template #header>
+          <emqx-checkbox v-model="allChecked" />
+        </template>
+        <template #default="{ row }">
+          <emqx-checkbox v-model="row.checked" @click.stop="() => {}" />
+        </template>
+      </emqx-table-column>
+      <emqx-table-column :label="$t('common.groupName')" prop="group_name" width="100px" />
+      <emqx-table-column :label="$t('common.tagName')" prop="tag_name" />
+      <emqx-table-column :label="$t('common.operator')" prop="operator">
+        <template #default="{ row }">
+          {{ getDictName(row.operator, alarmRuleDialog.operatorList) }}
+        </template>
+      </emqx-table-column>
+      <emqx-table-column :label="$t('common.abnormalValue')" prop="abnormal_value" width="100px" />
+      <emqx-table-column :label="$t('common.gapValue')" prop="gap_value" width="100px" />
+      <emqx-table-column :label="$t('common.processingMethod')" prop="processing_method">
+        <template #default="{ row }">
+          {{ getDictName(row.processing_method, alarmRuleDialog.processingMethodList) }}
+        </template>
+      </emqx-table-column>
+      <emqx-table-column :label="$t('common.faultLevel')" prop="fault_level" width="100px">
+        <template #default="{ row }">
+          {{ getDictName(row.fault_level, alarmRuleDialog.faultLevelList) }}
+        </template>
+      </emqx-table-column>
+      <emqx-table-column :label="$t('common.description')" prop="description" />
+      <emqx-table-column align="left" :label="$t('common.oper')" width="120px">
+        <template #default="{ row }">
+          <AComWithDesc :content="$t('common.edit')">
+            <i class="el-icon-edit-outline" @click="editAlarmRule(row)" />
+          </AComWithDesc>
+          <AComWithDesc :content="$t('common.delete')">
+            <i class="iconfont icondelete" @click="delAlarmRule(row)" />
+          </AComWithDesc>
+        </template>
+      </emqx-table-column>
+    </emqx-table>
+    <emqx-pagination
+      layout="total, sizes, prev, pager, next, jumper"
+      v-model:current-page="pageController.num"
+      :page-sizes="[10, 20, 30, 40, 50]"
+      :total="pageController.total"
+      :page-size="pageController.size"
+      @size-change="handleSizeChange"
+      @current-change="dbGetAlarmRules"
+    />
+  </emqx-card>
+
+  <AlarmRuleDialog ref="alarmRuleDialog" :deviceName="node.name" @submitted="dbGetAlarmRules"></AlarmRuleDialog>
+</template>
+
+<script lang="ts" setup>
+import { ref, computed, nextTick, defineAsyncComponent } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import { MessageBoxConfirm } from '@/utils/element'
+import ViewHeaderBar from '@/components/ViewHeaderBar.vue'
+import AComWithDesc from '@/components/AComWithDesc.vue'
+import KeywordSerachInput from '@/components/KeywordSearchInput.vue'
+import useExportAlarmRule from '@/composables/config/useExportAlarmRule'
+import { useDownload } from '@/composables/useDownload'
+import useTableFileReader from '@/composables/useTableFileReader'
+import http from '@/utils/http'
+import { EmqxMessage } from '@emqx/emqx-ui'
+import { queryAlarmRluleList, addAlarmRlule, updateAlarmRlule, deleteAlarmRlule } from '@/api/alarmRules'
+import { forEach } from 'lodash'
+import { OmitArrayFields } from '@/utils/utils'
+
+const AlarmRuleDialog = defineAsyncComponent(() => import('@/views/config/southDriver/components/AlarmRuleDialog.vue'))
+const { downloadFile } = useDownload()
+const { fileReader } = useTableFileReader()
+const route = useRoute()
+const { t } = useI18n()
+const { isExporting, exportTable } = useExportAlarmRule()
+const router = useRouter()
+// 路由传递参数
+const node = computed(() => route.query)
+// 是否正在加载列表数据
+const isListLoading = ref(false)
+// 点位名称查询条件
+const pointName = ref('')
+// 显示对话框
+const showDialog = ref(false)
+const alarmRuleDialog = ref<{
+  initForm: (alarmRuleInfo: any) => void
+  groupList: any[]
+  operatorList: any[]
+  processingMethodList: any[]
+  faultLevelList: any[]
+}>()
+// 分页控制器数据
+const pageController = ref({
+  num: 1,
+  size: 10,
+  total: 0,
+})
+// 报警规则列表数据
+const alarmRules = ref([] as any)
+
+// 查询报警规则列表
+const dbGetAlarmRules = async () => {
+  if (!node.value.name) {
+    router.push({ name: 'SouthDriver' })
+  }
+  const parms: any = {
+    page: pageController.value.num,
+    page_size: pageController.value.size,
+    device_name: node.value.name,
+  }
+  if (pointName.value && pointName.value !== '') {
+    parms.tag_name = pointName.value
+  }
+  const result = await queryAlarmRluleList(parms)
+  alarmRules.value = result.data.abnormal_setting
+  pageController.value.total = result.data.total_num
+}
+
+// 批量删除报警规则
+const bartchDelete = async () => {
+  isListLoading.value = true
+  if (!subCheckedList.value.length) {
+    isListLoading.value = false
+    return EmqxMessage.warning('请选择要删除的报警规则')
+  }
+  await MessageBoxConfirm('确定删除选中的报警规则吗？')
+  for (const item of subCheckedList.value as any[]) {
+    await deleteAlarmRlule({ device_name: item.device_name, group_name: item.group_name, tag_name: item.tag_name })
+  }
+  pageController.value.num = 1
+  await dbGetAlarmRules()
+  isListLoading.value = false
+}
+
+// 添加报警规则
+const addAlarmRules = () => {
+  alarmRuleDialog.value?.initForm({})
+}
+
+// 导入报警规则模板数据并解析为列表数据
+const importAlarmRules = async (file: File) => {
+  isListLoading.value = true
+
+  // 校验文件后缀
+  const nameStrings = file.name.split('.')
+  const type = nameStrings[nameStrings.length - 1]
+  if (type !== 'xls' && type !== 'xlsx') {
+    EmqxMessage.warning(t('admin.uploadExcelTypeError'))
+    isListLoading.value = false
+    return
+  }
+
+  try {
+    const data = await fileReader(file)
+    const importList = ((data[0] && data[0].sheet) || []) as Array<any>
+    if (!importList.length) {
+      EmqxMessage.warning(t('config.validTableError'))
+      isListLoading.value = false
+      return
+    }
+
+    // 数据非空校验
+    if (!validateData(importList)) {
+      isListLoading.value = false
+      return // 结束当前函数
+    }
+
+    // 判断是否有重复（基于 group_name, tag_name 两个属性）
+    const hasDuplicate = hasDuplicates(importList, ['group_name', 'tag_name'])
+    if (hasDuplicate) {
+      EmqxMessage.warning('存在重复的报警规则，请检查后重新导入！')
+      isListLoading.value = false
+      return
+    }
+    // 使用 Promise.all 替代循环内的 await
+    await Promise.all(
+      importList.map(async (item) => {
+        // 代入设备名称
+        item.device_name = node.value.name
+        // 转化运算符
+        item.operator = getDictValue(item.operator, alarmRuleDialog.value?.operatorList)
+        // 转化处理方式
+        item.processing_method = getDictValue(item.processing_method, alarmRuleDialog.value?.processingMethodList)
+        // 转化故障等级
+        item.fault_level = getDictValue(item.fault_level, alarmRuleDialog.value?.faultLevelList)
+        if (!item.description) {
+          item.description = ''
+        }
+        // 转化点位名称为字符串
+        item.tag_name = item.tag_name.toString()
+        // 转化异常值类型为数字
+        item.abnormal_value = Number(item.abnormal_value)
+        // 转化回查值为数字
+        item.gap_value = Number(item.gap_value)
+        // 保存信息
+        await addAlarmRlule(item)
+      }),
+    )
+    dbGetAlarmRules()
+  } catch (error) {
+    // 错误处理
+    EmqxMessage.warning('导入出现错误！')
+  } finally {
+    isListLoading.value = false
+  }
+}
+
+const validateData = (importList: any) => {
+  for (const item of importList) {
+    if (isEmpty(item.group_name)) {
+      EmqxMessage.warning('请填写group_name！')
+      return false
+    }
+    if (isEmpty(item.tag_name)) {
+      EmqxMessage.warning('请填写tag_name！')
+      return false
+    }
+    if (isEmpty(item.processing_method)) {
+      EmqxMessage.warning('请填写processing_method！')
+      return false
+    }
+    if (isEmpty(item.abnormal_value)) {
+      EmqxMessage.warning('请填写abnormal_value！')
+      return false
+    }
+    const abnormal_value = Number(item.abnormal_value)
+    if (isNaN(abnormal_value)) {
+      EmqxMessage.warning('abnormal_value不是有效的数字！')
+      return false
+    }
+    if (isEmpty(item.fault_level)) {
+      EmqxMessage.warning('请填写fault_level！')
+      return false
+    }
+    if (isEmpty(item.operator)) {
+      EmqxMessage.warning('请填写operator！')
+      return false
+    }
+    if (isEmpty(item.gap_value)) {
+      EmqxMessage.warning('请填写gap_value！')
+      return false
+    }
+    const gap_value = Number(item.gap_value)
+    if (isNaN(gap_value)) {
+      EmqxMessage.warning('gap_value不是有效的数字！')
+      return false
+    }
+  }
+  return true
+}
+
+// 完整的空值判断工具函数
+const isEmpty = (value: any) => {
+  // null 和 undefined
+  if (value == null) {
+    return true
+  }
+
+  // 数字：只有 NaN 视为空，0 不为空
+  if (typeof value === 'number') {
+    return isNaN(value)
+  }
+
+  // 字符串：去除空格后为空
+  if (typeof value === 'string') {
+    return value.trim() === ''
+  }
+
+  // 布尔值：永远不为空
+  if (typeof value === 'boolean') {
+    return false
+  }
+
+  // 数组：空数组视为空
+  if (Array.isArray(value)) {
+    return value.length === 0
+  }
+
+  // 对象：空对象视为空
+  if (typeof value === 'object') {
+    return Object.keys(value).length === 0
+  }
+
+  return false
+}
+
+// 判断是否有重复（基于 group_name, tag_name 两个属性）
+function hasDuplicates(arr: any, keys: any) {
+  const seen = new Set()
+  for (const item of arr) {
+    // 创建基于指定属性的标识字符串
+    const key = keys.map((k: any) => item[k]).join('|')
+    if (seen.has(key)) {
+      return true
+    }
+    seen.add(key)
+  }
+  return false
+}
+
+// 下载导入模板
+const downloadTemplate = async () => {
+  const fileName = 'alarm_rule_template.xlsx'
+  try {
+    const { pathname } = window.location
+    const fileURL = `${pathname.slice(-1) === '/' ? pathname.slice(0, -1) : pathname}/template/${fileName}`
+    const { data } = await http.get(fileURL, { responseType: 'blob', baseURL: '' })
+    downloadFile({ 'content-type': 'application/octet-stream', 'content-disposition': `filename=${fileName}` }, data)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+// 导出报警规则列表数据到文件
+const exportAlarmRules = () => {
+  const exportList = alarmRules.value.filter((item: any) => item.checked)
+  if (!exportList.length) {
+    EmqxMessage.warning('请先选择需要导出的数据！')
+    return false
+  }
+  // 填充字典数据
+  exportList.forEach((item: any) => {
+    item.processing_method = getDictName(item.processing_method, alarmRuleDialog.value?.processingMethodList)
+    item.fault_level = getDictName(item.fault_level, alarmRuleDialog.value?.faultLevelList)
+    item.operator = getDictName(item.operator, alarmRuleDialog.value?.operatorList)
+  })
+
+  exportTable(exportList, `${node.value.name}报警规则`)
+}
+
+// 编辑报警规则
+const editAlarmRule = (row: any) => {
+  alarmRuleDialog.value?.initForm(row)
+}
+
+// 删除报警规则
+const delAlarmRule = async (row: any) => {
+  await MessageBoxConfirm(t('common.confirmDelete'))
+  await deleteAlarmRlule({ device_name: row.device_name, group_name: row.group_name, tag_name: row.tag_name })
+  dbGetAlarmRules()
+}
+
+// 分页大小改变时触发的事件处理函数
+const handleSizeChange = (size: number) => {
+  pageController.value.size = size
+  pageController.value.num = 1
+  dbGetAlarmRules()
+}
+
+// 字典转化(值转文本)
+const getDictName = (node: any, dictList?: any[]) => {
+  if (!dictList) return node
+  const index = dictList.findIndex((item: any) => {
+    return item.value === node
+  })
+  if (index > -1) {
+    return dictList[index].key
+  }
+
+  return node
+}
+
+// 字典转化(文本转值)
+const getDictValue = (node: any, dictList?: any[]) => {
+  if (!dictList) return node
+  const index = dictList.findIndex((item: any) => {
+    return item.key === node
+  })
+  if (index > -1) {
+    return dictList[index].value
+  }
+
+  return node
+}
+
+const subCheckedList = computed(() => {
+  const checkedList: Array<[]> = alarmRules.value.filter((item: any) => item.checked)
+  const newCheckedList: Array<[]> = OmitArrayFields(checkedList, ['checked'])
+  return newCheckedList
+})
+
+const allChecked = computed({
+  get() {
+    if (alarmRules.value.length === 0) {
+      return false
+    }
+    return alarmRules.value.every(({ checked }: any) => checked)
+  },
+  set(val: boolean) {
+    alarmRules.value.forEach((item: any) => {
+      item.checked = val
+    })
+  },
+})
+
+dbGetAlarmRules()
+</script>
+
+<style lang="scss" scoped>
+.driver-name {
+  margin-right: 22px;
+}
+
+.btn-group {
+  &:not(:last-child) {
+    margin-right: 32px;
+  }
+}
+
+.uploader-tag,
+.export-tags--btn {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.search-input {
+  margin-right: 10px;
+}
+
+.btn-download-temp-popper .el-dropdown-menu {
+  padding: 0;
+}
+.btn-download-temp {
+  font-weight: normal;
+  border: none;
+}
+</style>

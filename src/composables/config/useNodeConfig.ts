@@ -49,7 +49,12 @@ export default (props: Props) => {
   const formComParmasRef: any = ref([])
   const isSubmitting = ref(false)
   const pluginName = ref('')
-  const keyName = ref('peak-shave-valley-fill-day-config-list')
+  const keyNames = ref([
+    'peak-shave-valley-fill-day-config-list',
+    'peak-shave-valley-fill-specific-config-list',
+    'peak-shave-valley-fill-universal-config-list',
+    'peak-shave-valley-fill-month-config-list',
+  ])
 
   const setParamRef = (el: any) => {
     formComParmasRef.value.push(el)
@@ -155,7 +160,7 @@ export default (props: Props) => {
     const { params, tag_type, ...fields } = info
     return Object.keys(fields).map((key) => {
       // ---------------------------单独处理削峰填谷时间范围----------------------------
-      if (key === keyName.value) {
+      if (keyNames.value.includes(key)) {
         const fieldsInfo = (fields[key] as { fields: any }).fields
         fieldsInfo.forEach((item: any) => {
           if (item.type === TypeOfPluginParam.TimeRange) {
@@ -233,20 +238,26 @@ export default (props: Props) => {
       // ----------------------------单独处理削峰填谷时间范围------------------------------
       // 将值中的 timerange（数组） 拆分成两个 timeselect 值
       setTimeout(() => {
-        if (configForm.value[keyName.value].length > 0) {
-          let newConfigForm = []
-          if (Array.isArray(configForm.value[keyName.value])) {
-            newConfigForm = Array.isArray(configForm.value[keyName.value]) ? configForm.value[keyName.value] : []
+        keyNames.value.forEach((k) => {
+          const cur = configForm.value[k]
+          if (!cur) return
+          let newConfigForm = [] as any[]
+          if (Array.isArray(cur)) {
+            newConfigForm = cur
           } else {
-            newConfigForm = JSON.parse(configForm.value[keyName.value])
+            try {
+              newConfigForm = JSON.parse(cur)
+            } catch {
+              newConfigForm = []
+            }
           }
 
           newConfigForm.forEach((valInfo: any) => {
-            valInfo.timeselect_one = valInfo.timeframe[0]
-            valInfo.timeselect_two = valInfo.timeframe[1]
+            valInfo.timeselect_one = valInfo.timeframe?.[0]
+            valInfo.timeselect_two = valInfo.timeframe?.[1]
           })
-          configForm.value[keyName.value] = newConfigForm
-        }
+          configForm.value[k] = newConfigForm
+        })
       }, 1000) // 1000 毫秒（1 秒）后执行
       // --------------------------------------------------------------------------------
     }
@@ -307,7 +318,7 @@ export default (props: Props) => {
           }
 
           // --------------------------单独处理削峰填谷时间范围---------------------------------------
-          if (key === keyName.value && value.length > 0) {
+          if (keyNames.value.includes(key) && Array.isArray(value) && value.length > 0) {
             value.forEach((valueInfo: any) => {
               valueInfo.timeframe = [valueInfo.timeselect_one, valueInfo.timeselect_two]
               delete valueInfo.timeselect_one

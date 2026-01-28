@@ -95,13 +95,17 @@ const navList = computed(() => {
           label: 'config.northAppSetup',
         },
         {
-          to: '/configuration/template',
-          label: 'config.templateManagement',
+          to: '/configuration/strategy-config',
+          label: 'config.strategyConfig',
         },
-        {
-          to: '/configuration/plugin',
-          label: 'config.plugin',
-        },
+        // {
+        //   to: '/configuration/template',
+        //   label: 'config.templateManagement',
+        // },
+        // {
+        //   to: '/configuration/plugin',
+        //   label: 'config.plugin',
+        // },
       ],
     },
     {
@@ -121,6 +125,10 @@ const navList = computed(() => {
         //   to: '/admin/log',
         //   label: ('admin.log'),
         // },
+        {
+          to: '/admin/auditlog',
+          label: 'admin.auditLog',
+        },
       ],
     },
   ]

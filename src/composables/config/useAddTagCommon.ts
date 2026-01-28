@@ -155,6 +155,7 @@ export const createTagForm = () => {
     offset: undefined,
     description: '',
     valueRange: '',
+    threshold: undefined,
     precision: undefined,
     value: undefined,
   })

@@ -46,8 +46,27 @@ export const useSubscriptionList = () => {
     },
   })
 
-  const node = computed(() => route.params.node.toString())
-  const node_description = computed(() => route.params.node_description.toString())
+  const node = computed(() => {
+    const param = route.params.node
+    if (param && typeof param === 'string') {
+      return param
+    }
+    if (Array.isArray(param)) {
+      return param[0]
+    }
+    return ''
+  })
+
+  const node_description = computed(() => {
+    const param = route.params.node_description
+    if (param && typeof param === 'string') {
+      return param
+    }
+    if (Array.isArray(param)) {
+      return param[0]
+    }
+    return ''
+  })
 
   // 监听共享的 deviceList
   watch(
@@ -89,6 +108,11 @@ export const useSubscriptionList = () => {
     subscriptionList.value = list.map((item) => {
       return Object.assign(item, { checked: false })
     })
+    // 直接更新 subscriptionList 中的 node_description
+    subscriptionList.value = subscriptionList.value.map((item) => ({
+      ...item,
+      node_description: sharedDeviceList.value.find((d) => d.name === item.driver)?.node_description || null,
+    }))
     isListLoading.value = false
   }
 
@@ -242,6 +266,7 @@ export const useAddSubscription = (props: AddSubscriptionProps) => {
   })
 
   const formCom = ref()
+  const subscriptionForm: Ref<SubscriptionDataForm> = ref(createRawSubscriptionForm())
 
   const topicWarning = computed(() => {
     let warningContent = ''
@@ -254,8 +279,6 @@ export const useAddSubscription = (props: AddSubscriptionProps) => {
   })
 
   const { rules } = useSubscriptionGroup()
-
-  const subscriptionForm: Ref<SubscriptionDataForm> = ref(createRawSubscriptionForm())
   const isSubmitting = ref(false)
   const { totalSouthDriverList: deviceList } = useSouthDriver()
   const groupList: Ref<Array<GroupData>> = ref([])
@@ -278,10 +301,8 @@ export const useAddSubscription = (props: AddSubscriptionProps) => {
   }
 
   const setDefaultTopic = () => {
-    const nodeName = props.currentNode
-    // subscriptionForm.value.topic = `/neuron/${nodeName}`
     // nikon update default topic
-    subscriptionForm.value.topic = 'v1/devices/me/telemetry'
+    // subscriptionForm.value.topic = 'v1/devices/me/telemetry'
   }
 
   const initForm = async () => {
@@ -347,10 +368,18 @@ export const useAddSubscription = (props: AddSubscriptionProps) => {
         await addSubscription(data)
       }
 
+      // 刷新设备列表以确保最新数据
+      try {
+        const { getSouthDriverList } = useSouthDriver()
+        await getSouthDriverList()
+      } catch (error) {
+        console.error('Failed to refresh south driver list:', error)
+      }
+
       EmqxMessage.success(t('common.submitSuccess'))
       return Promise.resolve()
     } catch (error) {
-      return Promise.reject()
+      return Promise.reject(error)
     } finally {
       isSubmitting.value = false
     }

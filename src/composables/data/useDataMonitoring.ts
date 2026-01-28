@@ -25,6 +25,7 @@ export interface TagDataInTable extends TagDataInMonitoring {
   decimal?: number
   offset?: number
   precision?: number
+  timestamp?: number
 }
 export default () => {
   const { t } = useI18n()

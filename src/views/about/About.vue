@@ -41,7 +41,7 @@
 <script setup lang="ts">
 import { ref, reactive, computed, onUnmounted } from 'vue'
 import { ElProgress } from 'element-plus'
-import { queryVersion, queryHardwareToken } from '@/api/admin'
+import { queryVersion } from '@/api/admin'
 import { getStatisticByType } from '@/api/statistics'
 import { secondToTime } from '@/utils/time'
 import { formatMemory } from '@/utils/utils'

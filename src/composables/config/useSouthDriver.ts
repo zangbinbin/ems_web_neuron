@@ -195,6 +195,10 @@ export default (autoLoad = true, needRefreshStatus = false) => {
     dbGetSouthDriverList()
   }
 
+  const editAlarmRules = (node: DriverItemInList) => {
+    router.push({ name: 'AlarmRules', query: node })
+  }
+
   const reloadDriverList = () => {
     getSouthDriverList()
     editDriverData.value = { name: '', node_description: '' }
@@ -229,6 +233,7 @@ export default (autoLoad = true, needRefreshStatus = false) => {
     goGroupPage,
     goNodeConfig,
     modifyNodeLogLevel,
+    editAlarmRules,
     deleteDriver,
 
     sortBy,
