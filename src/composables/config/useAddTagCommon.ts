@@ -54,6 +54,14 @@ export const useTagAttributeTypeSelect = () => {
     13: [1, 4, 8],
     14: [2, 4, 8],
     15: [1, 2, 4, 8],
+    24: [8, 16],
+    25: [1, 8, 16],
+    26: [2, 8, 16],
+    27: [1, 2, 8, 16],
+    28: [4, 8, 16],
+    29: [1, 4, 8, 16],
+    30: [2, 4, 8, 16],
+    31: [1, 2, 4, 8, 16],
   }
 
   const findLabelByValue = (val: number) => tagAttributeTypeOptList.find(({ value }) => val === value)?.label || ''

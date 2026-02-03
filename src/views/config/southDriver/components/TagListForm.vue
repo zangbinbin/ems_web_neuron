@@ -222,6 +222,7 @@ const formData: WritableComputedRef<AddTagListForm> = computed({
 const isBYTESType = computed(() => (index: number) => formData.value.tagList[index].type === TagType.BYTES)
 
 const changeAttribute = (row: TagFormItem, $index: number) => {
+  console.log('changeAttribute', row)
   const isStaticAttr = isAttrsIncludeStatic.value(row.attribute)
 
   if (!isStaticAttr) {
