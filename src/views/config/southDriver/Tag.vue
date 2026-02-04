@@ -61,6 +61,8 @@
         </emqx-table-column>
         <emqx-table-column :label="$t('config.desc')" prop="description" />
         <emqx-table-column :label="$t('config.valueRange')" prop="valueRange" />
+        <emqx-table-column :label="$t('config.formula')" prop="formlua" />
+        <emqx-table-column :label="$t('config.targetField')" prop="target_field" />
         <emqx-table-column :label="$t('config.threshold')">
           <template #default="{ row }">{{ tagDecimalValue(row.threshold) }}</template>
         </emqx-table-column>

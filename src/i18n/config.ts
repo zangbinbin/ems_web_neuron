@@ -1,3 +1,5 @@
+import { form } from '@meta2d/core/src/diagrams'
+
 export default {
   driver: {
     zh: '驱动',
@@ -114,6 +116,14 @@ export default {
   threshold: {
     zh: '阈值',
     en: 'Threshold',
+  },
+  formula: {
+    zh: '公式',
+    en: 'Formula',
+  },
+  targetField: {
+    zh: '目标字段',
+    en: 'TargetField',
   },
   tagValue: {
     zh: '值',

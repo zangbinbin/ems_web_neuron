@@ -82,6 +82,22 @@
           <emqx-input v-model="row.valueRange" />
         </template>
       </el-table-column>
+      <el-table-column width="130">
+        <template #header>
+          <span class="thead-title">{{ $t('config.formula') }}</span>
+        </template>
+        <template #default="{ row }">
+          <emqx-input v-model="row.formlua" />
+        </template>
+      </el-table-column>
+      <el-table-column width="130">
+        <template #header>
+          <span class="thead-title">{{ $t('config.targetField') }}</span>
+        </template>
+        <template #default="{ row }">
+          <emqx-input v-model="row.target_field" />
+        </template>
+      </el-table-column>
       <el-table-column :label="$t('config.threshold')" width="110">
         <template #default="{ row, $index }">
           <el-form-item :prop="`tagList.${$index}.threshold`">

@@ -88,11 +88,22 @@
         </emqx-form-item>
       </emqx-col>
       <emqx-col :span="12">
+        <emqx-form-item :label="$t('config.formula')">
+          <emqx-input v-model="form.formlua" />
+        </emqx-form-item>
+      </emqx-col>
+      <emqx-col :span="12">
+        <emqx-form-item :label="$t('config.targetField')">
+          <emqx-input v-model="form.target_field" />
+        </emqx-form-item>
+      </emqx-col>
+      <emqx-col :span="12">
         <emqx-form-item :label="$t('config.threshold')" prop="threshold">
           <!--  @blur="changeDecimal" -->
           <emqx-input-number v-model="form.threshold" :step="1" controls-position="right" />
         </emqx-form-item>
       </emqx-col>
+
       <emqx-col :span="12">
         <emqx-form-item :label="$t('config.desc')">
           <emqx-input v-model="form.description" />

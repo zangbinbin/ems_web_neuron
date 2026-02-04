@@ -62,6 +62,14 @@ export const useTagAttributeTypeSelect = () => {
     29: [1, 4, 8, 16],
     30: [2, 4, 8, 16],
     31: [1, 2, 4, 8, 16],
+    40: [8, 32],
+    41: [1, 8, 32],
+    42: [2, 8, 32],
+    43: [1, 2, 8, 32],
+    44: [4, 8, 32],
+    45: [1, 4, 8, 32],
+    46: [2, 4, 8, 32],
+    47: [1, 2, 4, 8, 32],
   }
 
   const findLabelByValue = (val: number) => tagAttributeTypeOptList.find(({ value }) => val === value)?.label || ''
@@ -163,6 +171,8 @@ export const createTagForm = () => {
     offset: undefined,
     description: '',
     valueRange: '',
+    formlua: '',
+    target_field: '',
     threshold: undefined,
     precision: undefined,
     value: undefined,

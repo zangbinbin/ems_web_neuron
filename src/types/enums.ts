@@ -71,6 +71,7 @@ export enum TagAttributeType {
   Subscribe = 4,
   Static = 8,
   Composite = 16,
+  Forward = 32,
 }
 
 export enum PluginKind {
