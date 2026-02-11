@@ -25,7 +25,16 @@
           </el-form-item>
         </template>
       </el-table-column>
-
+      <el-table-column width="180">
+        <template #header>
+          <span class="thead-title">{{ $t('common.queue') }}</span>
+        </template>
+        <template #default="{ row, $index }">
+          <el-form-item v-if="isAttrsIncludeMonitor(row.attribute)" :prop="`tagList.${$index}.queue`">
+            <TagQueueSelect v-model="row.queue" />
+          </el-form-item>
+        </template>
+      </el-table-column>
       <el-table-column width="130">
         <template #header>
           <span class="thead-title">{{ $t('common.type') }}</span>
@@ -84,18 +93,18 @@
       </el-table-column>
       <el-table-column width="130">
         <template #header>
-          <span class="thead-title">{{ $t('config.formula') }}</span>
+          <span class="thead-title">{{ $t('config.read_script') }}</span>
         </template>
         <template #default="{ row }">
-          <emqx-input v-model="row.formlua" />
+          <emqx-input v-if="isAttrsIncludeComposite(row.attribute)" v-model="row.read_script" type="textarea" />
         </template>
       </el-table-column>
       <el-table-column width="130">
         <template #header>
-          <span class="thead-title">{{ $t('config.targetField') }}</span>
+          <span class="thead-title">{{ $t('config.write_script') }}</span>
         </template>
         <template #default="{ row }">
-          <emqx-input v-model="row.target_field" />
+          <emqx-input v-if="isAttrsIncludeComposite(row.attribute)" v-model="row.write_script" type="textarea" />
         </template>
       </el-table-column>
       <el-table-column :label="$t('config.threshold')" width="110">
@@ -206,6 +215,7 @@ import type { PluginInfo, AddTagListForm, TagFormItem } from '@/types/config'
 import useTagForm from '@/composables/config/useTagForm'
 import { TagType } from '@/types/enums'
 import AComWithDesc from '@/components/AComWithDesc.vue'
+import TagQueueSelect from './TagQueueSelect.vue'
 
 const props = defineProps({
   data: {
@@ -223,7 +233,16 @@ const props = defineProps({
 })
 const emit = defineEmits(['update:modelValue', 'deleteTagItem'])
 
-const { formCom, isAttrsIncludeStatic, tagTypeOptListAfterFilter, rules, validate, resetFields } = useTagForm(props)
+const {
+  formCom,
+  isAttrsIncludeStatic,
+  isAttrsIncludeMonitor,
+  isAttrsIncludeComposite,
+  tagTypeOptListAfterFilter,
+  rules,
+  validate,
+  resetFields,
+} = useTagForm(props)
 const { isShowPrecisionField } = useTagPrecision()
 
 const formData: WritableComputedRef<AddTagListForm> = computed({

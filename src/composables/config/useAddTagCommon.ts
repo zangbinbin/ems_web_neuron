@@ -3,7 +3,7 @@ import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import { EmqxMessage } from '@emqx/emqx-ui'
 import type { TagFormItem, TagForm, TagData } from '@/types/config'
-import { TagType, TagAttributeType } from '@/types/enums'
+import { TagType, TagAttributeType, TagQueueType } from '@/types/enums'
 import { dataType, createRandomString } from '@/utils/utils'
 import useWriteDataCheckNParse from '@/composables/data/useWriteDataCheckNParse'
 
@@ -54,6 +54,13 @@ export const useTagAttributeTypeSelect = () => {
     13: [1, 4, 8],
     14: [2, 4, 8],
     15: [1, 2, 4, 8],
+    17: [1, 16],
+    18: [2, 16],
+    19: [1, 2, 16],
+    20: [4, 16],
+    21: [1, 4, 16],
+    22: [2, 4, 16],
+    23: [1, 2, 4, 16],
     24: [8, 16],
     25: [1, 8, 16],
     26: [2, 8, 16],
@@ -62,6 +69,14 @@ export const useTagAttributeTypeSelect = () => {
     29: [1, 4, 8, 16],
     30: [2, 4, 8, 16],
     31: [1, 2, 4, 8, 16],
+    32: [32],
+    33: [1, 32],
+    34: [2, 32],
+    35: [1, 2, 32],
+    36: [4, 32],
+    37: [1, 4, 32],
+    38: [2, 4, 32],
+    39: [1, 2, 4, 32],
     40: [8, 32],
     41: [1, 8, 32],
     42: [2, 8, 32],
@@ -70,6 +85,30 @@ export const useTagAttributeTypeSelect = () => {
     45: [1, 4, 8, 32],
     46: [2, 4, 8, 32],
     47: [1, 2, 4, 8, 32],
+    48: [16, 32],
+    49: [1, 16, 32],
+    50: [2, 16, 32],
+    51: [1, 2, 16, 32],
+    52: [4, 16, 32],
+    53: [1, 4, 16, 32],
+    54: [2, 4, 16, 32],
+    55: [1, 2, 4, 16, 32],
+    56: [8, 16, 32],
+    57: [1, 8, 16, 32],
+    58: [2, 8, 16, 32],
+    59: [1, 2, 8, 16, 32],
+    60: [4, 8, 16, 32],
+    61: [1, 4, 8, 16, 32],
+    62: [2, 4, 8, 16, 32],
+    63: [1, 2, 4, 8, 16, 32],
+    75: [1, 2, 8, 64],
+    79: [1, 2, 4, 8, 64],
+    91: [1, 2, 8, 16, 64],
+    107: [1, 2, 8, 32, 64],
+    95: [1, 2, 4, 8, 16, 64],
+    111: [1, 2, 4, 8, 32, 64],
+    123: [1, 2, 8, 16, 32, 64],
+    127: [1, 2, 4, 8, 16, 32, 64],
   }
 
   const findLabelByValue = (val: number) => tagAttributeTypeOptList.find(({ value }) => val === value)?.label || ''
@@ -125,6 +164,72 @@ export const useTagAttributeTypeSelect = () => {
   }
 }
 
+export const useTagQueueTypeSelect = () => {
+  const tagQueueTypeOptList = Object.keys(TagQueueType)
+    .filter((key) => typeof TagQueueType[key as keyof typeof TagQueueType] === 'string')
+    .map((key) => ({
+      value: Number(key),
+      label: TagQueueType[key as keyof typeof TagQueueType],
+    }))
+
+  const tagQueueValueMap: Record<number, number[]> = {
+    0: [],
+    1: [1],
+    2: [2],
+    3: [1, 2],
+  }
+
+  const findLabelByValue = (val: number) => tagQueueTypeOptList.find(({ value }) => val === value)?.label || ''
+  const findValueByLabel = (lab: any) => tagQueueTypeOptList.find(({ label }) => label === lab)?.value || null
+
+  const getQueueStrByValue = (val: number, filler = ', ') => {
+    const key = Number(Object.keys(tagQueueValueMap).find((total) => Number(total) === val))
+    const valueArr: number[] = tagQueueValueMap[key as keyof typeof tagQueueValueMap]
+    return valueArr.map((value) => findLabelByValue(value)).join(filler)
+  }
+
+  const getTotalQueueByStr = (str: string, separator: string): number | null => {
+    try {
+      if (!str) {
+        return null
+      }
+      const labelArr = str.split(separator)
+      let ret = 0
+      let currentValue: number | null
+      for (const label of labelArr) {
+        currentValue = findValueByLabel(label)
+        if (!currentValue) {
+          return null
+        }
+        ret += currentValue
+      }
+      return ret
+    } catch (error) {
+      return null
+    }
+  }
+
+  const isQueuesIncludeTheValue = (value: number | undefined, queue: number) => {
+    if (!value || !queue) return false
+
+    const key = Object.keys(tagQueueValueMap).find((total) => {
+      return Number(total) === value
+    })
+    const queueValues: number[] = tagQueueValueMap[Number(key) as keyof typeof tagQueueValueMap]
+
+    return queueValues?.includes(queue)
+  }
+
+  return {
+    tagQueueTypeOptList,
+    tagQueueValueMap,
+    getQueueStrByValue,
+    findLabelByValue,
+    getTotalQueueByStr,
+    isQueuesIncludeTheValue,
+  }
+}
+
 export const useTagPrecision = () => {
   const isShowPrecisionField = computed(() => (type: number | null) => {
     if (type === null || type === undefined) return false
@@ -164,6 +269,7 @@ export const createTagForm = () => {
     name: '',
     address: '',
     attribute: undefined,
+    queue: null,
     type: null,
     // for the key when use v-for
     id: createRandomString(6),
@@ -171,8 +277,8 @@ export const createTagForm = () => {
     offset: undefined,
     description: '',
     valueRange: '',
-    formlua: '',
-    target_field: '',
+    read_script: '',
+    write_script: '',
     threshold: undefined,
     precision: undefined,
     value: undefined,

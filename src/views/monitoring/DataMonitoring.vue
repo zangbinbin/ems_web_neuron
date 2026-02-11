@@ -85,12 +85,6 @@
         <emqx-table-column :label="$t('config.valueRange')">
           <template #default="{ row }">{{ row.valueRange }}</template>
         </emqx-table-column>
-        <emqx-table-column :label="$t('config.formula')">
-          <template #default="{ row }">{{ row.formlua }}</template>
-        </emqx-table-column>
-        <emqx-table-column :label="$t('config.targetField')">
-          <template #default="{ row }">{{ row.target_field }}</template>
-        </emqx-table-column>
         <emqx-table-column :label="$t('config.threshold')">
           <template #default="{ row }">{{ tagDecimalValue(row.threshold) }}</template>
         </emqx-table-column>
@@ -182,7 +176,6 @@ const {
   sortDataByKey,
   writtenTag,
 } = useDataMonitoring()
-
 const showWriteDialog = ref(false)
 const currentTag: Ref<undefined | TagDataInTable> = ref(undefined)
 

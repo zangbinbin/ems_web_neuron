@@ -43,6 +43,7 @@ export const SELF_HANDLE_ERROR_CODES: Record<string, any> = {
 }
 
 export const FILLER_IN_TAG_ATTR = ' '
+export const FILLER_IN_TAG_QUEUE = ' '
 
 export const DASHBOARD_APP_NAME = 'default-dashboard-adapter'
 export const APP_DO_NOT_NEED_SHOW = [DASHBOARD_APP_NAME, 'default-persist-adapter']

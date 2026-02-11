@@ -60,10 +60,13 @@
         </emqx-table-column>
         <emqx-table-column :label="$t('config.desc')" prop="description" />
         <emqx-table-column :label="$t('config.valueRange')" prop="valueRange" />
-        <emqx-table-column :label="$t('config.formula')" prop="formlua" />
-        <emqx-table-column :label="$t('config.targetField')" prop="target_field" />
+        <emqx-table-column :label="$t('config.read_script')" prop="read_script" show-overflow-tooltip="true" />
+        <emqx-table-column :label="$t('config.write_script')" prop="write_script" show-overflow-tooltip="true" />
         <emqx-table-column :label="$t('config.threshold')">
           <template #default="{ row }">{{ tagDecimalValue(row.threshold) }}</template>
+        </emqx-table-column>
+        <emqx-table-column :label="$t('common.queue')">
+          <template #default="{ row }">{{ getQueueStrByValue(row.queue) }}</template>
         </emqx-table-column>
         <emqx-table-column align="left" :label="$t('common.oper')" width="140px" fixed="right">
           <template #default="{ row }">
@@ -106,6 +109,7 @@ import useTemplateTagList from '@/composables/config/useTemplateTagList'
 import {
   useTagTypeSelect,
   useTagAttributeTypeSelect,
+  useTagQueueTypeSelect,
   useTagPrecision,
   useTagDecimal,
 } from '@/composables/config/useAddTagCommon'
@@ -140,6 +144,7 @@ const { tagPrecisionValue } = useTagPrecision()
 const { tagDecimalValue } = useTagDecimal()
 const { findLabelByValue: findTagTypeLabelByValue } = useTagTypeSelect()
 const { getAttrStrByValue } = useTagAttributeTypeSelect()
+const { getQueueStrByValue } = useTagQueueTypeSelect()
 </script>
 
 <style lang="scss">

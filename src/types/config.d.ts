@@ -250,11 +250,12 @@ export interface TagForm {
   address?: string
   point?: string | undefined
   attribute: number | undefined
+  queue: number | null
   type: number | null
   description: string
   valueRange: string
-  formlua?: string
-  target_field?: string
+  read_script?: string
+  write_script?: string
   threshold?: number | undefined
   precision?: number | undefined
   decimal?: number | null

@@ -3,14 +3,15 @@ import { ref } from 'vue'
 import { EmqxMessage } from '@emqx/emqx-ui'
 import { useI18n } from 'vue-i18n'
 import { exportExcelData } from '@/utils/exportPointExcel'
-import { useTagTypeSelect, useTagAttributeTypeSelect } from './useAddTagCommon'
+import { useTagTypeSelect, useTagAttributeTypeSelect, useTagQueueTypeSelect } from './useAddTagCommon'
 import type { TagData } from '@/types/config'
-import { FILLER_IN_TAG_ATTR } from '@/utils/constants'
+import { FILLER_IN_TAG_ATTR, FILLER_IN_TAG_QUEUE } from '@/utils/constants'
 
 export default () => {
   const { t } = useI18n()
   const isExporting = ref(false)
   const { getAttrStrByValue } = useTagAttributeTypeSelect()
+  const { getQueueStrByValue } = useTagQueueTypeSelect()
   const { findLabelByValue } = useTagTypeSelect()
 
   interface OriginalItem {
@@ -18,6 +19,7 @@ export default () => {
     address?: string
     point?: string | undefined
     attribute: number | undefined
+    queue: number | undefined
     type: number | null
     description: string
     valueRange: string
@@ -127,6 +129,7 @@ export default () => {
           address: item.address,
           point: item.point ?? '',
           attribute: item.attribute ? getAttrStrByValue(item.attribute, FILLER_IN_TAG_ATTR) : '',
+          queue: item.queue ? getQueueStrByValue(item.queue, FILLER_IN_TAG_QUEUE) : '',
           type: item.type ? findLabelByValue(item.type) : '',
           description: item.description,
           valueRange: item.valueRange,

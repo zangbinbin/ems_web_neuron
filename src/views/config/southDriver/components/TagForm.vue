@@ -87,14 +87,14 @@
           <emqx-input v-model="form.valueRange" />
         </emqx-form-item>
       </emqx-col>
-      <emqx-col :span="12">
-        <emqx-form-item :label="$t('config.formula')">
-          <emqx-input v-model="form.formlua" />
+      <emqx-col v-if="isAttrsIncludeComposite(form.attribute)" :span="12">
+        <emqx-form-item :label="$t('config.read_script')">
+          <emqx-input v-model="form.read_script" type="textarea" />
         </emqx-form-item>
       </emqx-col>
-      <emqx-col :span="12">
-        <emqx-form-item :label="$t('config.targetField')">
-          <emqx-input v-model="form.target_field" />
+      <emqx-col v-if="isAttrsIncludeComposite(form.attribute)" :span="12">
+        <emqx-form-item :label="$t('config.write_script')">
+          <emqx-input v-model="form.write_script" type="textarea" />
         </emqx-form-item>
       </emqx-col>
       <emqx-col :span="12">
@@ -103,7 +103,14 @@
           <emqx-input-number v-model="form.threshold" :step="1" controls-position="right" />
         </emqx-form-item>
       </emqx-col>
-
+      <emqx-col v-if="isAttrsIncludeMonitor(form.attribute)" :span="12">
+        <emqx-form-item :label="$t('common.queue')" prop="queue" required>
+          <template #label>
+            <span>{{ $t('common.queue') }}</span>
+          </template>
+          <TagQueueSelect v-model="form.queue" />
+        </emqx-form-item>
+      </emqx-col>
       <emqx-col :span="12">
         <emqx-form-item :label="$t('config.desc')">
           <emqx-input v-model="form.description" />
@@ -118,6 +125,7 @@ import type { PropType, WritableComputedRef } from 'vue'
 import { defineExpose, computed, defineProps, defineEmits, nextTick } from 'vue'
 import { useTagPrecision } from '@/composables/config/useAddTagCommon'
 import TagAttributeSelect from './TagAttributeSelect.vue'
+import TagQueueSelect from './TagQueueSelect.vue'
 import type { PluginInfo, TagForm } from '@/types/config'
 import useTagForm from '@/composables/config/useTagForm'
 import { TagType } from '@/types/enums'
@@ -138,7 +146,16 @@ const props = defineProps({
 })
 const emit = defineEmits(['update:modelValue'])
 
-const { formCom, isAttrsIncludeStatic, tagTypeOptListAfterFilter, rules, validate, resetFields } = useTagForm(props)
+const {
+  formCom,
+  isAttrsIncludeStatic,
+  isAttrsIncludeMonitor,
+  isAttrsIncludeComposite,
+  tagTypeOptListAfterFilter,
+  rules,
+  validate,
+  resetFields,
+} = useTagForm(props)
 const { isShowPrecisionField } = useTagPrecision()
 
 const form: WritableComputedRef<TagForm> = computed({

@@ -2,12 +2,18 @@ import useTableFileReader from '@/composables/useTableFileReader'
 import type { TagForm, TagData, PluginInfo, TagRegex } from '@/types/config'
 import type { TagType } from '@/types/enums'
 import { TagAttributeType } from '@/types/enums'
-import { FILLER_IN_TAG_ATTR } from '@/utils/constants'
+import { FILLER_IN_TAG_ATTR, FILLER_IN_TAG_QUEUE } from '@/utils/constants'
 import { getErrorMsg, matchObjShape, popUpErrorMessage } from '@/utils/utils'
 import { EmqxMessage } from '@emqx/emqx-ui'
 import { useI18n } from 'vue-i18n'
-import { useTagTypeSelect, useTagAttributeTypeSelect, createTagForm } from '@/composables/config/useAddTagCommon'
+import {
+  useTagTypeSelect,
+  useTagAttributeTypeSelect,
+  createTagForm,
+  useTagQueueTypeSelect,
+} from '@/composables/config/useAddTagCommon'
 import useWriteDataCheckNParse from '@/composables/data/useWriteDataCheckNParse'
+import { get } from 'lodash'
 
 export default (pluginInfo: PluginInfo) => {
   const { fileReader } = useTableFileReader()
@@ -18,6 +24,7 @@ export default (pluginInfo: PluginInfo) => {
 
   const { findValueByLabel: findTypeValueByLabel, findLabelByValue: findTypeLabelByValue } = useTagTypeSelect()
   const { getTotalValueByStr: getAttrTotalValueByStr, isAttrsIncludeTheValue } = useTagAttributeTypeSelect()
+  const { getTotalQueueByStr: getQueueTotalValueByStr, isQueuesIncludeTheValue } = useTagQueueTypeSelect()
 
   const checkAttrIncludeStatic = (attr: number) => {
     const isIncludeStaticAttr = isAttrsIncludeTheValue(attr, TagAttributeType.Static)
@@ -83,11 +90,12 @@ export default (pluginInfo: PluginInfo) => {
         point,
         address,
         attribute,
+        queue,
         type: typeLabel,
         description = '',
         valueRange = '',
-        formlua = '',
-        target_field = '',
+        read_script = '',
+        write_script = '',
         threshold,
         decimal,
         offset,
@@ -95,6 +103,7 @@ export default (pluginInfo: PluginInfo) => {
         value,
       } of tagList) {
         const attr = getAttrTotalValueByStr(attribute, FILLER_IN_TAG_ATTR)
+        const que = getQueueTotalValueByStr(queue, FILLER_IN_TAG_QUEUE)
         const type = findTypeValueByLabel(typeLabel)
 
         if (!type || !attr) {
@@ -140,11 +149,12 @@ export default (pluginInfo: PluginInfo) => {
           point: point?.toString().trim() || '',
           address: address?.toString().trim() || '',
           attribute: attr,
+          queue: que,
           type,
           description: description?.toString().trim() || '',
           valueRange: valueRange?.toString().trim() || '',
-          formlua: formlua?.toString().trim() || '',
-          target_field: target_field?.toString().trim() || '',
+          read_script: read_script?.toString().trim() || '',
+          write_script: write_script?.toString().trim() || '',
           threshold,
           decimal,
           offset,

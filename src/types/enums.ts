@@ -71,7 +71,13 @@ export enum TagAttributeType {
   Subscribe = 4,
   Static = 8,
   Composite = 16,
-  Forward = 32,
+  Monitor = 32,
+  Forward = 64,
+}
+
+export enum TagQueueType {
+  Alarm = 1,
+  RunLight = 2,
 }
 
 export enum PluginKind {

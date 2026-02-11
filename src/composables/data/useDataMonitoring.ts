@@ -9,7 +9,11 @@ import type { Ref } from 'vue'
 import { computed, onUnmounted, ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'vuex'
-import { useTagTypeSelect, useTagAttributeTypeSelect } from '@/composables/config/useAddTagCommon'
+import {
+  useTagTypeSelect,
+  useTagAttributeTypeSelect,
+  useTagQueueTypeSelect,
+} from '@/composables/config/useAddTagCommon'
 import { debounce, cloneDeep } from 'lodash'
 import { EmqxMessage } from '@emqx/emqx-ui'
 
@@ -72,6 +76,7 @@ export default () => {
   let wittenTagTimer: undefined | number
   const updated = ref(Date.now())
   const { tagAttrValueMap } = useTagAttributeTypeSelect()
+  const { tagQueueValueMap } = useTagQueueTypeSelect()
   const { transToHexadecimal } = useWriteDataCheckNParse()
 
   const reSubCount: { groupName: undefined | string; lastTimestamp: number; count: number } = {
@@ -187,10 +192,11 @@ export default () => {
     )
     const tags = await queryTagList(params)
     const tagNameMap: any[] = tags.map((item: TagForm) => {
-      const { attribute, name, ...restData } = item
+      const { attribute, queue, name, ...restData } = item
       return {
         tagName: name,
         attribute: tagAttrValueMap[attribute as keyof typeof tagAttrValueMap],
+        queue: tagQueueValueMap[queue as keyof typeof tagQueueValueMap],
         ...restData,
       }
     })

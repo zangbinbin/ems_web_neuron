@@ -2,10 +2,10 @@ import { ref } from 'vue'
 import { EmqxMessage } from '@emqx/emqx-ui'
 import { useI18n } from 'vue-i18n'
 import { exportExcelData } from '@/utils/utils'
-import { useTagTypeSelect, useTagAttributeTypeSelect } from './useAddTagCommon'
+import { useTagTypeSelect, useTagAttributeTypeSelect, useTagQueueTypeSelect } from './useAddTagCommon'
 
 import type { TagData } from '@/types/config'
-import { FILLER_IN_TAG_ATTR } from '@/utils/constants'
+import { FILLER_IN_TAG_ATTR, FILLER_IN_TAG_QUEUE } from '@/utils/constants'
 
 export default () => {
   const { t } = useI18n()
@@ -13,6 +13,7 @@ export default () => {
   const isExporting = ref(false)
 
   const { getAttrStrByValue } = useTagAttributeTypeSelect()
+  const { getQueueStrByValue } = useTagQueueTypeSelect()
   const { findLabelByValue } = useTagTypeSelect()
 
   // when a filed is added to tag（refer to the `createRawTagForm` in useAddTag.ts）, sync here.
@@ -23,11 +24,12 @@ export default () => {
       'address',
       'point',
       'attribute',
+      'queue',
       'type',
       'description',
       'valueRange',
-      'formlua',
-      'target_field',
+      'read_script',
+      'write_script',
       'threshold',
       'decimal',
       'offset',
@@ -42,11 +44,12 @@ export default () => {
         address,
         point,
         attribute,
+        queue,
         type,
         description,
         valueRange,
-        formlua,
-        target_field,
+        read_script,
+        write_script,
         threshold,
         decimal,
         offset,
@@ -55,6 +58,7 @@ export default () => {
       } = obj
       const content = []
       const attrStr = attribute ? getAttrStrByValue(attribute, FILLER_IN_TAG_ATTR) : ''
+      const queueStr = queue ? getQueueStrByValue(queue, FILLER_IN_TAG_QUEUE) : ''
       const typeStr = type ? findLabelByValue(type) : ''
       content.push([
         group,
@@ -62,11 +66,12 @@ export default () => {
         address,
         point,
         attrStr,
+        queueStr,
         typeStr,
         description,
         valueRange,
-        formlua,
-        target_field,
+        read_script,
+        write_script,
         threshold,
         decimal,
         offset,

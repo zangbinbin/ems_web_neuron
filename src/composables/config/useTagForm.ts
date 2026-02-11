@@ -16,6 +16,13 @@ export default (props: any) => {
     return isAttrsIncludeTheValue(attr, TagAttributeType.Static)
   })
 
+  const isAttrsIncludeMonitor = computed(() => (attr: number | undefined) => {
+    return isAttrsIncludeTheValue(attr, TagAttributeType.Monitor)
+  })
+  const isAttrsIncludeComposite = computed(() => (attr: number | undefined) => {
+    return isAttrsIncludeTheValue(attr, TagAttributeType.Composite)
+  })
+
   const tagRegex = computed(() => {
     return props?.nodePluginInfo?.tag_regex
   })
@@ -187,6 +194,8 @@ export default (props: any) => {
   return {
     formCom,
     isAttrsIncludeStatic,
+    isAttrsIncludeMonitor,
+    isAttrsIncludeComposite,
     tagTypeOptListAfterFilter,
     rules,
     validate,

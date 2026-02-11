@@ -279,6 +279,10 @@ export default {
     zh: '属性',
     en: 'Attribute',
   },
+  queue: {
+    zh: '策略',
+    en: 'Queue',
+  },
   description: {
     zh: '描述',
     en: 'Description',

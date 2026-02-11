@@ -1,4 +1,5 @@
 import { form } from '@meta2d/core/src/diagrams'
+import { write } from 'xlsx'
 
 export default {
   driver: {
@@ -117,13 +118,13 @@ export default {
     zh: '阈值',
     en: 'Threshold',
   },
-  formula: {
-    zh: '公式',
-    en: 'Formula',
+  read_script: {
+    zh: '读脚本',
+    en: 'Read script',
   },
-  targetField: {
-    zh: '目标字段',
-    en: 'TargetField',
+  write_script: {
+    zh: '写脚本',
+    en: 'Write script',
   },
   tagValue: {
     zh: '值',
