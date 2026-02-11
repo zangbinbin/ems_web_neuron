@@ -280,7 +280,7 @@ export default {
     en: 'Attribute',
   },
   queue: {
-    zh: '策略',
+    zh: '队列',
     en: 'Queue',
   },
   description: {
