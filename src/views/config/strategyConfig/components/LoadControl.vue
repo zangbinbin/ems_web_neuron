@@ -37,6 +37,9 @@
           <emqx-form-item prop="charge_adjust_step_value" :label="$t('common.PowerAdjustmentStep')" required>
             <emqx-input type="number" v-model.number="formData.charge_adjust_step_value" />
           </emqx-form-item>
+          <emqx-form-item prop="power_init_value" :label="$t('common.powerInitValue')" required>
+            <emqx-input type="number" v-model.number="formData.power_init_value" />
+          </emqx-form-item>
         </emqx-form>
       </emqx-col>
     </emqx-row>
@@ -71,6 +74,7 @@ const formData = ref({
   limited_value_charging: 0,
   threshold_value_charging: 0,
   charge_adjust_step_value: 0,
+  power_init_value: 0,
   chargingpower_limit_is_open: 0, // 开关：默认关闭
   node_name: siteInfo.value.siteName || '', // 站点名称
 } as any)
@@ -81,6 +85,7 @@ const formRules = computed(() => {
     limited_value_charging: [{ required: true, message: t('common.limitedValueChargingTip') }],
     threshold_value_charging: [{ required: true, message: t('common.thresholdValueCharging') }],
     charge_adjust_step_value: [{ required: true, message: t('common.chargeAdjustStepValue') }],
+    power_init_value: [{ required: true, message: t('common.powerInitValueTip') }],
   }
 })
 

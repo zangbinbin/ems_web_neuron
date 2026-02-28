@@ -34,6 +34,9 @@
           <emqx-form-item prop="discharge_adjust_step_value" :label="$t('common.dischargeAdjustStepValue')" required>
             <emqx-input type="number" v-model.number="formData.discharge_adjust_step_value" />
           </emqx-form-item>
+          <emqx-form-item prop="power_init_value" :label="$t('common.powerInitValue')" required>
+            <emqx-input type="number" v-model.number="formData.power_init_value" />
+          </emqx-form-item>
         </emqx-form>
       </emqx-col>
     </emqx-row>
@@ -66,6 +69,7 @@ const formData = ref({
   limited_value_discharge: 0,
   forbidden_value_discharge: 0,
   discharge_adjust_step_value: 0,
+  power_init_value: 0,
   prevent_electrical_energy_is_open: 0, // 开关：默认关闭
   node_name: params.value.siteName || '', // 站点名称
 } as any)
@@ -75,6 +79,7 @@ const formRules = computed(() => {
     limited_value_discharge: [{ required: true, message: t('common.limitedValueDischargeTip') }],
     forbidden_value_discharge: [{ required: true, message: t('common.forbiddenValueDischargeTip') }],
     discharge_adjust_step_value: [{ required: true, message: t('common.dischargeAdjustStepValueTip') }],
+    power_init_value: [{ required: true, message: t('common.powerInitValueTip') }],
   }
 })
 

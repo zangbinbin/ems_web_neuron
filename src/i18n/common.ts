@@ -631,4 +631,12 @@ export default {
     zh: '功率调节步长不能为空',
     en: 'Threshold value for discharge power adjustment step length cannot be empty',
   },
+  powerInitValue: {
+    zh: '初始调节功率',
+    en: 'Initial Adjustment Power',
+  },
+  powerInitValueTip: {
+    zh: '请输入初始调节功率',
+    en: 'Please enter initial adjustment power',
+  },
 }
