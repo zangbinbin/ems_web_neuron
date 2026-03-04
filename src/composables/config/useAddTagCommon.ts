@@ -174,9 +174,13 @@ export const useTagQueueTypeSelect = () => {
 
   const tagQueueValueMap: Record<number, number[]> = {
     0: [],
-    1: [1],
-    2: [2],
-    3: [1, 2],
+    1: [1], // Alarm
+    2: [2], // Strategy
+    3: [1, 2], // Alarm + Strategy
+    4: [4], // Corectl
+    5: [1, 4], // Alarm + Corectl
+    6: [2, 4], // Strategy + Corectl
+    7: [1, 2, 4], // Alarm + Strategy + Corectl
   }
 
   const findLabelByValue = (val: number) => tagQueueTypeOptList.find(({ value }) => val === value)?.label || ''

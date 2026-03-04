@@ -78,7 +78,7 @@ export enum TagAttributeType {
 export enum TagQueueType {
   Alarm = 1,
   Strategy = 2,
-  Corectl = 3,
+  Corectl = 4,
 }
 
 export enum PluginKind {
