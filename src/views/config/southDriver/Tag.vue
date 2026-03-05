@@ -62,7 +62,7 @@
         <emqx-table-column :label="$t('config.desc')" prop="description" />
         <emqx-table-column :label="$t('config.valueRange')" prop="valueRange" />
         <emqx-table-column :label="$t('config.read_script')" prop="read_script" show-overflow-tooltip="true" />
-
+        <emqx-table-column :label="$t('config.forward_script')" prop="forward_script" show-overflow-tooltip="true" />
         <emqx-table-column :label="$t('config.write_script')" prop="write_script" show-overflow-tooltip="true" />
         <emqx-table-column :label="$t('common.queue')">
           <template #default="{ row }">{{ getQueueStrByValue(row.queue) }}</template>

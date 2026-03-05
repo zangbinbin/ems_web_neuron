@@ -126,6 +126,10 @@ export default {
     zh: '写脚本',
     en: 'Write script',
   },
+  forward_script: {
+    zh: '转发脚本',
+    en: 'Forward script',
+  },
   tagValue: {
     zh: '值',
     en: 'Value',

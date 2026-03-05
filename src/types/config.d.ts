@@ -256,6 +256,7 @@ export interface TagForm {
   valueRange: string
   read_script?: string
   write_script?: string
+  forward_script?: string
   threshold?: number | undefined
   precision?: number | undefined
   decimal?: number | null

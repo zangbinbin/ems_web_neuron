@@ -107,6 +107,14 @@
           <emqx-input v-if="isAttrsIncludeComposite(row.attribute)" v-model="row.write_script" type="textarea" />
         </template>
       </el-table-column>
+      <el-table-column width="130">
+        <template #header>
+          <span class="thead-title">{{ $t('config.forward_script') }}</span>
+        </template>
+        <template #default="{ row }">
+          <emqx-input v-if="isAttrsIncludeForward(row.attribute)" v-model="row.forward_script" type="textarea" />
+        </template>
+      </el-table-column>
       <el-table-column :label="$t('config.threshold')" width="110">
         <template #default="{ row, $index }">
           <el-form-item :prop="`tagList.${$index}.threshold`">
@@ -238,6 +246,7 @@ const {
   isAttrsIncludeStatic,
   isAttrsIncludeMonitor,
   isAttrsIncludeComposite,
+  isAttrsIncludeForward,
   tagTypeOptListAfterFilter,
   rules,
   validate,

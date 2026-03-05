@@ -22,6 +22,9 @@ export default (props: any) => {
   const isAttrsIncludeComposite = computed(() => (attr: number | undefined) => {
     return isAttrsIncludeTheValue(attr, TagAttributeType.Composite)
   })
+  const isAttrsIncludeForward = computed(() => (attr: number | undefined) => {
+    return isAttrsIncludeTheValue(attr, TagAttributeType.Forward)
+  })
 
   const tagRegex = computed(() => {
     return props?.nodePluginInfo?.tag_regex
@@ -196,6 +199,7 @@ export default (props: any) => {
     isAttrsIncludeStatic,
     isAttrsIncludeMonitor,
     isAttrsIncludeComposite,
+    isAttrsIncludeForward,
     tagTypeOptListAfterFilter,
     rules,
     validate,

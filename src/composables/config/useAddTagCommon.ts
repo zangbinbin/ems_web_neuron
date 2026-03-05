@@ -279,6 +279,7 @@ export const createTagForm = () => {
     valueRange: '',
     read_script: '',
     write_script: '',
+    forward_script: '',
     threshold: undefined,
     precision: undefined,
     value: undefined,

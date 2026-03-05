@@ -97,6 +97,11 @@
           <emqx-input v-model="form.write_script" type="textarea" />
         </emqx-form-item>
       </emqx-col>
+      <emqx-col v-if="isAttrsIncludeForward(form.attribute)" :span="12">
+        <emqx-form-item :label="$t('config.forward_script')">
+          <emqx-input v-model="form.forward_script" type="textarea" />
+        </emqx-form-item>
+      </emqx-col>
       <emqx-col :span="12">
         <emqx-form-item :label="$t('config.threshold')" prop="threshold">
           <!--  @blur="changeDecimal" -->
@@ -151,6 +156,7 @@ const {
   isAttrsIncludeStatic,
   isAttrsIncludeMonitor,
   isAttrsIncludeComposite,
+  isAttrsIncludeForward,
   tagTypeOptListAfterFilter,
   rules,
   validate,
