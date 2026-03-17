@@ -24,9 +24,9 @@
           <div @click="changeTab(6)" :class="{ active: currentIndex === 6 }">
             {{ $t('config.tabPeakShaveValleyFillMS') }}
           </div>
-          <div @click="changeTab(7)" :class="{ active: currentIndex === 7 }">
+          <!-- <div @click="changeTab(7)" :class="{ active: currentIndex === 7 }">
             {{ $t('config.lightStoragePriority') }}
-          </div>
+          </div> -->
           <!-- <div @click="changeTab(9)" :class="{ active: currentIndex === 9 }">{{ $t('config.tabDemandManage') }}</div> -->
           <!-- <div @click="changeTab(10)" :class="{ active: currentIndex === 10 }">
             {{ $t('config.tabBackFlowPrevente') }}
