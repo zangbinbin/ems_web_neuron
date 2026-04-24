@@ -89,17 +89,32 @@
       </emqx-col>
       <emqx-col v-if="isAttrsIncludeComposite(form.attribute)" :span="12">
         <emqx-form-item :label="$t('config.read_script')">
-          <emqx-input v-model="form.read_script" type="textarea" />
+          <div style="display: flex; gap: 8px">
+            <emqx-input v-model="form.read_script" type="textarea" style="flex: 1" />
+            <emqx-button type="primary" size="small" @click="testReadScript" :loading="loading.readScript">
+              {{ $t('common.testScript') }}
+            </emqx-button>
+          </div>
         </emqx-form-item>
       </emqx-col>
       <emqx-col v-if="isAttrsIncludeComposite(form.attribute)" :span="12">
         <emqx-form-item :label="$t('config.write_script')">
-          <emqx-input v-model="form.write_script" type="textarea" />
+          <div style="display: flex; gap: 8px">
+            <emqx-input v-model="form.write_script" type="textarea" style="flex: 1" />
+            <emqx-button type="primary" size="small" @click="testWriteScript" :loading="loading.writeScript">
+              {{ $t('common.testScript') }}
+            </emqx-button>
+          </div>
         </emqx-form-item>
       </emqx-col>
       <emqx-col v-if="isAttrsIncludeForward(form.attribute)" :span="12">
         <emqx-form-item :label="$t('config.forward_script')">
-          <emqx-input v-model="form.forward_script" type="textarea" />
+          <div style="display: flex; gap: 8px">
+            <emqx-input v-model="form.forward_script" type="textarea" style="flex: 1" />
+            <emqx-button type="primary" size="small" @click="testForwardScript" :loading="loading.forwardScript">
+              {{ $t('common.testScript') }}
+            </emqx-button>
+          </div>
         </emqx-form-item>
       </emqx-col>
       <emqx-col :span="12">
@@ -127,7 +142,7 @@
 
 <script lang="ts" setup>
 import type { PropType, WritableComputedRef } from 'vue'
-import { defineExpose, computed, defineProps, defineEmits, nextTick } from 'vue'
+import { defineExpose, computed, defineProps, defineEmits, nextTick, ref } from 'vue'
 import { useTagPrecision } from '@/composables/config/useAddTagCommon'
 import TagAttributeSelect from './TagAttributeSelect.vue'
 import TagQueueSelect from './TagQueueSelect.vue'
@@ -135,6 +150,8 @@ import type { PluginInfo, TagForm } from '@/types/config'
 import useTagForm from '@/composables/config/useTagForm'
 import { TagType } from '@/types/enums'
 import AComWithDesc from '@/components/AComWithDesc.vue'
+import { ElMessage } from 'element-plus'
+import { testCompositeScript, testForwardScript as apiTestForwardScript } from '@/api/config'
 
 const props = defineProps({
   data: {
@@ -175,6 +192,12 @@ const form: WritableComputedRef<TagForm> = computed({
 
 const isBYTESType = computed(() => form.value.type === TagType.BYTES)
 
+const loading = ref({
+  readScript: false,
+  writeScript: false,
+  forwardScript: false,
+})
+
 const changeAttribute = () => {
   const isStaticAttr = isAttrsIncludeStatic.value(form.value.attribute)
 
@@ -192,6 +215,128 @@ const changeAttribute = () => {
   nextTick(() => {
     formCom.value.form.validateField('address')
   })
+}
+
+const testReadScript = async () => {
+  const script = form.value.read_script || ''
+  if (!script) {
+    ElMessage.warning('脚本内容不能为空')
+    return
+  }
+
+  if (!form.value.name) {
+    ElMessage.warning('标签名称不能为空')
+    return
+  }
+
+  loading.value.readScript = true
+
+  try {
+    const response = await testCompositeScript({
+      script,
+      tag_name: form.value.name,
+      value: {
+        type: 5,
+        value: 1,
+      },
+    })
+
+    console.log('API响应:', response)
+
+    if (response.data.error === 0) {
+      ElMessage.success(`测试成功: ${response.data.result}`)
+    } else {
+      ElMessage.error(`脚本错误: ${response.data.error_msg || response.data.result}`)
+    }
+  } catch (error: any) {
+    console.log('API错误:', error)
+    if (error.data?.error) {
+      ElMessage.error(`脚本错误: ${error.data.error_msg || '未知错误'}`)
+    } else {
+      ElMessage.error('测试失败')
+    }
+    console.error('测试失败:', error)
+  } finally {
+    loading.value.readScript = false
+  }
+}
+
+const testWriteScript = async () => {
+  const script = form.value.write_script || ''
+  if (!script) {
+    ElMessage.warning('脚本内容不能为空')
+    return
+  }
+
+  if (!form.value.name) {
+    ElMessage.warning('标签名称不能为空')
+    return
+  }
+
+  loading.value.writeScript = true
+
+  try {
+    const response = await testCompositeScript({
+      script,
+      tag_name: form.value.name,
+      value: {
+        type: 5,
+        value: 1,
+      },
+    })
+
+    if (response.data.error === 0) {
+      ElMessage.success(`测试成功: ${response.data.result}`)
+    } else {
+      ElMessage.error(`脚本错误: ${response.data.error_msg || response.data.result}`)
+    }
+  } catch (error: any) {
+    if (error.data?.error) {
+      ElMessage.error(`脚本错误: ${error.data.error_msg || '未知错误'}`)
+    } else {
+      ElMessage.error('测试失败')
+    }
+    console.error('测试失败:', error)
+  } finally {
+    loading.value.writeScript = false
+  }
+}
+
+const testForwardScript = async () => {
+  const script = form.value.forward_script || ''
+  if (!script) {
+    ElMessage.warning('脚本内容不能为空')
+    return
+  }
+
+  if (!form.value.name) {
+    ElMessage.warning('标签名称不能为空')
+    return
+  }
+
+  loading.value.forwardScript = true
+
+  try {
+    const response = await apiTestForwardScript({
+      script,
+      tag_name: form.value.name,
+      value: {
+        type: 5,
+        value: 1,
+      },
+    })
+
+    ElMessage.success(`测试成功: ${response.data.result}`)
+  } catch (error: any) {
+    if (error.data?.error) {
+      ElMessage.error(`脚本错误: ${error.data.error_msg || '未知错误'}`)
+    } else {
+      ElMessage.error('测试失败')
+    }
+    console.error('测试失败:', error)
+  } finally {
+    loading.value.forwardScript = false
+  }
 }
 
 // validate address when change tag `type`

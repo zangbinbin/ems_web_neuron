@@ -647,4 +647,8 @@ export default {
     zh: '请输入初始调节功率',
     en: 'Please enter initial adjustment power',
   },
+  testScript: {
+    zh: '测试脚本',
+    en: 'Test Script',
+  },
 }

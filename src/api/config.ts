@@ -268,3 +268,26 @@ export const updatePlugin = (data: PluginForm) => {
 export const deletePlugin = (pluginName: string) => {
   return http.delete('/plugin', { data: { plugin: pluginName } })
 }
+
+/* SCRIPT TEST */
+export const testCompositeScript = (data: {
+  script: string
+  tag_name: string
+  value: {
+    type: number
+    value: number
+  }
+}) => {
+  return http.post('/lua/composite', data)
+}
+
+export const testForwardScript = (data: {
+  script: string
+  tag_name: string
+  value: {
+    type: number
+    value: number
+  }
+}) => {
+  return http.post('/lua/forward', data)
+}
