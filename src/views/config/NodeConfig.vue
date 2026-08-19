@@ -40,9 +40,9 @@
             {{ $t('config.tabDataStorageList') }}
           </div> -->
           <div @click="changeTab(70)" :class="{ active: currentIndex === 70 }">{{ $t('config.tabPoint') }}</div>
-          <!-- <div @click="changeTab(80)" :class="{ active: currentIndex === 80 }" style="border-radius: 0px 5px 5px 0px">
-            {{ $t('config.tabConnection') }}
-          </div> -->
+          <div @click="changeTab(80)" :class="{ active: currentIndex === 80 }" style="border-radius: 0px 5px 5px 0px">
+            {{ $t('config.tabStrategyParams') }}
+          </div>
         </div>
         <!-- Tab Content -->
         <div>

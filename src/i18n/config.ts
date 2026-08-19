@@ -777,6 +777,10 @@ export default {
     zh: '点位名称配置',
     en: 'Point Name',
   },
+  tabStrategyParams: {
+    zh: '策略参数配置',
+    en: 'Strategy Parameter Config',
+  },
   tabConnection: {
     zh: '云连接配置',
     en: 'Connection',
